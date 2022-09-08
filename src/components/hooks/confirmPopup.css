@@ -1,0 +1,46 @@
+.confirm-popup {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 5500;
+  background-color: rgba(0, 0, 0, 0.6);
+  min-height: 100%;
+  min-width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  /* border: 1px solid green; */
+}
+
+.confirm-popup-inner {
+  background-color: white;
+  /* max-width: 950px; */
+  width: 35vw;
+  margin: 20px;
+  height: 25vh;
+  top: 20vh;
+  left: 31%;
+  position: absolute;
+  flex-wrap: nowrap;
+  overflow-y: hidden;
+  overflow-x: hidden;
+}
+
+.confirm-body {
+  /* border: 1px solid red; */
+  height: 10vh;
+}
+
+.confirm-footer {
+  position: absolute;
+  z-index: 30;
+  bottom: 10px;
+  right: 5px;
+  /* border: 1px solid red; */
+}
+
+@media screen and (max-width: 650px) {
+  .confirm-popup-inner {
+    width: 60vw !important;
+    left: 17% !important;
+  }
+}

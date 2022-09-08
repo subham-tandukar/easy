@@ -1,0 +1,71 @@
+.confirm-popup {
+    position: absolute;
+    right: 0px;
+    bottom: -86px;
+    z-index: 5500;
+    background-color: rgba(0, 0, 0, 0.6);
+    min-height: 100%;
+    min-width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    /* border: 1px solid green; */
+    }
+    
+    .confirm-popup-inner {
+      background-color: white;
+      /* max-width: 950px; */
+      width: 32vw;
+      margin: 20px;
+      height: 25vh;
+      top: 34vh;
+      left: 33%;
+      position: absolute;
+      flex-wrap: nowrap;
+      overflow-y: hidden;
+      overflow-x: hidden;
+    }
+    
+    .confirm-body {
+      /* border: 1px solid red; */
+      height: 10vh;
+    }
+    
+    .confirm-footer {
+      position: static;
+      bottom: 0 !important;
+      z-index: 30;
+      display: flex;
+      float: right;
+      /* border: 1px solid red; */
+    }
+    
+    @media screen and (max-width: 650px) {
+      .confirm-popup-inner {
+        width: 50vw !important;
+        left: 22% !important;
+      }
+    }
+  
+    .popUpDelTitle{
+      padding-left: 10px;
+      font-size: 15px;
+    }
+  
+    .delText{
+      padding-top: 10px;
+      font-size: 14px;
+    }
+  
+    .confirm-reverse-popup {
+      position: absolute;
+      right: 0px;
+      bottom: 0px;
+      z-index: 5500;
+      background-color: rgba(0, 0, 0, 0.6);
+      min-height: 100%;
+      min-width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      /* border: 1px solid green; */
+  }
+    

@@ -1,0 +1,31 @@
+.select-org {
+  padding-top: 22px;
+}
+
+.select-src {
+  padding-top: 22px;
+}
+.addatt-btn {
+  height: 29.5px;
+  margin-top: 22px;
+}
+
+@media screen and (max-width: 575px) {
+  .sel-month {
+    margin-top: 5px;
+    justify-content: center;
+  }
+  .select-src {
+    padding-top: 10px !important;
+  }
+  .addatt-btn {
+    margin-top: 5px !important;
+    justify-content: right;
+  }
+  .select-org {
+    padding-top: 0px !important;
+  }
+  .btnatt {
+    justify-content: right;
+  }
+}

@@ -1,0 +1,90 @@
+.tabview {
+    display: flex;
+    justify-content: space-between;
+    background-color: var(--Maingray);
+}
+.insidePopup--div {
+    text-align: left;
+  }
+ 
+  .insidePopup--div ul {
+    display: flex;
+    padding-left: 0rem !important;
+    overflow: auto;
+  }
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  .insidePopup--div ul::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .insidePopup--div ul {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+  .insidePopup--div ul li {
+    display: inline-block;
+    padding: 15px 15px;
+    font-weight: 600;
+  }
+  .insidePopup--div ul li:hover {
+    color: var(--textBlack);
+    cursor: pointer;
+    border-bottom: 2px solid var(--MainColor);
+  }
+  .insidePopup--div ul li.active {
+    color: var(--MainColor);
+    background: var(--ActiveColor);
+    border-bottom: 2px solid var(--MainColor);
+  }
+  .insidePopup--div ul {
+    margin-bottom: 6px !important;
+  }
+
+  .add--btn{
+    padding-top: 15px;
+    padding-right: 10px;
+  }
+
+
+  .label-radio{
+    height: 30px;
+    width: 65px;
+    border: 1px solid var(--MainColor);
+    margin: auto;
+    border-radius: 3px;
+    position: relative;
+    color: var(--MainColor);
+    background-color: white;
+    transition: 0.5s;
+    text-align: center;
+    padding-top: 5px;
+    cursor: pointer;
+ }
+
+ input[type="radio"]:checked + label {
+	background-color: var(--MainColor);
+	color: #ffffff;
+}
+ 
+ input[type="radio"]{
+    -webkit-appearance: none;
+}
+
+
+.collectorpopUpBody {
+    position: relative;
+    width: 100%;
+    z-index: 2;
+    height: 54vh;
+  }
+  
+  .collectorpopup-inner {
+    background-color: white;
+    /* max-width: 950px; */
+    width: 55%;
+    /* height: 80vh; */
+    top: 18vh;
+    left: 25%;
+    position: absolute;
+  }

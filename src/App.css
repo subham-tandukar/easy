@@ -1,0 +1,228 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=Poppins:ital,wght@0,300;0,400;0,500;0,700;0,800;1,600;1,700&display=swap");
+* {
+  font-family: "Open Sans", sans-serif;
+  padding: 0;
+}
+
+.App {
+  text-align: center;
+  min-height: calc(100vh - 80px);
+}
+
+body {
+  font-size: 13px;
+}
+
+h1,
+h2,
+h3,
+h5,
+h4,
+h6 {
+  color: #000;
+}
+
+a:hover,
+a:active {
+  text-decoration: none;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+p {
+  color: #000;
+  font-size: 12px;
+}
+
+.side__content {
+  padding-right: calc(40px - 1.5rem);
+  padding-left: calc(100px - 1.5rem);
+  margin-top: 5rem;
+  transition: all 0.3s ease-in-out;
+  min-height: calc(100vh - 5rem);
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+/* body {
+  overflow-x: hidden;
+} */
+
+.sup-col {
+  color: red;
+}
+
+.label-radio {
+  height: 30px;
+  width: 140px;
+  border: 1px solid var(--MainColor);
+  margin: auto;
+  border-radius: 3px;
+  position: relative;
+  color: var(--MainColor);
+  background-color: white;
+  transition: 0.5s;
+  text-align: center;
+  padding-top: 5px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+input[type="radio"]:checked + label {
+  background-color: var(--MainColor);
+  color: #ffffff;
+}
+
+input[type="radio"] {
+  -webkit-appearance: none;
+}
+
+.TUEFO {
+  padding: 0px !important;
+}
+
+/* CSS for button thet accepts the excel value */
+.input-xlsx {
+  display: flex;
+}
+
+.input-xlsx > input {
+  display: none;
+}
+
+.input-xlsx > label {
+  border: 1px solid var(--button-color);
+  border-radius: 3px;
+  padding: 5px;
+  font-size: 13px;
+  background-color: var(--button-color);
+  color: #ffffff;
+  cursor: pointer;
+  margin-right: 2px;
+}
+
+@media (min-width: 959.9px) {
+  .dots-icon,
+  #mob-nav,
+  .ham-menu {
+    display: none;
+  }
+  .padding {
+    padding-left: calc(300px - 1.5rem);
+  }
+  .none {
+    display: none !important;
+  }
+}
+@media (max-width: 959.9px) {
+  .login__page {
+    overflow: hidden;
+  }
+  .login__page .login-form-wrapper,
+  .login__page .login-img-wrapper {
+    width: 75%;
+    margin: 0 auto;
+    padding-right: 0 !important;
+    padding-left: 30px !important;
+  }
+  .logo {
+    width: 200px !important;
+    margin-left: 2rem;
+  }
+  .side__panel {
+    width: 0 !important;
+  }
+  .side__content {
+    padding-left: 40px !important;
+  }
+  .total-employee .total-employee-box {
+    margin-bottom: 3rem;
+  }
+  .total-employee::before {
+    display: none;
+  }
+  .project-details,
+  .today-absent {
+    padding: 1rem !important;
+  }
+  nav {
+    padding: 1rem 0 !important;
+  }
+  #large-nav {
+    display: none;
+  }
+  .dots-icon {
+    padding-right: 2rem;
+    cursor: pointer;
+  }
+  .dots-icon .dots {
+    transition: all 0.3s ease-in-out;
+  }
+  .dots-icon .dots:hover {
+    color: #0049ae !important;
+  }
+  .mob-nav {
+    display: none;
+  }
+  .ham-menu {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 20px;
+    cursor: pointer;
+  }
+  .ham-menu .ham-icon {
+    transition: all 0.3s ease-in-out;
+  }
+  .ham-menu .ham-icon:hover {
+    color: #0049ae !important;
+  }
+  .ham-menu .closed-icon {
+    transition: all 0.3s ease-in-out;
+  }
+  .ham-menu .closed-icon:hover {
+    color: #ff4949 !important;
+  }
+}
+@media (max-width: 639.9px) {
+  p {
+    font-size: 12px;
+  }
+  .card-title {
+    font-size: 20px;
+  }
+  .login__page {
+    padding-top: 2rem;
+  }
+  .login__page .login-form-wrapper,
+  .login__page .login-img-wrapper {
+    width: 100%;
+  }
+  .login__page .login__img .txt h1 {
+    font-size: 35px !important;
+  }
+  .login__page .login__form {
+    padding: 2rem;
+  }
+}
+
+@media (max-width: 575.9px) {
+  .table__button__wrapper {
+    position: static !important;
+  }
+}
+
+@media (max-width: 360.9px) {
+  .login__page .login__form {
+    padding: 1rem;
+  }
+  .login__page .login__form form .uk-button {
+    width: 75%;
+  }
+  .side__content {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+}

@@ -1,0 +1,23 @@
+.leavenote-wrapper {
+  position: relative;
+  z-index: 1;
+}
+
+.upper-dataTbl {
+  /* border: 1px solid red !important; */
+  display: flex;
+  flex-direction: column;
+}
+.upper-btn {
+  display: flex;
+  float: right;
+}
+
+.btn-addlnote {
+  display: flex;
+  justify-content: right;
+}
+
+.leave-status {
+  padding: 4px 8px;
+}

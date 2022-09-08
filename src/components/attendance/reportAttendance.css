@@ -1,0 +1,30 @@
+/* .sumatten-wrapper {
+  position: relative;
+  z-index: 0;
+} */
+
+.select-category {
+  padding-top: 22px;
+}
+
+.addatt-btn {
+  height: 29.5px;
+  margin-top: 22px;
+}
+
+@media screen and (max-width: 575px) {
+  .sel-month {
+    margin-top: 5px;
+    justify-content: center;
+  }
+  .addatt-btn {
+    margin-top: 5px !important;
+    justify-content: right;
+  }
+  .select-category {
+    padding-top: 0px !important;
+  }
+  .btnatt {
+    justify-content: right;
+  }
+}

@@ -1,0 +1,183 @@
+.layout-wrapper {
+  position: relative;
+}
+
+/* Style page content - use this if you want to push the page content to the right when you open the side navigation */
+.main {
+  transition: 0.1s;
+  /* border: 1px solid red; */
+  margin-left: 250px;
+  /* top: 0;
+  position: relative;
+  z-index: 4; */
+}
+.pushMain {
+  margin-left: 0px !important;
+}
+
+@media screen and (max-width: 795px) {
+  .nav-icons {
+    display: none;
+  }
+  .main {
+    transition: 0.1s;
+    margin-left: 0px;
+  }
+  .pushMain {
+    margin-left: 0px !important;
+  }
+}
+
+.page-header {
+  /* border: 1px solid red; */
+  display: flex;
+  justify-content: space-between;
+}
+
+.page-title {
+  /* border: 1px solid red; */
+  color: #656565;
+  font-size: 23px;
+}
+.page-date {
+  /* border: 1px solid red; */
+  margin-right: 10px;
+  padding: 5px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #656565;
+}
+
+.title-hr {
+  padding: 1px;
+  margin-left: 10px;
+  margin-top: 10px;
+  width: 98%;
+}
+
+@media screen and (max-width: 650px) {
+  .page-date {
+    display: none !important;
+  }
+}
+
+/* .btn {
+  font-weight: 700;
+} */
+.form-control,
+.btn,
+.form-select {
+  border-radius: 3px !important;
+  font-family: "Open Sans", sans-serif !important;
+  font-size: 13px !important;
+}
+.form-control:focus,
+.btn:focus,
+.form-select:focus {
+  box-shadow: none !important;
+  border-color: "var(--button-color)";
+  outline: none;
+}
+.form-select:focus {
+  border-radius: none !important;
+}
+
+.rdt_TableCol {
+  /* border: 1px solid red; */
+  padding: 12px !important;
+  font-size: 14px !important;
+  font-weight: bolder;
+  /* justify-content: center; */
+  background-color: #fafbfc !important;
+  color: #212529 !important;
+}
+
+.rdt_TableCell {
+  /* border: 1px solid black; */
+  font-size: 13px !important;
+  padding: 12px !important;
+  /* justify-content: center; */
+  color: #212529 !important;
+}
+
+.sc-dkzDqf.faVNZf.rdt_TableHeadRow {
+  background-color: #fafbfc !important;
+}
+
+.sec-dataTable {
+  border: 1px solid #e1e2e3;
+  padding: 10px 15px;
+  height: 70vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  position: relative;
+  z-index: 200;
+}
+
+.sec-dataTable::-webkit-scrollbar {
+  display: none;
+}
+
+.sec-dataTable {
+  -ms-overflow-style: none;
+  scrollbar-width: none; /* Firefox */
+}
+
+.errBox {
+  border: 1px solid red;
+}
+
+/* toaster */
+/* .toast {
+  background-color: red;
+} */
+
+/* cal-picker */
+input._1oYOS.form-control.form-control-sm.pt-0.pb-0 {
+  background-color: white;
+}
+._2xcMq {
+  top: -2px !important;
+  max-width: 300px;
+  width: 100%;
+  position: absolute;
+  background-color: #fff;
+  /* z-index: 1000 !important; */
+  color: #000;
+  box-shadow: none !important;
+  font-size: 12px !important;
+  line-height: 1 !important;
+  /* border: 1px solid #e1e2e3 !important; */
+  display: flex !important;
+  justify-content: center !important;
+}
+
+p._3fmCl._1Pw8c._bBYU7 {
+  display: none !important;
+}
+
+p._3fmCl._1ydFT._bBYU7 {
+  display: none !important;
+}
+
+select._2aNF9 {
+  font-size: 13px;
+  margin-left: 3px;
+  border: none !important;
+}
+
+._1Op28._1mUuW {
+  display: flex !important;
+  justify-content: center;
+}
+
+span._249_g._3zVi3._FsLy_._1ImcB {
+  border-radius: inherit;
+}
+
+/* search-field */
+.searchField {
+  /* border: 1px solid red; */
+  height: 14px !important;
+  font-size: 0.875rem !important;
+}

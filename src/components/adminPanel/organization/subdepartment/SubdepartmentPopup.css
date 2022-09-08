@@ -1,0 +1,21 @@
+.subdepartmentpopup-inner {
+  background-color: white;
+  /* max-width: 950px; */
+  width: 50%;
+  height: 50vh;
+  top: 14vh;
+  left: 22%;
+  position: absolute;
+  flex-wrap: nowrap;
+  overflow-y: hidden;
+  overflow-x: hidden;
+}
+
+.subdepartmentpopUpBody {
+  position: relative;
+  width: 100%;
+  z-index: 2;
+  /* border: 1px solid red; */
+  /* height: 53vh; */
+  /* overflow-y: scroll; */
+}

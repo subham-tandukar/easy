@@ -1,0 +1,30 @@
+.nomatch-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 70px;
+}
+
+.nomatch-div > p,
+h3 {
+  text-transform: uppercase;
+  color: #656565;
+}
+
+.nomatch-button {
+  height: 50px;
+  width: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: inherit;
+  color: White;
+  transition: all 0.3s linear;
+  text-transform: capitalize;
+  cursor: pointer;
+  background-color: var(--button-color);
+}
+
+.nomatch-button:hover {
+  color: White !important;
+}

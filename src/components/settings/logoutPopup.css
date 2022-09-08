@@ -1,0 +1,58 @@
+/* css for logout popup */
+.logoutPopup-wrapper {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 5500;
+  background-color: rgba(0, 0, 0, 0.6);
+  min-height: 100vh;
+  min-width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  /* border: 1px solid green; */
+}
+
+.logoutpopup-inner {
+  background-color: white;
+  /* max-width: 950px; */
+  width: 35vw;
+  height: 28vh;
+  top: 25vh;
+  left: 33%;
+  position: absolute;
+  flex-wrap: nowrap;
+  overflow-y: hidden;
+  overflow-x: hidden;
+}
+
+.logoutpopup-body {
+  font-size: 15px;
+  position: relative;
+  z-index: 10;
+  /* border: 1px solid red; */
+  padding: 3% 1%;
+  color: black;
+}
+
+.logoutpopup-footer {
+  position: absolute;
+  bottom: 15px;
+  right: 10px;
+  z-index: 10;
+  display: flex;
+  justify-content: flex-end;
+}
+
+@media screen and (max-width: 750px) {
+  .logoutpopup-inner {
+    width: 60% !important;
+    left: 20%;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .logoutpopup-inner {
+    width: 80% !important;
+    left: 10%;
+  }
+}

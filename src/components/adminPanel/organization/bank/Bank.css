@@ -1,0 +1,12 @@
+.bankpopup-inner {
+    background-color: white;
+    max-width: 950px;
+    width: 50%;
+    height: 71vh;
+    top: 10vh;
+    left: 22%;
+    position: absolute;
+    flex-wrap: nowrap;
+    overflow-y: hidden;
+    overflow-x: hidden;
+}

@@ -1,0 +1,45 @@
+.translations-content-container {
+    text-align: left;
+    padding-top: 8px;
+    border-top: 1px solid #eee;
+
+    line-height: 28px;
+}
+.privacy-container{
+    position: relative;
+    width: 90%;
+    max-width: 1024px;
+    margin: 0 auto;
+    
+}
+
+.tab-content > h1, h2 {
+    font-weight: 700;
+    font-size: 40px;
+    line-height: 60px;
+    color: #000;
+    
+    
+}
+.tab-content > h3, h4 {
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 36px;
+    color: #000;
+    
+}
+.tab-content > p {
+    color: #000;
+    font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
+   
+}
+.tab-content > ul > li > p {
+    color: #000;
+    font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
+   
+}
+.tab-content > ul > li {
+    color: #000;
+    font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
+   
+}

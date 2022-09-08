@@ -1,0 +1,121 @@
+.notification-wrapper {
+  /* border: 1px solid green; */
+  overflow: hidden;
+  /* position: relative; */
+}
+
+.notif-body {
+  /* border: 1px solid red; */
+  position: relative;
+  height: 73vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.notification {
+  /* border: 1px solid red; */
+  padding: 10px 0px;
+  margin-bottom: 10px;
+  border: 1px solid #e1e2e3;
+}
+
+.notify-header {
+  /* border: 1px solid red; */
+  position: relative;
+  height: 60px;
+}
+.sec-image {
+  /* border: 1px solid red; */
+  margin-left: 20px;
+  position: absolute;
+  height: 60px;
+  width: 60px;
+  display: flex;
+  padding: 5px;
+}
+
+.creator-img {
+  /* border: 1px solid red; */
+  object-fit: fill;
+  border-radius: 25px;
+}
+
+.sec-creator {
+  position: absolute;
+  left: 60px;
+  /* border: 1px solid red; */
+  margin-left: 3%;
+  padding: 7px 10px;
+}
+
+.notify-body {
+  /* border: 1px solid red; */
+  position: relative;
+  height: 150px;
+  width: 100%;
+}
+.sec-notify {
+  position: absolute;
+  /* border: 1px solid red; */
+  margin-left: 20px;
+  height: 100%;
+  width: 50%;
+}
+
+.sec-notify-image {
+  /* border: 1px solid red; */
+  display: flex;
+  justify-content: center;
+  width: 30%;
+  height: 100%;
+  position: absolute;
+  left: 65%;
+  padding: 5px 0px;
+  margin-right: auto;
+}
+
+.notification-img {
+  /* border: 1px solid green; */
+  object-fit: cover;
+  height: 140px;
+  width: 100%;
+}
+
+.notify-btn {
+  /* border: 1px solid red; */
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 60px;
+}
+
+.nobody-hr {
+  padding: 1px;
+  margin-left: 10px;
+  margin-top: 10px;
+  width: 98%;
+  margin-bottom: 5px;
+}
+
+@media screen and (max-width: 550px) {
+  .notify-body {
+    height: 200px !important;
+  }
+  .sec-notify {
+    width: 97% !important;
+    height: 50px;
+  }
+  .sec-notify-image {
+    top: 55px;
+    left: 20px;
+    width: 96% !important;
+    height: 150px !important;
+  }
+  .notification-img {
+    height: 140px !important;
+  }
+  .notify-btn {
+    display: flex !important;
+    width: 100% !important;
+    justify-content: center;
+  }
+}

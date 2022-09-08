@@ -1,0 +1,8 @@
+.categorypopUpBody {
+    position: relative;
+    width: 100%;
+    z-index: 2;
+    /* border: 1px solid red;   77vh*/
+    height: 55vh;
+    overflow-y: scroll;
+  }

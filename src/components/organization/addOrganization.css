@@ -1,0 +1,115 @@
+.addorgpopup-wrapper {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 5500;
+  background-color: rgba(0, 0, 0, 0.6);
+  min-height: 100vh;
+  min-width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  /* border: 1px solid red; */
+}
+
+.addorgpopup-inner {
+  background-color: white;
+  /* max-width: 950px; */
+  width: 60%;
+  height: 72vh;
+  top: 9vh;
+  left: 19%;
+  position: absolute;
+  flex-wrap: nowrap;
+  overflow-y: hidden;
+  overflow-x: hidden;
+}
+
+.addorgpopUpBody {
+  position: relative;
+  width: 100%;
+  z-index: 2;
+  /* border: 1px solid red; */
+  height: 56vh;
+  overflow-y: scroll;
+}
+
+.addorgFooter {
+  /* border: 1px solid red; */
+  position: absolute;
+  z-index: 5000;
+  bottom: 5px;
+  right: 1px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+@media screen and (max-width: 900px) {
+  .addorgpopup-inner {
+    width: 70% !important;
+    top: 9vh;
+    left: 15%;
+  }
+}
+
+@media screen and (max-width: 577px) {
+  .addorgpopup-inner {
+    width: 90% !important;
+    top: 9vh;
+    left: 5%;
+  }
+}
+
+span#basic-addon3 {
+  font-size: 13px;
+  padding: 0 5px;
+}
+
+.sec-addIcon {
+  /* border: 1px solid red; */
+  height: 53.5px;
+  display: flex;
+  padding: 0px;
+  padding-top: 26px !important;
+  margin-left: -8px;
+}
+
+.Plus-icon {
+  border: 1px solid var(--button-color);
+  height: 24px;
+  cursor: pointer;
+  opacity: 0.6;
+  padding: 2px;
+}
+
+.Plus-icon:hover {
+  opacity: 1;
+}
+
+.btn-viewMore {
+  padding: 3px 10px;
+}
+
+.sec-scroll {
+  /* border: 1px solid blue; */
+  padding: 5px 0;
+  width: 100%;
+  position: relative;
+}
+
+.scrollBox {
+  /* border: 1px solid red; */
+  display: flex;
+  /* justify-content: space-around; */
+  width: 100%;
+  position: relative;
+  overflow-x: scroll;
+  padding-bottom: 5px;
+}
+
+.type-medium {
+  display: flex;
+}
+
+.medium-radio {
+  margin-right: 10px;
+}
