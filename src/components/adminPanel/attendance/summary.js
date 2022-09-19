@@ -15,7 +15,8 @@ import { GetCurrMonth, GetCurrYear } from "../../hooks/dateConvertor";
 export default function AdminSummary() {
   const { User } = useContext(AuthContext);
   const [category, setCategory] = useState("");
-  const { fiscalYear, todayDate, appURL } = useContext(UpperbarContext);
+  const { fiscalYear, todayDate, appURL, darkText } =
+    useContext(UpperbarContext);
   const [depList, setDepList] = useState([]);
   const [subDepList, setSubDepList] = useState([]);
 
@@ -54,13 +55,10 @@ export default function AdminSummary() {
     };
 
     Fetchdata(dataForm).then(function (result) {
-
       if (result.StatusCode === 200) {
-
         const postResult = result.list;
         setDepList(postResult);
       } else {
-
         setDepList([]);
       }
     });
@@ -80,13 +78,10 @@ export default function AdminSummary() {
       };
 
       Fetchdata(dataForm).then(function (result) {
-
         if (result.StatusCode === 200) {
-
           const postResult = result.SubDepList;
           setSubDepList(postResult);
         } else {
-
           setSubDepList([]);
         }
       });
@@ -105,7 +100,7 @@ export default function AdminSummary() {
 
   function getNepaliDate(date) {
     const nepDate = new NepaliDate().getBS();
-    // 
+    //
     return nepDate;
   }
 
@@ -126,9 +121,11 @@ export default function AdminSummary() {
       <div className="container-fluid classatten-wrapper  mt-3 ps-4 pe-4">
         <div className="row mt-3">
           <div className="page-header">
-            <div className="text-start  page-title">Attendance Summary </div>
+            <div className="text-start  page-title" style={darkText}>
+              Attendance Summary{" "}
+            </div>
             <div className="page-date">
-              <div className="sec-content">
+              <div className="sec-content" style={darkText}>
                 Today's Date : {todayDate} <span>|</span> Fiscal Year :{" "}
                 {fiscalYear.StartDate}
                 <span>-</span>
@@ -143,7 +140,7 @@ export default function AdminSummary() {
           <div className="sec-dataTable">
             <div className="row mb-3 ">
               <div className="col-md-4 col-sm-4 col-lg-3">
-                <div className="text-start mb-1" style={{ fontSize: "12px" }}>
+                <div className="text-start mb-1" style={darkText}>
                   Category
                 </div>
                 <select
@@ -164,7 +161,7 @@ export default function AdminSummary() {
               </div>
 
               <div className="col-md-4 col-sm-4 col-lg-3 sel-month">
-                <div className="text-start mb-1" style={{ fontSize: "12px" }}>
+                <div className="text-start mb-1" style={darkText}>
                   Department
                 </div>
                 <select
@@ -193,7 +190,7 @@ export default function AdminSummary() {
 
               {department !== "-1" && (
                 <div className="col-md-3 col-sm-3 col-lg-3 sel-month">
-                  <div className="text-start mb-1" style={{ fontSize: "12px" }}>
+                  <div className="text-start mb-1" style={darkText}>
                     Sub-Department
                   </div>
                   <select
@@ -222,7 +219,7 @@ export default function AdminSummary() {
 
               {category === "2" && (
                 <div className="col-md-3 col-sm-3 col-lg-3 sel-month">
-                  <div className="text-start mb-1" style={{ fontSize: "12px" }}>
+                  <div className="text-start mb-1" style={darkText}>
                     Month
                   </div>
                   <select
@@ -271,7 +268,7 @@ export default function AdminSummary() {
 
               {category === "1" && (
                 <div className="col-md-4 col-sm-4 col-lg-3 sel-month">
-                  <div className="text-start mb-1" style={{ fontSize: "12px" }}>
+                  <div className="text-start mb-1" style={darkText}>
                     Year
                   </div>
                   <select
@@ -285,19 +282,19 @@ export default function AdminSummary() {
                     </option>
                     {DFlag === "N"
                       ? nYears.map((list) => (
-                        <>
-                          <option key={list} value={list}>
-                            {list}
-                          </option>
-                        </>
-                      ))
+                          <>
+                            <option key={list} value={list}>
+                              {list}
+                            </option>
+                          </>
+                        ))
                       : eYears.map((list) => (
-                        <>
-                          <option key={list} value={list}>
-                            {list}
-                          </option>
-                        </>
-                      ))}
+                          <>
+                            <option key={list} value={list}>
+                              {list}
+                            </option>
+                          </>
+                        ))}
                   </select>
                 </div>
               )}
@@ -309,7 +306,7 @@ export default function AdminSummary() {
                   className=" text-center d-flex flex-column justify-content-center align-items-center"
                   style={{ margin: "10% auto", width: "120px" }}
                 >
-                  <p className="initial-msg">Please provide input!</p>
+                  <p className="initial-msg" style={darkText}>Please provide input!</p>
                 </div>
               )}
               {category === "1" && sYear && department && subDepartment && (

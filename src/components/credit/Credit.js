@@ -1,48 +1,41 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import "../../profile/profile.css";
+import "../profile/profile.css";
 import DataTable, { defaultThemes } from "react-data-table-component";
-import AuthContext from "../../context/auth-context";
+import AuthContext from "../context/auth-context";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import UpperbarContext from "../../context/upperbar-context";
-import CooperativeContext from "../organization/cooperativeState/CooperativeContext";
-import { ShowImgPreview } from "../../hooks/imagePreview";
-import CreditManagementContext from "../CreditManagementState/CreditManagementContext";
-import ApprovePop from "./ApprovePop";
-import RejectPop from "./RejectPop";
-import StaffContext from "../organization/staffState/StaffContext";
+import UpperbarContext from "../context/upperbar-context";
+import CooperativeContext from "../adminPanel/organization/cooperativeState/CooperativeContext";
+import { ShowImgPreview } from "../hooks/imagePreview";
+import CreditManagementContext from "../adminPanel/CreditManagementState/CreditManagementContext";
+import StaffContext from "../adminPanel/organization/staffState/StaffContext";
+import CreditPopup from "./CreditPopup";
+import { Fetchdata } from "../hooks/getData";
 
-export default function CreditManagement() {
+export default function Credit() {
   const { fiscalYear, todayDate, darkText } = useContext(UpperbarContext);
   const { customStyles } = useContext(StaffContext);
-
+  const [creditPopup, setCreditPopup] = useState(false);
+  const [creditEditPopup, setCreditEditPopup] = useState(false);
   const { reactURL, cooperativeList } = useContext(CooperativeContext);
-
+  const { User } = useContext(AuthContext);
   const [imgPrv, setImgPrv] = useState(false);
   const [imagePre, setImagePre] = useState("");
-
   const [reload, setReload] = useState(false);
 
-  const {
-    approvePopup,
-    handleApprove,
-    handleApproveTrue,
-    handleApproveFalse,
-    handleRejectFalse,
-    handleRejectTrue,
-    handleReject,
-    rejectPopup,
-    originalList,
-    setOriginalList,
-    chooseCooperative,
-    setChooseCooperative,
-    status,
-    setStatus,
-    creditList,
-    setCreditList,
-  } = useContext(CreditManagementContext);
-
   const searchInput = useRef("");
+
+  const initalvalue = {
+    creditAmt: "",
+    remark: "",
+  };
+  const [creditErrors, setCreditErrors] = useState({});
+  const [creditValues, setCreditValues] = useState(initalvalue);
+
+  const addCredit = () => {
+    setCreditPopup(true);
+    setCreditValues("");
+  };
 
   const handleCooperative = (e) => {
     const target = e.target;
@@ -150,6 +143,38 @@ export default function CreditManagement() {
     },
   ];
 
+  //API to hit Credit list
+  const [creditLst, setCreditLst] = useState([]);
+  const [chooseCooperative, setChooseCooperative] = useState("");
+  const [status, setStatus] = useState("");
+
+  useEffect(() => {
+    crList();
+  }, [chooseCooperative, status]);
+
+  const crList = () => {
+    const params = {
+      CoOperativeCode: chooseCooperative,
+      UserName: User.Username,
+      Flag: "s",
+      IsEncryptReq: "N",
+      TimeStamp: "2022-05-02T01:35:44.345",
+      FetchURL:
+        "https://testing.esnep.com/MblPayPanel/CoOperative/CreditManagement",
+    };
+
+    Fetchdata(params).then(function (result) {
+      if (result.statuS_CODE === "0") {
+        const postResult = result.creditLst ? result.creditLst : "";
+        setLoading(false);
+        setCreditLst(postResult);
+        console.log("result", postResult);
+      } else {
+        setCreditLst([]);
+      }
+    });
+  };
+
   const searchHandler = (e) => {
     e.preventDefault();
 
@@ -161,12 +186,12 @@ export default function CreditManagement() {
       });
 
       if (srchResult) {
-        setCreditList(srchResult);
+        setCreditLst(srchResult);
       } else {
-        setCreditList({});
+        setCreditLst({});
       }
     } else {
-      setCreditList(originalList);
+      setCreditLst(originalList);
     }
   };
 
@@ -186,15 +211,12 @@ export default function CreditManagement() {
             <div className="text-start  page-title" style={darkText}>
               Credit Management
             </div>
-
-            <div className="d-flex align-items-center">
-              <div className="page-date">
-                <div className="sec-content" style={darkText}>
-                  Today's Date : {todayDate} <span>|</span> Fiscal Year :{" "}
-                  {fiscalYear.StartDate}
-                  <span>-</span>
-                  {fiscalYear.EndDate}
-                </div>
+            <div className="page-date">
+              <div className="sec-content" style={darkText}>
+                Today's Date : {todayDate} <span>|</span> Fiscal Year :{" "}
+                {fiscalYear.StartDate}
+                <span>-</span>
+                {fiscalYear.EndDate}
               </div>
             </div>
           </div>
@@ -202,9 +224,24 @@ export default function CreditManagement() {
         </div>
         <>
           <div className="sec-dataTable">
+            <div className="upper-dataTbl">
+              <div className="btn-addlnote mb-3">
+                <button
+                  type="button"
+                  class="btn btn-sm"
+                  style={{
+                    background: "var(--button-color)",
+                    color: "white",
+                  }}
+                  onClick={addCredit}
+                >
+                  Add Credit
+                </button>
+              </div>
+            </div>
             <DataTable
               columns={columns}
-              data={creditList}
+              data={creditLst}
               customStyles={customStyles}
               pagination
               fixedHeader
@@ -294,7 +331,7 @@ export default function CreditManagement() {
           </div>
         </>
       </div>
-      {approvePopup.show && (
+      {/* {approvePopup.show && (
         <ApprovePop
           handleApproveTrue={handleApproveTrue}
           handleApproveFalse={handleApproveFalse}
@@ -306,13 +343,27 @@ export default function CreditManagement() {
           handleRejectTrue={handleRejectTrue}
           handleRejectFalse={handleRejectFalse}
         />
-      )}
+      )} */}
 
-      {imgPrv &&
+      {/* {imgPrv &&
         ShowImgPreview({
           img: imagePre,
           setTrigger: setImgPrv,
-        })}
+        })} */}
+
+      {creditPopup && (
+        <CreditPopup
+          reload={reload}
+          setReload={setReload}
+          setCreditPopup={setCreditPopup}
+          crList={crList}
+          creditValues={creditValues}
+          setCreditValues={setCreditValues}
+          creditErrors={creditErrors}
+          setCreditErrors={setCreditErrors}
+          chooseCooperative={chooseCooperative}
+        />
+      )}
     </>
   );
 }

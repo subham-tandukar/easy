@@ -45,7 +45,7 @@ export default function AddCustomerSupport({
     image: "",
   };
 
-  const { appURL } = useContext(UpperbarContext);
+  const { appURL, sidePanelBg } = useContext(UpperbarContext);
   const { User } = useContext(AuthContext);
   const [formValues, setFormValues] = useState(initalvalue);
   const [formErrors, setformErrors] = useState({});
@@ -75,11 +75,11 @@ export default function AddCustomerSupport({
 
   // function getCurrTime() {
   //   let date = new Date();
-  //   // 
+  //   //
   //   let cur_time = date.toTimeString().split(" ")[0];
   //   return cur_time;
   // }
-  // 
+  //
 
   // getCurrTime();
 
@@ -106,13 +106,10 @@ export default function AddCustomerSupport({
     };
 
     Fetchdata(dataForm).then(function (result) {
-
       if (result.StatusCode === 200) {
-
         const postResult = result.OrgList;
         setOrgList(postResult);
       } else {
-
       }
     });
   }, []);
@@ -130,7 +127,6 @@ export default function AddCustomerSupport({
     }
   }, [orgList]);
 
-
   useEffect(() => {
     const dataForm = {
       FetchURL: `${appURL}api/org-product?ComID=${User.CompanyId}&BranchID=${User.BranchId}`,
@@ -138,13 +134,10 @@ export default function AddCustomerSupport({
     };
 
     Fetchdata(dataForm).then(function (result) {
-
       if (result.StatusCode === 200) {
-
         const postResult = result.OrganizationProducts;
         setOrgPrdList(postResult);
       } else {
-
       }
     });
   }, []);
@@ -156,13 +149,10 @@ export default function AddCustomerSupport({
     };
 
     Fetchdata(dataForm).then(function (result) {
-
       if (result.StatusCode === 200) {
-
         const postResult = result.OrganizationStaffs;
         setOrgStaffList(postResult);
       } else {
-
       }
     });
   }, []);
@@ -241,8 +231,6 @@ export default function AddCustomerSupport({
 
   useEffect(() => {
     if (Object.keys(formErrors).length === 0 && isSubmit) {
-
-
       const dataForm = {
         ComID: User.CompanyId,
         UserID: User.UID,
@@ -268,12 +256,10 @@ export default function AddCustomerSupport({
         Type: "POST",
       };
 
-      // 
+      //
 
       Fetchdata(dataForm).then(function (result) {
-
         if (result.StatusCode === 200) {
-
           setReload(!reload);
           toast(result.Message, {
             style: {
@@ -300,7 +286,6 @@ export default function AddCustomerSupport({
   }, [formErrors]);
 
   const handleSelectOrg = (e) => {
-
     setSelectedOptions(e.label);
     setSelectedId(e.value);
     setTooltipData("");
@@ -310,7 +295,7 @@ export default function AddCustomerSupport({
   };
 
   const showTooltips = () => {
-    // 
+    //
     if (selectedOptions && selectedId && tooltipData.length <= 0) {
       let srchResult = orgList.filter((list) => {
         return list.OrgId == selectedId;
@@ -425,7 +410,7 @@ export default function AddCustomerSupport({
       />
       <div className="container addcspopup-wrapper">
         <div className="addcspopup-inner ">
-          <div className="popUpHeader ps-0 pe-0">
+          <div className="popUpHeader ps-0 pe-0" style={sidePanelBg}>
             <div className="popUpTitle">Add Customer Support</div>
             <div className="popUpClose">
               <img
@@ -538,8 +523,8 @@ export default function AddCustomerSupport({
                     value={formValues.issueDate}
                     onChange={handleIssueDate}
                     name="issueDate"
-                  // hideDefaultValue={true}
-                  // placeholder={"Select Issue Date"}
+                    // hideDefaultValue={true}
+                    // placeholder={"Select Issue Date"}
                   />
                 ) : (
                   <input

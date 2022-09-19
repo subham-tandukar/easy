@@ -10,9 +10,11 @@ import JobContext from "../jobState/JobContext";
 import { ToastContainer, toast } from "react-toastify";
 import DataTable from "react-data-table-component";
 import StaffContext from "../organization/staffState/StaffContext";
+import UpperbarContext from "../../context/upperbar-context";
 
 
 export default function ApplicantPopup() {
+    const { sidePanelBg } = useContext(UpperbarContext);
     const searchInput = useRef("");
     const { customStyles } = useContext(StaffContext)
 
@@ -156,7 +158,7 @@ export default function ApplicantPopup() {
             />
             <div className="container leavenotepopup-wrapper">
                 <div className="staffpopup-inner">
-                    <div className="popUpHeader ps-0 pe-0">
+                    <div className="popUpHeader ps-0 pe-0" style={sidePanelBg}>
                         <div className="popUpTitle">Applicant </div>
                         <div className="popUpClose">
                             <img

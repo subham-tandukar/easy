@@ -27,13 +27,13 @@ export default function AAddAttendance({
   };
 
   const { User } = useContext(AuthContext);
-  const { appURL } = useContext(UpperbarContext);
+  const { appURL, sidePanelBg, mainBg, darkText } = useContext(UpperbarContext);
   const [formValues, setFormValues] = useState(initalvalue);
   const [formErrors, setformErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
   const [fieldWork, setFieldWork] = useState(false);
 
-  // 
+  //
 
   const handleChange = (e) => {
     e.preventDefault();
@@ -53,9 +53,9 @@ export default function AAddAttendance({
     const nepDate = new NepaliDate(new Date(newss));
     var cm = nepDate.getMonth() + 1;
     var cd = nepDate.getDate() - 1;
-    // 
+    //
     let strDate = nepDate.getYear() + "-" + cm + "-" + cd;
-    // 
+    //
     return strDate;
   };
 
@@ -105,9 +105,6 @@ export default function AAddAttendance({
 
   useEffect(() => {
     if (Object.keys(formErrors).length === 0 && isSubmit) {
-
-
-
       const dataForm = {
         ComID: User.CompanyId,
         UserID: User.UID,
@@ -128,9 +125,7 @@ export default function AAddAttendance({
       };
 
       Fetchdata(dataForm).then(function (result) {
-
         if (result.StatusCode === 200) {
-
           setReload(!reload);
           toast(result.Message, {
             style: {
@@ -156,7 +151,7 @@ export default function AAddAttendance({
     }
   }, [formErrors]);
 
-  // 
+  //
 
   return (
     <>
@@ -169,8 +164,8 @@ export default function AAddAttendance({
         rtl={false}
       />
       <div className="container attpopup-wrapper">
-        <div className="attpopup-inner ">
-          <div className="popUpHeader ps-0 pe-0">
+        <div className="attpopup-inner " style={mainBg}>
+          <div className="popUpHeader ps-0 pe-0" style={sidePanelBg}>
             <div className="popUpTitle">Add Attendance</div>
             <div className="popUpClose">
               <img
@@ -184,7 +179,7 @@ export default function AAddAttendance({
           <div className="attpopupBody ps-3 pe-3">
             <div className="row text-start mt-2 ">
               <div className="col-md-6 col-sm-6 col-lg-6">
-                <div className="text-start mb-1" style={{ fontSize: "12px" }}>
+                <div className="text-start mb-1" style={darkText}>
                   Date
                 </div>
                 {DFlag === "N" ? (
@@ -215,7 +210,7 @@ export default function AAddAttendance({
                 )}
               </div>
               <div className="col-md-6 col-sm-6 col-lg-6">
-                <div className="text-start mb-1" style={{ fontSize: "12px" }}>
+                <div className="text-start mb-1" style={darkText}>
                   Time
                 </div>
                 <input
@@ -233,7 +228,7 @@ export default function AAddAttendance({
 
             <div className="row text-start ">
               <div className="form-group">
-                <label style={{ fontSize: "12px" }}>Status</label>
+                <label style={darkText}>Status</label>
                 <select
                   class="form-select form-select-sm"
                   aria-label="Default select example"
@@ -255,7 +250,7 @@ export default function AAddAttendance({
 
             <div className="row text-start mt-1">
               <div className="form-group">
-                <div class="form-check" style={{ fontSize: "12px" }}>
+                <div class="form-check" style={darkText}>
                   <input
                     class="form-check-input"
                     type="checkbox"

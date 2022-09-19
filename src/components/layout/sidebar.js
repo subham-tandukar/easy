@@ -25,9 +25,9 @@ import UpperbarContext from "../context/upperbar-context";
 import { ShowLogoutPopup } from "../settings/logoutPopup";
 import ChangePassword from "../settings/changePassword";
 import $ from "jquery";
+import UsewindowDimension from "../hooks/UsewindowDimension";
 
 export default function Sidebar({
-  windowWidth,
   sidebarController,
   setSidebarController,
   userDetails,
@@ -50,8 +50,9 @@ export default function Sidebar({
 
   let navigate = useNavigate();
 
+  const { width } = UsewindowDimension();
   const handleMenuChange = () => {
-    if (windowWidth < 960) {
+    if (width < 960) {
       setSideMenu(!sideMenu);
     } else {
       setSideMenu(sideMenu);
@@ -107,6 +108,15 @@ export default function Sidebar({
   const handleMouseOver = () => {
     setHide(false);
     setPadding(false);
+    if (mode === "light") {
+      $(".page-title").css({ color: "#656565" });
+      $(".page-date").css({ color: "#656565" });
+      $(".title-hr").css({ color: "#656565" });
+    } else {
+      $(".page-title").css({ color: "#fff" });
+      $(".page-date").css({ color: "#fff" });
+      $(".title-hr").css({ color: "#fff" });
+    }
   };
   const handleMouseLeave = () => {
     setHide(!hide);
@@ -437,17 +447,6 @@ export default function Sidebar({
                 )}
 
                 <MenuItem
-                  icon={<MdPerson size={18} />}
-                  className="arrow"
-                  activeclassname={classes.active}
-                  onMouseOverCapture={handlePadding}
-                  onClick={handleMenuChange}
-                >
-                  Profile
-                  <NavLink to="profile" />
-                </MenuItem>
-
-                <MenuItem
                   activeclassname={classes.active}
                   className="arrow "
                   onMouseOverCapture={handlePadding}
@@ -552,16 +551,18 @@ export default function Sidebar({
                   <NavLink to="customer-support"></NavLink>
                 </MenuItem>
 
-                {/* <MenuItem
-                  activeclassname={classes.active}
-                  className="arrow "
-                  onMouseOverCapture={handlePadding}
-                  onClick={handleMenuChange}
-                  icon={<MdNotificationsNone size={18} />}
-                >
-                  Notification
-                  <NavLink to="notification"></NavLink>
-                </MenuItem> */}
+                {userDetails.IsManager !== 0 && (
+                  <MenuItem
+                    activeclassname={classes.active}
+                    className="arrow "
+                    onMouseOverCapture={handlePadding}
+                    onClick={handleMenuChange}
+                    icon={<MdNotificationsNone size={18} />}
+                  >
+                    Notification
+                    <NavLink to="notification"></NavLink>
+                  </MenuItem>
+                )}
 
                 <MenuItem
                   activeclassname={classes.active}
@@ -585,17 +586,31 @@ export default function Sidebar({
                   <NavLink to="user-activity"></NavLink>
                 </MenuItem>
 
+                {/*  */}
+
+                <MenuItem
+                  icon={<MdPerson size={18} />}
+                  className="arrow"
+                  activeclassname={classes.active}
+                  onMouseOverCapture={handlePadding}
+                  onClick={handleMenuChange}
+                >
+                  Credit Management
+                  <NavLink to="/credit" />
+                </MenuItem>
+
+                {/*  */}
+
                 <SubMenu title="Setting" icon={<AiOutlineSetting size={18} />}>
                   <MenuItem
+                    icon={<MdPerson size={18} />}
+                    className="arrow"
                     activeclassname={classes.active}
-                    className="arrow "
-                    //  onMouseOverCapture={handlePadding}
-                    // onClick={handleMenuChange}
-                    //
+                    onMouseOverCapture={handlePadding}
+                    onClick={handleMenuChange}
                   >
-                    <div onClick={changePopup} style={{ color: "#555" }}>
-                      Change Password
-                    </div>
+                    Profile
+                    <NavLink to="profile" />
                   </MenuItem>
                   <MenuItem
                     activeclassname={classes.active}
@@ -604,9 +619,16 @@ export default function Sidebar({
                     // onClick={handleMenuChange}
                     //
                   >
-                    <div onClick={showAlert} style={{ color: "#555" }}>
-                      Logout
-                    </div>
+                    <div onClick={changePopup}>Change Password</div>
+                  </MenuItem>
+                  <MenuItem
+                    activeclassname={classes.active}
+                    className="arrow "
+                    //  onMouseOverCapture={handlePadding}
+                    // onClick={handleMenuChange}
+                    //
+                  >
+                    <div onClick={showAlert}>Logout</div>
                   </MenuItem>
                 </SubMenu>
               </Menu>

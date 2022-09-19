@@ -25,14 +25,14 @@ export default function AttendancePopup({
     time: "",
     status: "",
   };
-  const { appURL } = useContext(UpperbarContext);
+  const { appURL, sidePanelBg } = useContext(UpperbarContext);
   const { User } = useContext(AuthContext);
   const [formValues, setFormValues] = useState(initalvalue);
   const [formErrors, setformErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
   const [fieldWork, setFieldWork] = useState(false);
 
-  // 
+  //
 
   const handleChange = (e) => {
     e.preventDefault();
@@ -52,9 +52,9 @@ export default function AttendancePopup({
     const nepDate = new NepaliDate(new Date(newss));
     var cm = nepDate.getMonth() + 1;
     var cd = nepDate.getDate() - 1;
-    // 
+    //
     let strDate = nepDate.getYear() + "-" + cm + "-" + cd;
-    // 
+    //
     return strDate;
   };
 
@@ -104,9 +104,6 @@ export default function AttendancePopup({
 
   useEffect(() => {
     if (Object.keys(formErrors).length === 0 && isSubmit) {
-
-
-
       const dataForm = {
         // ComID: User.CompanyId,
         // UserID: User.UID,
@@ -140,9 +137,7 @@ export default function AttendancePopup({
       };
 
       Fetchdata(dataForm).then(function (result) {
-
         if (result.StatusCode === 200) {
-
           setReload(!reload);
           toast(result.Message, {
             style: {
@@ -168,7 +163,7 @@ export default function AttendancePopup({
     }
   }, [formErrors]);
 
-  // 
+  //
 
   return (
     <>
@@ -182,7 +177,7 @@ export default function AttendancePopup({
       />
       <div className="container attpopup-wrapper">
         <div className="attpopup-inner ">
-          <div className="popUpHeader ps-0 pe-0">
+          <div className="popUpHeader ps-0 pe-0" style={sidePanelBg}>
             <div className="popUpTitle">Add Attendance</div>
             <div className="popUpClose">
               <img

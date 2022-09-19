@@ -5,7 +5,8 @@ import { ToastContainer, toast } from "react-toastify";
 import AuthContext from "../../../context/auth-context";
 import UpperbarContext from "../../../context/upperbar-context";
 import { defaultThemes } from "react-data-table-component";
-
+// import { getBoundingClientObj } from "react-select/dist/declarations/src/utils";
+import { GetEnglishDate } from "../../../hooks/dateConvertor";
 function StaffState(props) {
   const { User } = useContext(AuthContext);
   const { appURL } = useContext(UpperbarContext);
@@ -26,7 +27,216 @@ function StaffState(props) {
 
   const [loading, setLoading] = useState(false);
 
+  // for notification starts
+
+  const initialvalue = {
+    all: "",
+    department: "",
+    subDepartment: "",
+    staff: "",
+    designation: "",
+    title: "",
+    description: "",
+    actionButton: "",
+    actionUrl: "",
+    pubDate: "",
+  };
+
+  const [notificationErrors, setNotificationErrors] = useState({});
+  const [notificationValues, setNotificationValues] = useState(initialvalue);
+  const [notificationPopup, setNotificationPopup] = useState(false);
+
   const [notificationList, setNotificationList] = useState([]);
+  const [DFlag, setDFlag] = useState("N");
+  const [notifyOriginalList, setNotifyOriginalList] = useState(null);
+
+  const [chooseNotifyDepartment, setChooseNotifyDepartment] = useState("");
+  const [chooseNotifySubDepartment, setChooseNotifySubDepartment] =
+    useState("");
+  const [chooseNotifyDesignation, setChooseNotifyDesignation] = useState("");
+  const [chooseNotifyFlag, setChooseNotifyFlag] = useState("");
+
+  useEffect(() => {
+    notifyList();
+  }, [
+    chooseNotifyDepartment,
+    chooseNotifySubDepartment,
+    chooseNotifyDesignation,
+    chooseNotifyFlag,
+  ]);
+
+  const notifyList = () => {
+    const params = {
+      ComID: User.CompanyId,
+      StaffID: User.UID,
+      Flag: "S",
+      NFlag: chooseNotifyFlag,
+      UserID: User.UID,
+      DepartmentID: chooseNotifyDepartment,
+      SubDepartmentID: chooseNotifySubDepartment,
+      DesignationID: chooseNotifyDesignation,
+      BranchID: User.BranchId,
+      Status: "-1",
+      FetchURL: `${appURL}api/admin/notification`,
+      Type: "POST",
+    };
+
+    Fetchdata(params).then(function (resp) {
+      console.log("res", resp);
+      if (resp.StatusCode === 200) {
+        const postResult = resp.NotificationList ? resp.NotificationList : "";
+        setLoading(false);
+        setNotificationList(postResult);
+        setNotifyOriginalList(postResult);
+        console.log("result", postResult);
+      } else {
+        setNotificationList([]);
+        setLoading(false);
+      }
+    });
+  };
+
+  // sessionStorage.setItem("NotificationList", JSON.stringify(notificationList));
+  // console.log("notify", notificationList);
+
+  const [perID, setPerId] = useState();
+  const [editPopup, setEditPopup] = useState(false);
+  const handleEdit = (data) => {
+    setPerId(data.NotificationID);
+    setNotificationValues({
+      title: data.Title,
+      all: data.NFlag,
+      department: data.DepartmentID,
+      subDepartment: data.SubDepartmentID,
+      designation: data.DesignationID,
+      description: data.Description,
+      actionButton: data.AcBtn,
+      actionUrl: data.AcUrl,
+      pubDate: data.PublishedDate,
+    });
+    setImage(data.Image);
+    setEditPopup(true);
+    console.log(perID);
+  };
+
+  // to edit notification
+  const editdata = () => {
+    const dataForm = {
+      ComID: User.CompanyId,
+      StaffID: User.UID,
+      Flag: "U",
+      NFlag: notificationValues.all !== " " ? notificationValues.all : " ",
+      UserID: User.UID,
+      NotificationID: perID,
+      Title: notificationValues.title !== " " ? notificationValues.title : " ",
+      Description:
+        notificationValues.description !== " "
+          ? notificationValues.description
+          : " ",
+      Image: image !== null ? image.split(",")[1] : "",
+      AcBtn:
+        notificationValues.actionButton !== " "
+          ? notificationValues.actionButton
+          : " ",
+      AcUrl:
+        notificationValues.actionUrl !== " "
+          ? notificationValues.actionUrl
+          : " ",
+      PublishedDate:
+        DFlag === "N"
+          ? GetEnglishDate(notificationValues.pubDate)
+          : notificationValues.pubDate,
+
+      DepartmentID:
+        notificationValues.department !== " "
+          ? notificationValues.department
+          : " ",
+      SubDepartmentID:
+        notificationValues.subDepartment !== " "
+          ? notificationValues.subDepartment
+          : " ",
+      DesignationID:
+        notificationValues.designation !== " "
+          ? notificationValues.designation
+          : " ",
+      BranchID: User.BranchId,
+      FiscalID: User.FiscalId,
+      FetchURL: `${appURL}api/admin/notification`,
+      Type: "POST",
+    };
+    Fetchdata(dataForm).then(function (resp) {
+      console.log("data", resp);
+      if (resp.StatusCode === 200) {
+        setEditPopup(false);
+        notifyList();
+        toast(resp.Message, {
+          style: {
+            color: "green",
+            fontSize: "13px",
+          },
+        });
+      } else {
+        toast("Error: " + resp.Message, {
+          style: {
+            color: "red",
+            fontSize: "13px",
+          },
+        });
+      }
+    });
+  };
+
+  // to hit notification status
+  const stat = [];
+  const [newStatus, setNewStatus] = useState(stat);
+
+  const deactivateNotify = (ID, IsActive) => {
+    const dataForm = {
+      ComID: User.CompanyId,
+      StaffID: User.UID,
+      NotificationID: ID,
+      Flag: "US",
+      Status: IsActive,
+      BranchID: User.BranchId,
+      FiscalID: User.FiscalId,
+      FetchURL: `${appURL}api/admin/notification`,
+      Type: "POST",
+    };
+    if (IsActive === 1) {
+      dataForm.Status = 0;
+    } else {
+      dataForm.Status = 1;
+    }
+    Fetchdata(dataForm).then(function (result) {
+      if (result.StatusCode === 200) {
+        notifyList();
+        let statsN = JSON.parse(JSON.stringify(newStatus));
+        let pitchStatus;
+
+        if (dataForm.Status === 1) {
+          pitchStatus = "Activated";
+        } else if (dataForm.Status === 0) {
+          pitchStatus = "Deactivated";
+        }
+        setNewStatus(statsN);
+        toast(result.Message, {
+          style: {
+            color: "green",
+            fontSize: "13px",
+          },
+        });
+      } else {
+        toast("Error: " + result.Message, {
+          style: {
+            color: "red",
+            fontSize: "13px",
+          },
+        });
+      }
+    });
+  };
+
+  // for notification ends
 
   const staffValue = {
     firstName: "",
@@ -488,6 +698,32 @@ function StaffState(props) {
         customStylesForImage,
         notificationList,
         setNotificationList,
+        notificationValues,
+        setNotificationValues,
+        notificationErrors,
+        setNotificationErrors,
+        notificationPopup,
+        setNotificationPopup,
+        notifyList,
+        handleEdit,
+        DFlag,
+        setDFlag,
+        editdata,
+        setEditPopup,
+        editPopup,
+        deactivateNotify,
+        chooseNotifyDepartment,
+        chooseNotifySubDepartment,
+        chooseNotifyDesignation,
+        chooseNotifyFlag,
+        setChooseNotifyDepartment,
+        setChooseNotifyDesignation,
+        setChooseNotifyFlag,
+        setChooseNotifySubDepartment,
+        notifyOriginalList,
+        // fetchNotification,
+        // image1,
+        // setImage1,
       }}
     >
       {props.children}

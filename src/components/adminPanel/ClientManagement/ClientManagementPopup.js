@@ -8,42 +8,38 @@ import "../organization/staff/Staff.css";
 import "react-toastify/dist/ReactToastify.css";
 import ClientManagementContext from "../clientManagementState/ClientManagementContext";
 import ClientManagementForm from "./ClientManagementForm";
-
-
+import UpperbarContext from "../../context/upperbar-context";
 
 export default function ClientManagementPopup() {
+  const { sidePanelBg } = useContext(UpperbarContext);
 
-    const {
+  const { setPopup, setCollectorFormError } = useContext(
+    ClientManagementContext
+  );
 
-        setPopup,
-        setCollectorFormError,
+  const closePopUp = (e) => {
+    setPopup(false);
+    setCollectorFormError({});
+  };
 
-    } = useContext(ClientManagementContext);
-
-    const closePopUp = (e) => {
-        setPopup(false);
-        setCollectorFormError({});
-    };
-
-
-    return (
-        <>
-            <div className="container leavenotepopup-wrapper">
-                <div className="collectorpopup-inner ">
-                    <div className="popUpHeader ps-0 pe-0">
-                        <div className="popUpTitle">Client Management </div>
-                        <div className="popUpClose">
-                            <img
-                                className="popUpCloseIcon"
-                                src={CloseIcon}
-                                alt="CloseIcon"
-                                onClick={closePopUp}
-                            />
-                        </div>
-                    </div>
-                    <ClientManagementForm />
-                </div>
+  return (
+    <>
+      <div className="container leavenotepopup-wrapper">
+        <div className="collectorpopup-inner ">
+          <div className="popUpHeader ps-0 pe-0" style={sidePanelBg}>
+            <div className="popUpTitle">Client Management </div>
+            <div className="popUpClose">
+              <img
+                className="popUpCloseIcon"
+                src={CloseIcon}
+                alt="CloseIcon"
+                onClick={closePopUp}
+              />
             </div>
-        </>
-    );
+          </div>
+          <ClientManagementForm />
+        </div>
+      </div>
+    </>
+  );
 }

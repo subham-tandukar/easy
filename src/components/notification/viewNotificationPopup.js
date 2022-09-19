@@ -1,22 +1,23 @@
 import React, { useContext, useEffect, useState } from "react";
 import "./viewNotificationPopup.css";
 import CloseIcon from "../../images/CloseIcon.svg";
+import UpperbarContext from "../context/upperbar-context";
 
 export default function ViewNotificationPopup({
   notification,
   setViewPopup,
   DFlag,
 }) {
+  const { sidePanelBg } = useContext(UpperbarContext);
   const closePopUp = (e) => {
     setViewPopup(false);
   };
-
 
   return (
     <>
       <div className="container viewNotifyPopup-wrapper">
         <div className="viewNotifyPopup-inner ">
-          <div className="popUpHeader ps-0 pe-0">
+          <div className="popUpHeader ps-0 pe-0" style={sidePanelBg}>
             <div className="popUpTitle">View</div>
             <div className="popUpClose">
               <img

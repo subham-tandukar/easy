@@ -37,7 +37,7 @@ export const UpperbarContextProvider = (props) => {
   const darkBg = { background: mode === "light" ? "#fff" : "#040412" };
   const darkBg2 = { background: mode === "light" ? "#e6edf7" : "#0b0b45" };
   const sidePanelBg = { background: mode === "light" ? "#004aad" : "#0b0b45" };
-  const mainBg = { background: mode === "light" ? "#fff" : "#040423" };
+  const mainBg = { background: mode === "light" ? "#f8f9fb" : "#040423" };
   const [reload, setReload] = useState();
   const toggletheme = () => {
     if (mode === "light") {
@@ -49,9 +49,13 @@ export const UpperbarContextProvider = (props) => {
     }
   };
 
+  const [userDetails, setUserDetails] = useState("");
+
   return (
     <UpperbarContext.Provider
       value={{
+        userDetails,
+        setUserDetails,
         logoutDropdown,
         setLogoutDropdown,
         logoutAlert,

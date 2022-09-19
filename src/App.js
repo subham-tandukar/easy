@@ -15,7 +15,7 @@ import NoMatchPage from "./components/pageNoFound";
 import UserActivity from "./components/user/userActivity";
 import FollowUp from "./components/followUp/followUp";
 import CustomerSupport from "./components/customerSupport/customerSupport";
-import Dashboard from "./components/dashboard/Dashboard"
+import Dashboard from "./components/dashboard/Dashboard";
 
 // adminpanel
 import AAttendanceReport from "./components/adminPanel/attendance/attendanceReport";
@@ -43,7 +43,7 @@ import CommissionState from "./components/adminPanel/commissionState/CommissionS
 import Commission from "./components/adminPanel/commission/Commission";
 import Report from "./components/adminPanel/report/Report";
 import PrivacyPolicy from "./components/PrivacyPolicy";
-import { useLocation } from 'react-router-dom';
+import { useLocation } from "react-router-dom";
 import SliderState from "./components/adminPanel/sliderState/SliderState";
 import Slider from "./components/adminPanel/slider/Slider";
 import CooperativeSummary from "./components/adminPanel/CooperativeSummary/CooperativeSummary";
@@ -55,14 +55,15 @@ import CreditManagementState from "./components/adminPanel/CreditManagementState
 import JobState from "./components/adminPanel/jobState/JobState";
 import Job from "./components/adminPanel/job/Job";
 import Complain from "./components/Complain";
+import Credit from "./components/credit/Credit";
+import StaffContext from "./components/adminPanel/organization/staffState/StaffContext";
+import UserNotification from "./components/notification/UserNotification";
 
 function App() {
   const { User } = useContext(AuthContext);
   const main_color = "#0049ae";
 
-
-
-  // 
+  //
   useEffect(() => {
     document.documentElement.style.setProperty("--main-color", main_color);
   }, []);
@@ -74,13 +75,10 @@ function App() {
         {User && <Route path="/login" element={<Navigate to="/" />} />}
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/complain" element={<Complain />} />
-
-
       </Routes>
       <div className="App">
         {User && (
           <>
-
             <Layout>
               <StaffState>
                 <JobState>
@@ -92,57 +90,147 @@ function App() {
                             <HamiChhimekiState>
                               <Routes>
                                 <Route index path="/" element={<Dashboard />} />
-                                <Route path="profile" element={<Profile/>} />
-                                <Route path="notification" element={<Notification />} />
-                                <Route path="attendance-summary" element={<Summary />} />
+                                <Route path="profile" element={<Profile />} />
+                                <Route
+                                  path="notification"
+                                  element={<Notification />}
+                                />
+                                <Route
+                                  path="user-notification"
+                                  element={<UserNotification />}
+                                />
+                                <Route
+                                  path="attendance-summary"
+                                  element={<Summary />}
+                                />
                                 <Route
                                   path="report-attendance"
                                   element={<ReportAttendance />}
                                 />
                                 <Route path="holiday" element={<Holiday />} />
-                                <Route path="organization" element={<Organization />} />
+                                <Route
+                                  path="organization"
+                                  element={<Organization />}
+                                />
                                 <Route path="followup" element={<FollowUp />} />
-                                <Route path="leave-note" element={<LeaveNoteList />} />
-                                <Route path="user-activity" element={<UserActivity />} />
-                                <Route path="customer-support" element={<CustomerSupport />} />
+                                <Route
+                                  path="leave-note"
+                                  element={<LeaveNoteList />}
+                                />
+                                <Route
+                                  path="user-activity"
+                                  element={<UserActivity />}
+                                />
+                                <Route
+                                  path="customer-support"
+                                  element={<CustomerSupport />}
+                                />
+                                <Route path="credit" element={<Credit />} />
 
                                 {/* Admin routes */}
                                 <Route
                                   path="admin-attendance"
                                   element={<AAttendanceReport />}
                                 />
-                                <Route path="admin-summary" element={<AdminSummary />} />
-                                <Route path="/admin-department" element={<Department />} />
+                                <Route
+                                  path="admin-summary"
+                                  element={<AdminSummary />}
+                                />
+                                <Route
+                                  path="/admin-department"
+                                  element={<Department />}
+                                />
                                 <Route
                                   path="/admin-subdepartment"
                                   element={<Subdepartment />}
                                 />
-                                <Route path="/admin-designation" element={<Designation />} />
-                                <Route path="/admin-product" element={<Product />} />
-                                <Route path="/admin-shift" element={<Shift />} />
-                                <Route path="/admin-staff" element={<Staff />} />
-                                <Route path="/admin-holiday" element={<AdminHoliday />} />
-                                <Route path="/admin-branch" element={<Branch />} />
-                                <Route path="/admin-fiscal" element={<Fiscal />} />
+                                <Route
+                                  path="/admin-designation"
+                                  element={<Designation />}
+                                />
+                                <Route
+                                  path="/admin-product"
+                                  element={<Product />}
+                                />
+                                <Route
+                                  path="/admin-shift"
+                                  element={<Shift />}
+                                />
+                                <Route
+                                  path="/admin-staff"
+                                  element={<Staff />}
+                                />
+                                <Route
+                                  path="/admin-holiday"
+                                  element={<AdminHoliday />}
+                                />
+                                <Route
+                                  path="/admin-branch"
+                                  element={<Branch />}
+                                />
+                                <Route
+                                  path="/admin-fiscal"
+                                  element={<Fiscal />}
+                                />
                                 <Route path="/admin-bank" element={<Bank />} />
-                                <Route path="/admin-document" element={<Document />} />
-                                <Route path="/admin-leave-type" element={<Leave />} />
-                                <Route path="/admin-follow-type" element={<FollowType />} />
-                                <Route path="/admin-cooperative" element={<Cooperative />} />
-                                <Route path="/admin-hamichhimeki" element={<Chhimeki />} />
-                                <Route path="/admin-commission" element={<Commission />} />
-                                <Route path="/admin-report" element={<Report />} />
-                                <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+                                <Route
+                                  path="/admin-document"
+                                  element={<Document />}
+                                />
+                                <Route
+                                  path="/admin-leave-type"
+                                  element={<Leave />}
+                                />
+                                <Route
+                                  path="/admin-follow-type"
+                                  element={<FollowType />}
+                                />
+                                <Route
+                                  path="/admin-cooperative"
+                                  element={<Cooperative />}
+                                />
+                                <Route
+                                  path="/admin-hamichhimeki"
+                                  element={<Chhimeki />}
+                                />
+                                <Route
+                                  path="/admin-commission"
+                                  element={<Commission />}
+                                />
+                                <Route
+                                  path="/admin-report"
+                                  element={<Report />}
+                                />
+                                <Route
+                                  path="/privacy-policy"
+                                  element={<PrivacyPolicy />}
+                                />
                                 <Route path="/slider" element={<Slider />} />
-                                <Route path="/coop-summary" element={<CooperativeSummary />} />
-                                <Route path="/credit-management" element={<CreditManagement />} />
-                                <Route path="/client-management" element={<ClientManagement />} />
+                                <Route
+                                  path="/coop-summary"
+                                  element={<CooperativeSummary />}
+                                />
+                                <Route
+                                  path="/credit-management"
+                                  element={<CreditManagement />}
+                                />
+                                <Route
+                                  path="/client-management"
+                                  element={<ClientManagement />}
+                                />
                                 <Route path="/job" element={<Job />} />
 
-
-                                {User.UserID === "ES01" || User.UserID === "ES02" || User.UserID === "ES04" || User.UserID === "ES15" ?
-                                  <Route path="/lead-list" element={<MainLead />} />
-                                  : <></>}
+                                {User.UserID === "ES01" ||
+                                User.UserID === "ES02" ||
+                                User.UserID === "ES04" ||
+                                User.UserID === "ES15" ? (
+                                  <Route
+                                    path="/lead-list"
+                                    element={<MainLead />}
+                                  />
+                                ) : (
+                                  <></>
+                                )}
 
                                 <Route
                                   path="/admin-job-information"

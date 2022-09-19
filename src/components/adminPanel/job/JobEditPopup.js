@@ -9,10 +9,12 @@ import "react-toastify/dist/ReactToastify.css";
 import JobContext from "../jobState/JobContext";
 import JobForm from "./JobForm";
 import JobEditForm from "./JobEditForm";
+import UpperbarContext from "../../context/upperbar-context";
 
 
 
 export default function JobEditPopup() {
+    const { sidePanelBg } = useContext(UpperbarContext);
 
     const {
 
@@ -39,7 +41,7 @@ export default function JobEditPopup() {
         <>
             <div className="container leavenotepopup-wrapper">
                 <div className="staffpopup-inner ">
-                    <div className="popUpHeader ps-0 pe-0">
+                    <div className="popUpHeader ps-0 pe-0" style={sidePanelBg}>
                         <div className="popUpTitle">Job Edit </div>
                         <div className="popUpClose">
                             <img

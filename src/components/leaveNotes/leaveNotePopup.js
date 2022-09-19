@@ -24,7 +24,7 @@ export default function LeaveNotePopup({
     assignedStaff: "",
   };
 
-  const { appURL } = useContext(UpperbarContext);
+  const { appURL, sidePanelBg } = useContext(UpperbarContext);
   const { User } = useContext(AuthContext);
   const [formValues, setFormValues] = useState(initalvalue);
   const [formErrors, setformErrors] = useState({});
@@ -49,9 +49,9 @@ export default function LeaveNotePopup({
     var cm = nepDate.getMonth() + 1;
 
     var cd = nepDate.getDate() - 1;
-    // 
+    //
     let strDate = nepDate.getYear() + "-" + cm + "-" + cd;
-    // 
+    //
     return strDate;
   };
 
@@ -75,7 +75,7 @@ export default function LeaveNotePopup({
     setToDate(bsDate);
   };
 
-  // 
+  //
 
   const handleChange = (e) => {
     e.preventDefault();
@@ -106,13 +106,10 @@ export default function LeaveNotePopup({
     };
 
     Fetchdata(dataForm).then(function (result) {
-
       if (result.StatusCode === 200) {
-
         const postResult = result.LeaveList;
         setLeaveTList(postResult);
       } else {
-
       }
     });
   }, []);
@@ -124,13 +121,10 @@ export default function LeaveNotePopup({
     };
 
     Fetchdata(dataForm).then(function (result) {
-
       if (result.StatusCode === 200) {
-
         const postResult = result.OrganizationStaffs;
         setOrgStaffList(postResult);
       } else {
-
       }
     });
   }, []);
@@ -173,11 +167,6 @@ export default function LeaveNotePopup({
 
   useEffect(() => {
     if (Object.keys(formErrors).length === 0 && isSubmit) {
-
-
-
-
-
       const dataForm = {
         ComID: User.CompanyId,
         UserID: User.UID,
@@ -197,9 +186,7 @@ export default function LeaveNotePopup({
       };
 
       Fetchdata(dataForm).then(function (result) {
-
         if (result.StatusCode === 200) {
-
           setReload(!reload);
           setLeaveNotePopup(false);
         } else {
@@ -219,7 +206,7 @@ export default function LeaveNotePopup({
     }
   }, [formErrors]);
 
-  // 
+  //
   return (
     <>
       <ToastContainer
@@ -231,8 +218,8 @@ export default function LeaveNotePopup({
         rtl={false}
       />
       <div className="container leavenotepopup-wrapper">
-        <div className="leavenotepopup-inner ">
-          <div className="popUpHeader ps-0 pe-0">
+        <div className="leavenotepopup-inner">
+          <div className="popUpHeader ps-0 pe-0" style={sidePanelBg}>
             <div className="popUpTitle">Leave Note</div>
             <div className="popUpClose">
               <img

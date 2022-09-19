@@ -33,7 +33,7 @@ export default function AddFollowUp({ setAddPopup, reload, setReload, DFlag }) {
     quote: "",
   };
 
-  const { appURL } = useContext(UpperbarContext);
+  const { appURL, sidePanelBg } = useContext(UpperbarContext);
   const { User } = useContext(AuthContext);
   const [formValues, setFormValues] = useState(initalvalue);
   const [formErrors, setformErrors] = useState({});
@@ -49,7 +49,7 @@ export default function AddFollowUp({ setAddPopup, reload, setReload, DFlag }) {
   const [tooltipData, setTooltipData] = useState("");
   const [showPopOver, setShowPopOver] = useState(false);
 
-  // 
+  //
 
   const handleChange = (e) => {
     e.preventDefault();
@@ -74,13 +74,10 @@ export default function AddFollowUp({ setAddPopup, reload, setReload, DFlag }) {
     };
 
     Fetchdata(dataForm).then(function (result) {
-
       if (result.StatusCode === 200) {
-
         const postResult = result.OrganizationProducts;
         setOrgPrdList(postResult);
       } else {
-
       }
     });
   }, []);
@@ -92,13 +89,10 @@ export default function AddFollowUp({ setAddPopup, reload, setReload, DFlag }) {
     };
 
     Fetchdata(dataForm).then(function (result) {
-
       if (result.StatusCode === 200) {
-
         const postResult = result.OrgList;
         setOrgList(postResult);
       } else {
-
       }
     });
   }, []);
@@ -116,8 +110,6 @@ export default function AddFollowUp({ setAddPopup, reload, setReload, DFlag }) {
     }
   }, [orgList]);
 
-
-
   useEffect(() => {
     const dataForm = {
       FetchURL: `${appURL}api/follow-type?ComID=${User.CompanyId}&BranchID=${User.BranchId}`,
@@ -125,13 +117,10 @@ export default function AddFollowUp({ setAddPopup, reload, setReload, DFlag }) {
     };
 
     Fetchdata(dataForm).then(function (result) {
-
       if (result.StatusCode === 200) {
-
         const postResult = result.FollowupType;
         setFollowTList(postResult);
       } else {
-
       }
     });
   }, []);
@@ -143,13 +132,10 @@ export default function AddFollowUp({ setAddPopup, reload, setReload, DFlag }) {
     };
 
     Fetchdata(dataForm).then(function (result) {
-
       if (result.StatusCode === 200) {
-
         const postResult = result.OrganizationStaffs;
         setOrgStaffList(postResult);
       } else {
-
       }
     });
   }, []);
@@ -209,7 +195,6 @@ export default function AddFollowUp({ setAddPopup, reload, setReload, DFlag }) {
   };
 
   const handleSelectOrg = (e) => {
-
     setSelectedOptions(e.label);
     setSelectedId(e.value);
     setTooltipData("");
@@ -220,8 +205,6 @@ export default function AddFollowUp({ setAddPopup, reload, setReload, DFlag }) {
 
   useEffect(() => {
     if (Object.keys(formErrors).length === 0 && isSubmit) {
-
-
       const dataForm = {
         ComID: User.CompanyId,
         UserID: User.UID,
@@ -244,12 +227,8 @@ export default function AddFollowUp({ setAddPopup, reload, setReload, DFlag }) {
         Type: "POST",
       };
 
-
-
       Fetchdata(dataForm).then(function (result) {
-
         if (result.StatusCode === 200) {
-
           setReload(!reload);
           toast(result.Message, {
             style: {
@@ -364,7 +343,7 @@ export default function AddFollowUp({ setAddPopup, reload, setReload, DFlag }) {
   };
 
   const showTooltips = () => {
-    // 
+    //
     if (selectedOptions && selectedId && tooltipData.length <= 0) {
       let srchResult = orgList.filter((list) => {
         return list.OrgId == selectedId;
@@ -391,7 +370,7 @@ export default function AddFollowUp({ setAddPopup, reload, setReload, DFlag }) {
       />
       <div className="container addfollowpopup-wrapper">
         <div className="addfollowpopup-inner ">
-          <div className="popUpHeader ps-0 pe-0">
+          <div className="popUpHeader ps-0 pe-0" style={sidePanelBg}>
             <div className="popUpTitle">Add FollowUp</div>
             <div className="popUpClose">
               <img

@@ -12,10 +12,10 @@ import ConfirmPopup from "../hooks/confirmPopup";
 import UpperbarContext from "../context/upperbar-context";
 import { GetEnglishDate, GetNepaliDate } from "../hooks/dateConvertor";
 import StaffContext from "../adminPanel/organization/staffState/StaffContext";
+import ViewLeaveNote from "./ViewLeaveNote";
 
 export default function LeaveNoteList() {
-
-  const { customStyles } = useContext(StaffContext)
+  const { customStyles } = useContext(StaffContext);
 
   const [loading, setLoading] = useState(true);
   const [leavelist, setLeaveList] = useState([]);
@@ -25,9 +25,11 @@ export default function LeaveNoteList() {
   const [DFlag, setDFlag] = useState("N");
   const searchInput = useRef("");
   const [confirmPopup, setConfirmPopup] = useState(false);
+  const [viewPopup, setViewPopup] = useState(false);
   const [selected_note, setSelectedNote] = useState("");
   const { User } = useContext(AuthContext);
-  const { fiscalYear, todayDate, appURL } = useContext(UpperbarContext);
+  const { fiscalYear, todayDate, appURL, darkText } =
+    useContext(UpperbarContext);
 
   const columns = [
     {
@@ -110,7 +112,7 @@ export default function LeaveNoteList() {
               <button
                 type="button"
                 class="btn btn-sm editspan"
-              // onClick={() => updateRequest(row)}
+                onClick={() => handleView(row)}
               >
                 View
               </button>{" "}
@@ -139,14 +141,17 @@ export default function LeaveNoteList() {
   //   if (cm < 10) {
   //     cm = "0" + cm;
   //   }
-  //   // 
+  //   //
   //   let strDate = nepDate.year + "/" + cm + "/" + nepDate.date;
-  //   // 
+  //   //
   //   return strDate;
   // };
 
+  const handleView = (row) => {
+    setSelectedNote(row);
+    setViewPopup(true);
+  };
   const updateRequest = (row) => {
-
     setSelectedNote(row);
     setConfirmPopup(true);
   };
@@ -156,13 +161,11 @@ export default function LeaveNoteList() {
 
     const srchQuery = searchInput.current.value.toLowerCase();
     if (srchQuery) {
-
       let srchResult = originalList.filter((list) => {
         return list["LeaveTitle"].toLowerCase().includes(srchQuery);
       });
 
       if (srchResult) {
-
         setLeaveList(srchResult);
       } else {
         setLeaveList({});
@@ -181,7 +184,6 @@ export default function LeaveNoteList() {
     Fetchdata(params)
       .then(function (result) {
         if (result.StatusCode === 200) {
-
           const postResult = result.LeaveReports ? result.LeaveReports : "";
           setLeaveList(postResult);
           setOriginalList(postResult);
@@ -200,7 +202,6 @@ export default function LeaveNoteList() {
 
   const addLeaveNote = (e) => {
     setLeaveNotePopup(true);
-
   };
 
   return (
@@ -217,9 +218,11 @@ export default function LeaveNoteList() {
       <div className="container-fluid leavenote-wrapper mt-3 ps-4 pe-4">
         <div className="row mt-3">
           <div className="page-header">
-            <div className="text-start  page-title">All Leavenote</div>
+            <div className="text-start  page-title" style={darkText}>
+              All Leavenote
+            </div>
             <div className="page-date">
-              <div className="sec-content">
+              <div className="sec-content" style={darkText}>
                 Today's Date : {todayDate} <span>|</span> Fiscal Year :{" "}
                 {fiscalYear.StartDate}
                 <span>-</span>
@@ -289,6 +292,14 @@ export default function LeaveNoteList() {
           setLeaveNotePopup={setLeaveNotePopup}
           reload={reload}
           setReload={setReload}
+          DFlag={DFlag}
+        />
+      )}
+
+      {selected_note && viewPopup && (
+        <ViewLeaveNote
+          note={selected_note}
+          setViewPopup={setViewPopup}
           DFlag={DFlag}
         />
       )}

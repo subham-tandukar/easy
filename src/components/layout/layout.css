@@ -88,8 +88,8 @@
   font-size: 14px !important;
   font-weight: bolder;
   /* justify-content: center; */
-  background-color: #fafbfc !important;
-  color: #212529 !important;
+  /* background-color: #fafbfc !important; */
+  /* color: #212529 !important; */
 }
 
 .rdt_TableCell {
@@ -97,7 +97,7 @@
   font-size: 13px !important;
   padding: 12px !important;
   /* justify-content: center; */
-  color: #212529 !important;
+  /* color: #212529 !important; */
 }
 
 .sc-dkzDqf.faVNZf.rdt_TableHeadRow {
@@ -181,3 +181,5 @@ span._249_g._3zVi3._FsLy_._1ImcB {
   height: 14px !important;
   font-size: 0.875rem !important;
 }
+
+

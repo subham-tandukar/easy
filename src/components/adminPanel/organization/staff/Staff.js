@@ -15,7 +15,6 @@ import UpperbarContext from "../../../context/upperbar-context";
 export default function Staff() {
   const { fiscalYear, todayDate, appURL } = useContext(UpperbarContext);
 
-
   const {
     staffPopup,
     setStaffPopup,
@@ -37,7 +36,7 @@ export default function Staff() {
     setChooseDesignation,
     loading,
     setLoading,
-    customStylesForImage
+    customStylesForImage,
   } = useContext(StaffContext);
 
   const { User } = useContext(AuthContext);
@@ -165,16 +164,13 @@ export default function Staff() {
               <button
                 type="button"
                 class="btn btn-sm editspan"
-
                 onClick={() => editPop(row)}
               >
                 View{" "}
               </button>{" "}
-
               <button
                 type="button"
                 class="btn btn-sm actvspan"
-
                 onClick={() => changeStatus(row.UID, row.Status)}
               >
                 {checkStatus(row.Status)}
@@ -204,13 +200,11 @@ export default function Staff() {
     const srchQuery = searchInput.current.value.toLowerCase();
 
     if (srchQuery) {
-
       let srchResult = originalList.filter((list) => {
         return list["FirstName"].toLowerCase().includes(srchQuery);
       });
 
       if (srchResult) {
-
         setStaffList(srchResult);
       } else {
         setStaffList({});
@@ -243,7 +237,6 @@ export default function Staff() {
         const postResult = result.list ? result.list : "";
         setDepartmentList(postResult);
       } else {
-
       }
     });
   };
@@ -268,13 +261,11 @@ export default function Staff() {
     };
 
     Fetchdata(params).then(function (result) {
-
       if (result.StatusCode === 200) {
         const postResult = result.SubDepList ? result.SubDepList : "";
         setSubdepartmentList(postResult);
       } else {
         setSubdepartmentList([]);
-
       }
     });
   };
@@ -300,13 +291,11 @@ export default function Staff() {
     };
 
     Fetchdata(params).then(function (result) {
-
       if (result.StatusCode === 200) {
         const postResult = result.DesignationList ? result.DesignationList : "";
         setDesignationList(postResult);
       } else {
         setDesignationList([]);
-
       }
     });
   };

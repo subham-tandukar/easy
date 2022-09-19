@@ -17,8 +17,7 @@ import StaffContext from "../organization/staffState/StaffContext";
 export default function AAttendanceReport() {
   const { User } = useContext(AuthContext);
 
-  const { customStyles } = useContext(StaffContext)
-
+  const { customStyles } = useContext(StaffContext);
 
   const initialValue = {
     deparment: "-1",
@@ -28,7 +27,8 @@ export default function AAttendanceReport() {
   const [formValues, setFormValues] = useState(initialValue);
   const [attPopup, setAttPopup] = useState(false);
   const [DFlag, setDFlag] = useState("N");
-  const { fiscalYear, todayDate, appURL } = useContext(UpperbarContext);
+  const { fiscalYear, todayDate, appURL, darkText } =
+    useContext(UpperbarContext);
   const [reload, setReload] = useState(false);
   const [loading, setLoading] = useState(true);
   const [initialLoad, setInitialLoad] = useState(true);
@@ -67,12 +67,12 @@ export default function AAttendanceReport() {
     //   selector: (row) => {
     //     if (DFlag === "N") {
     //       const nDate = new NepaliDate(row.AttenDate).getBS();
-    //       // 
+    //       //
     //       const day = nDate.day;
     //       return weekDay[day];
     //     } else {
     //       const day = new Date(row.AttenDate).getDay();
-    //       
+    //
     //       return weekDay[day];
     //     }
     //   },
@@ -256,13 +256,10 @@ export default function AAttendanceReport() {
     };
 
     Fetchdata(dataForm).then(function (result) {
-
       if (result.StatusCode === 200) {
-
         const postResult = result.list;
         setDepList(postResult);
       } else {
-
         setDepList([]);
       }
     });
@@ -282,13 +279,10 @@ export default function AAttendanceReport() {
       };
 
       Fetchdata(dataForm).then(function (result) {
-
         if (result.StatusCode === 200) {
-
           const postResult = result.SubDepList;
           setSubDepList(postResult);
         } else {
-
           setSubDepList([]);
         }
       });
@@ -310,22 +304,18 @@ export default function AAttendanceReport() {
 
       Fetchdata(dataForm)
         .then(function (result) {
-
           if (result.StatusCode === 200) {
-
             const postResult = result.AttenRes;
             setAttendanceList(postResult);
             setInitialLoad(false);
             setLoading(false);
           } else {
-
             setAttendanceList([]);
             setInitialLoad(false);
             setLoading(false);
           }
         })
         .catch((err) => {
-
           setAttendanceList([]);
           setInitialLoad(false);
           setLoading(false);
@@ -334,8 +324,6 @@ export default function AAttendanceReport() {
   }, [reload, formValues.deparment, formValues.subDepartment, formValues.date]);
 
   const handleAttendance = (data) => {
-
-
     const dataForm = {
       ComID: User.CompanyId,
       StaffID: data.row.StaffID,
@@ -350,13 +338,11 @@ export default function AAttendanceReport() {
       Type: "POST",
     };
 
-
-
     // Fetchdata(dataForm)
     //   .then(function (result) {
-    //     
+    //
     //     if (result.StatusCode === 200) {
-    //       
+    //
     //       toast(result.Message, {
     //         style: {
     //           color: "green",
@@ -396,9 +382,11 @@ export default function AAttendanceReport() {
       <div className="container-fluid sumatten-wrapper  mt-3 ps-4 pe-4">
         <div className="row mt-3">
           <div className="page-header">
-            <div className="text-start  page-title">Attendance Report</div>
+            <div className="text-start  page-title" style={darkText}>
+              Attendance Report
+            </div>
             <div className="page-date">
-              <div className="sec-content">
+              <div className="sec-content" style={darkText}>
                 Today's Date : {todayDate} <span>|</span> Fiscal Year :{" "}
                 {fiscalYear.StartDate}
                 <span>-</span>
@@ -413,7 +401,7 @@ export default function AAttendanceReport() {
           <div className="sec-dataTable">
             <div className="row mb-1 ">
               <div className="col-md-3 col-sm-3 col-lg-3 sel-month">
-                <div className="text-start mb-1" style={{ fontSize: "12px" }}>
+                <div className="text-start mb-1" style={darkText}>
                   Department
                 </div>
                 <select
@@ -438,7 +426,7 @@ export default function AAttendanceReport() {
               </div>
               {formValues.deparment !== "-1" && (
                 <div className="col-md-3 col-sm-3 col-lg-3 sel-month">
-                  <div className="text-start mb-1" style={{ fontSize: "12px" }}>
+                  <div className="text-start mb-1" style={darkText}>
                     Sub-Department
                   </div>
                   <select
@@ -464,7 +452,7 @@ export default function AAttendanceReport() {
               )}
 
               <div className="col-md-3 col-sm-3 col-lg-3 sel-month">
-                <div className="text-start mb-1" style={{ fontSize: "12px" }}>
+                <div className="text-start mb-1" style={darkText}>
                   Select Date
                 </div>
                 {DFlag === "N" ? (

@@ -41,12 +41,15 @@ const projectDetails = [
 const ProjectDetails = () => {
   return (
     <>
-      <section className="card-box uk-margin-large-bottom uk-padding-remove">
+      <section className="card-box uk-padding-remove mt-3">
         <h4 className="card-title">Project Details</h4>
         {projectDetails.map((props) => {
           const { id, name, status, background, fontWeight } = props;
           return (
-            <div key={id} uk-scrollspy="cls: uk-animation-scale-up; delay: 500; repeat: false">
+            <div
+              key={id}
+              uk-scrollspy="cls: uk-animation-scale-up; delay: 500; repeat: false"
+            >
               <div
                 className="uk-flex uk-flex-between uk-flex-middle uk-flex-wrap project-details"
                 style={{ background: background }}

@@ -3,9 +3,12 @@ import CloseIcon from "../../images/CloseIcon.svg";
 import "./confirmPopup.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useContext } from "react";
+import UpperbarContext from "../context/upperbar-context";
 // import { RiAlertFill } from "react-icons/ri";
 
 export default function ConfirmPopup(data) {
+  const {sidePanelBg}=useContext(UpperbarContext)
   const handlePopup = () => {
 
 
@@ -70,7 +73,7 @@ export default function ConfirmPopup(data) {
       />
       <div className="container confirm-popup">
         <div className="confirm-popup-inner ">
-          <div className="popUpHeader ps-0 pe-0">
+          <div className="popUpHeader ps-0 pe-0" style={sidePanelBg}>
             <div className="popUpTitle">Easy School</div>
             <div className="popUpClose">
               <img

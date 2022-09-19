@@ -59,6 +59,10 @@
   cursor: pointer;
 }
 
+.nav-power-icons {
+  margin-top: 0 !important;
+}
+
 .nav-menu-icons {
   margin-top: 15px;
   cursor: pointer;
@@ -111,13 +115,14 @@
 .nav h3 {
   font-weight: bold;
   margin: 0;
+  font-size: 18px;
 }
 .nav h3 span {
   color: #0049ae;
 }
 .nav p {
   margin: 0;
-  font-size: 14px;
+  font-size: 12px;
 }
 .nav .address {
   font-size: 13px;
@@ -133,6 +138,12 @@
 }
 .nav .notify:hover svg {
   animation: notify 0.5s;
+}
+.nav .notify:hover .drop-box {
+  top: 43.325px !important;
+  opacity: 1;
+  visibility: visible;
+  /* transition: top 1s ease-in-out 0.5s; */
 }
 @keyframes notify {
   0% {
@@ -158,10 +169,29 @@
   top: -50%;
   left: 15px;
 }
-.nav .notify .uk-dropdown {
+.nav .notify .drop-box {
   padding: 0;
+  opacity: 0;
+  visibility: hidden;
+  top: 100px !important;
+  transition: all 0.3s ease-in-out 0.1s;
+  box-shadow: -5px -6px 15px rgba(0, 0, 0, 0.08),
+    5px 6px 15px rgba(0, 0, 0, 0.08);
+  position: absolute;
+  z-index: 1020;
+  box-sizing: border-box;
+  width: 300px;
+  max-height: 300px;
+  overflow-y: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none; /* Firefox */
 }
-.nav .notify .uk-dropdown::after {
+
+.nav .notify .drop-box::-webkit-scrollbar {
+  display: none;
+}
+
+.nav .notify .drop-box::after {
   content: "";
   position: absolute;
   display: block;
@@ -172,27 +202,73 @@
   border-bottom-color: #0049ae;
 }
 
-.nav .notify .uk-dropdown h5 {
+.nav .notify .drop-box h5 {
   background: #0049ae;
   color: #fff;
   text-align: left;
   padding: 0.5rem 1rem;
   border-bottom: 1px solid #fff;
   margin: 0;
+  position: fixed;
+  width: inherit;
 }
-.nav .notify .uk-dropdown .notify__wrapper {
+.nav .notify .drop-box .notify__wrapper {
   background: #e2f0ff;
-}
-.nav .notify .uk-dropdown .notify__footer {
-  background: #fff;
-  padding: 0.5rem 1rem;
+  /* padding: 0.5rem; */
+  border-bottom: 1px solid #fff;
   transition: all 0.3s ease-in-out;
+  margin-top: 2.3rem;
 }
-.nav .notify .uk-dropdown .notify__footer:hover {
+.nav .notify .drop-box .notify__wrapper .notify-wrap {
+  padding: 0.5rem;
+}
+.nav .notify .drop-box .notify__wrapper .notify-wrap:hover {
   background: #0049ae;
 }
-.nav .notify .uk-dropdown .notify__footer:hover p {
+.nav .notify .drop-box .notify__wrapper .notify-wrap:hover .notify-title,
+.nav .notify .drop-box .notify__wrapper .notify-wrap:hover .notify-desc {
+  color: #fff !important;
+}
+.nav .notify .drop-box .notify__wrapper .notify-img {
+  object-fit: cover;
+  height: 50px;
+  width: 50px;
+  background-color: rgb(151, 151, 151);
+  border-radius: 50%;
+}
+.nav .notify .drop-box .notify__wrapper .notify-title {
+  font-size: 14px;
+  font-weight: bold;
+  color: #000;
+  transition: all 0.3s ease-in-out;
+  text-align: left;
+}
+.nav .notify .drop-box .notify__wrapper .notify-desc {
+  font-size: 12px;
+  color: #555;
+  transition: all 0.3s ease-in-out;
+  width: fit-content;
+}
+.nav .notify .drop-box .notify__footer {
+  background: #0049ae;
+  padding: 0.7rem 1rem;
+  transition: all 0.3s ease-in-out;
+  position: sticky;
+  bottom: -1px;
+  border-top: 1px solid #fff;
+}
+.nav .notify .drop-box .notify__footer:hover p {
+  letter-spacing: 1px;
+}
+.nav .notify .drop-box .notify__footer:hover {
+  background: #093471;
+}
+.nav .notify .drop-box .notify__footer:hover p {
+  letter-spacing: 1px;
+}
+.nav .notify .drop-box .notify__footer p {
   color: #fff;
+  transition: all 0.3s ease-in-out;
 }
 .nav .user {
   cursor: pointer;

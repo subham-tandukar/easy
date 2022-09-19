@@ -7,43 +7,36 @@ import "../organization/product/ProductPopup.css";
 import "../organization/staff/Staff.css";
 import CommissionContext from "../commissionState/CommissionContext";
 import CommissionForm from "./CommissionForm";
-
-
-
+import UpperbarContext from "../../context/upperbar-context";
 
 export default function CommissionPopup() {
+  const { sidePanelBg } = useContext(UpperbarContext);
 
-    const {
+  const { setPopup, setCommissionFormError } = useContext(CommissionContext);
 
-        setPopup,
-        setCommissionFormError,
+  const closePopUp = (e) => {
+    setPopup(false);
+    setCommissionFormError({});
+  };
 
-    } = useContext(CommissionContext);
-
-    const closePopUp = (e) => {
-        setPopup(false);
-        setCommissionFormError({});
-    };
-
-
-    return (
-        <>
-            <div className="container leavenotepopup-wrapper">
-                <div className="departmentpopup-inner ">
-                    <div className="popUpHeader ps-0 pe-0">
-                        <div className="popUpTitle">Commission </div>
-                        <div className="popUpClose">
-                            <img
-                                className="popUpCloseIcon"
-                                src={CloseIcon}
-                                alt="CloseIcon"
-                                onClick={closePopUp}
-                            />
-                        </div>
-                    </div>
-                    <CommissionForm />
-                </div>
+  return (
+    <>
+      <div className="container leavenotepopup-wrapper">
+        <div className="departmentpopup-inner ">
+          <div className="popUpHeader ps-0 pe-0" style={sidePanelBg}>
+            <div className="popUpTitle">Commission </div>
+            <div className="popUpClose">
+              <img
+                className="popUpCloseIcon"
+                src={CloseIcon}
+                alt="CloseIcon"
+                onClick={closePopUp}
+              />
             </div>
-        </>
-    );
+          </div>
+          <CommissionForm />
+        </div>
+      </div>
+    </>
+  );
 }

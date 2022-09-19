@@ -66,7 +66,6 @@ export default function DepartmentPopup({
         Type: "POST",
       };
       Fetchdata(dataForm).then(function (result) {
-
         if (result.StatusCode === 200) {
           setDepartmentPopup(false);
           deptList();
@@ -104,13 +103,10 @@ export default function DepartmentPopup({
     };
 
     Fetchdata(dataForm).then(function (result) {
-
       if (result.StatusCode === 200) {
-
         const postResult = result.OrganizationStaffs;
         setStaffList(postResult);
       } else {
-
       }
     });
   }, []);

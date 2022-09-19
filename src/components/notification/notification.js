@@ -12,48 +12,89 @@ import ViewNotificationPopup from "./viewNotificationPopup";
 import UpperbarContext from "../context/upperbar-context";
 import { GetNepaliDate } from "../hooks/dateConvertor";
 import StaffContext from "../adminPanel/organization/staffState/StaffContext";
+import NotificationPopup from "./NotificationPopup";
+import EditNotificationPopup from "./editNotificationPopup";
 
 export default function Notification() {
-  const { customStyles, notificationList, setNotificationList } =
-    useContext(StaffContext);
+  const {
+    customStyles,
+    notificationList,
+    setNotificationList,
+    notificationValues,
+    setNotificationValues,
+    notificationErrors,
+    setNotificationErrors,
+    notificationPopup,
+    setNotificationPopup,
+    handleEdit,
+    DFlag,
+    setDFlag,
+    editPopup,
+    setEditPopup,
+    deactivateNotify,
+    chooseNotifyDepartment,
+    chooseNotifySubDepartment,
+    chooseNotifyDesignation,
+    chooseNotifyFlag,
+    setChooseNotifyDepartment,
+    setChooseNotifyDesignation,
+    setChooseNotifyFlag,
+    setChooseNotifySubDepartment,
+    loading,
+    setLoading,
+    notifyOriginalList,
+  } = useContext(StaffContext);
   const { User } = useContext(AuthContext);
-  const [loading, setLoading] = useState(true);
-  // const [notificationList, setNotificationList] = useState([]);
-  const [originalList, setOriginalList] = useState([]);
+
   const [imgPrv, setImgPrv] = useState(false);
   const [ImgPreview, setImgPreview] = useState("");
   const [selected_notification, setSelectedNotification] = useState("");
   const [viewPopup, setViewPopup] = useState(false);
-  const [DFlag, setDFlag] = useState("N");
+
+  const [submit, setSubmit] = useState(false);
   const searchInput = useRef("");
-  const { fiscalYear, todayDate, appURL } = useContext(UpperbarContext);
+  const { fiscalYear, todayDate, appURL, userDetails } =
+    useContext(UpperbarContext);
 
-  useEffect(() => {
-    const params = {
-      FetchURL: `${appURL}api/notification-list?ComID=${User.CompanyId}&UserID=${User.UID}`,
-      Type: "GET",
-    };
+  const addNotification = () => {
+    setNotificationPopup(true);
+    setNotificationValues(notificationValues);
+  };
 
-    Fetchdata(params)
-      .then(function (result) {
-        if (result.StatusCode === 200) {
-          const postResult = result.NotificationList
-            ? result.NotificationList
-            : "";
+  const handleAll = (e) => {
+    setChooseNotifyDepartment("");
+    setChooseNotifyDesignation("");
+    setChooseNotifySubDepartment("");
 
-          setNotificationList(postResult);
-          setOriginalList(postResult);
-          setLoading(false);
-        } else {
-          setNotificationList([]);
-          setLoading(false);
-        }
-      })
-      .catch((err) => {
-        setNotificationList([]);
-        setLoading(false);
-      });
-  }, []);
+    const target = e.target;
+    const name = target.name;
+    const value = target.value;
+    setChooseNotifyFlag(value);
+  };
+  const handleDepartment = (e) => {
+    setChooseNotifyDesignation("");
+    setChooseNotifySubDepartment("");
+
+    const target = e.target;
+    const name = target.name;
+    const value = target.value;
+    setChooseNotifyDepartment(value);
+  };
+
+  const handleSubDepartment = (e) => {
+    setChooseNotifyDesignation("");
+    const target = e.target;
+    const name = target.name;
+    const value = target.value;
+    setChooseNotifySubDepartment(value);
+  };
+
+  const handleDesignation = (e) => {
+    const target = e.target;
+    const name = target.name;
+    const value = target.value;
+    setChooseNotifyDesignation(value);
+  };
 
   const columns = [
     {
@@ -81,18 +122,20 @@ export default function Notification() {
       name: "Date",
       // grow: 1,
       center: true,
-      selector: (row) => {
-        return DFlag === "N"
-          ? GetNepaliDate(row.PublishedDate)
-          : row.PublishedDate;
-      },
+      selector: (row) =>
+        // {
+        //   return DFlag === "N"
+        //     ? GetNepaliDate(row.PublishedDate)
+        //     : row.PublishedDate;
+        // },
+        row.PublishedDate,
     },
-    {
-      name: "Created By",
-      // grow: 0,
-      center: true,
-      selector: (row) => row.CreatedBy,
-    },
+    // {
+    //   name: "Created By",
+    //   // grow: 0,
+    //   center: true,
+    //   selector: (row) => row.CreatedBy,
+    // },
 
     {
       name: "Action",
@@ -121,13 +164,29 @@ export default function Notification() {
               {/* <span className="pt-1">|</span> */}
               <button
                 type="button"
-                class="btn btn-sm notispan"
+                class="btn my-1 btn-sm notispan"
                 onClick={() => {
                   setSelectedNotification(row);
                   setViewPopup(true);
                 }}
               >
                 View
+              </button>
+              <button
+                type="button"
+                class="ms-2 my-1 btn btn-sm notispan bg-success"
+                onClick={() => {
+                  handleEdit(row);
+                }}
+              >
+                Edit
+              </button>
+              <button
+                type="button"
+                class="btn btn-sm my-1 actvspan ms-2"
+                onClick={() => changeStatus(row.NotificationID, row.Status)}
+              >
+                {checkStatus(row.Status)}
               </button>
               {/* <span className="pt-1">|</span>
               {row.AcBtn !== "-" && row.RedUrl !== "-" && (
@@ -150,12 +209,24 @@ export default function Notification() {
     },
   ];
 
+  const changeStatus = (ID, IsActive) => {
+    deactivateNotify(ID, IsActive);
+  };
+
+  const checkStatus = (IsActive) => {
+    if (IsActive === 1) {
+      return "Deactivate";
+    } else if (IsActive === 0) {
+      return "Activate";
+    }
+  };
+
   const searchHandler = (e) => {
     e.preventDefault();
 
     const srchQuery = searchInput.current.value.toLowerCase();
     if (srchQuery) {
-      let srchResult = originalList.filter((list) => {
+      let srchResult = notifyOriginalList.filter((list) => {
         return list["Title"].toLowerCase().includes(srchQuery);
       });
 
@@ -165,8 +236,94 @@ export default function Notification() {
         setNotificationList([]);
       }
     } else {
-      setNotificationList(originalList);
+      setNotificationList(notifyOriginalList);
     }
+  };
+
+  //API to hit Department list
+  const [departmentList, setDepartmentList] = useState([]);
+
+  useEffect(() => {
+    deptList();
+  }, []);
+
+  const deptList = () => {
+    const params = {
+      ComID: User.CompanyId,
+      StaffID: -1,
+      Flag: "S",
+      Type: "POST",
+      Status: 1,
+      BranchID: User.BranchId,
+      FetchURL: `${appURL}api/admin/department`,
+    };
+
+    Fetchdata(params).then(function (result) {
+      if (result.StatusCode === 200) {
+        const postResult = result.list ? result.list : "";
+        setDepartmentList(postResult);
+      } else {
+      }
+    });
+  };
+
+  // API to hit Sub-Department list
+  const [subdepartmentList, setSubdepartmentList] = useState([]);
+
+  useEffect(() => {
+    subdeptList();
+  }, [chooseNotifyDepartment]);
+
+  const subdeptList = () => {
+    const params = {
+      ComID: User.CompanyId,
+      StaffID: -1,
+      DepartID: chooseNotifyDepartment,
+      Flag: "S",
+      Type: "POST",
+      Status: 1,
+      BranchID: User.BranchId,
+      FetchURL: `${appURL}api/admin/sub-department`,
+    };
+
+    Fetchdata(params).then(function (result) {
+      if (result.StatusCode === 200) {
+        const postResult = result.SubDepList ? result.SubDepList : "";
+        setSubdepartmentList(postResult);
+      } else {
+        setSubdepartmentList([]);
+      }
+    });
+  };
+
+  //API to hit Designation list
+  const [designationList, setDesignationList] = useState([]);
+
+  useEffect(() => {
+    desgList();
+  }, [chooseNotifyDepartment, chooseNotifySubDepartment]);
+
+  const desgList = () => {
+    const params = {
+      ComID: User.CompanyId,
+      StaffID: -1,
+      DepartID: chooseNotifyDepartment,
+      SubDepartID: chooseNotifySubDepartment,
+      Flag: "S",
+      Type: "POST",
+      Status: 1,
+      BranchID: User.BranchId,
+      FetchURL: `${appURL}api/admin/designation`,
+    };
+
+    Fetchdata(params).then(function (result) {
+      if (result.StatusCode === 200) {
+        const postResult = result.DesignationList ? result.DesignationList : "";
+        setDesignationList(postResult);
+      } else {
+        setDesignationList([]);
+      }
+    });
   };
 
   return (
@@ -194,14 +351,31 @@ export default function Notification() {
           </div>
           <hr className="title-hr" />
         </div>
-        {loading ? (
-          <>
-            <Spinner />
-          </>
-        ) : (
-          <>
-            {" "}
-            <div className="sec-dataTable">
+
+        <>
+          <div className="sec-dataTable">
+            {userDetails.IsManager !== 0 && (
+              <div className="upper-dataTbl">
+                <div className="btn-addlnote mb-3">
+                  <button
+                    type="button"
+                    class="btn btn-sm"
+                    style={{
+                      background: "var(--button-color)",
+                      color: "white",
+                    }}
+                    onClick={addNotification}
+                  >
+                    Add Notification
+                  </button>
+                </div>
+              </div>
+            )}
+            {loading ? (
+              <>
+                <Spinner />
+              </>
+            ) : (
               <DataTable
                 columns={columns}
                 data={notificationList}
@@ -212,12 +386,198 @@ export default function Notification() {
                 highlightOnHover
                 pointerOnHover
                 responsive
-                progressPending={loading}
+                // progressPending={loading}
                 dense
                 striped
                 subHeader
                 subHeaderComponent={
                   <>
+                    <div className="upper-dataTbl me-2">
+                      <select
+                        style={{ fontSize: "11px" }}
+                        name="snotifiaction"
+                        value={chooseNotifyFlag}
+                        onChange={handleAll}
+                        className="form-control form-control-sm searchField"
+                      >
+                        <option value="a">All</option>
+                        <option value="d">Department Wise</option>
+                        <option value="s">Sub Department Wise</option>
+                        {/* <option value="i">Individual</option> */}
+                        <option value="de">Designation</option>
+                      </select>
+                    </div>
+                    {chooseNotifyFlag === "d" && (
+                      <div className="upper-dataTbl me-2">
+                        <select
+                          style={{ fontSize: "11px" }}
+                          name="snotifiaction"
+                          value={chooseNotifyDepartment}
+                          onChange={handleDepartment}
+                          className="form-control form-control-sm searchField"
+                        >
+                          <option
+                            value=""
+                            disabled
+                            selected
+                            style={{ fontSize: "11px" }}
+                          >
+                            Select Department
+                          </option>
+                          {departmentList.map((item) => (
+                            <option
+                              key={item.DepartmentID}
+                              value={item.DepartmentID}
+                            >
+                              {item.Department}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    )}
+
+                    {chooseNotifyFlag === "s" && (
+                      <>
+                        <div className="upper-dataTbl me-2">
+                          <select
+                            style={{ fontSize: "11px" }}
+                            name="snotifiaction"
+                            value={chooseNotifyDepartment}
+                            onChange={handleDepartment}
+                            className="form-control form-control-sm searchField"
+                          >
+                            <option
+                              value=""
+                              disabled
+                              selected
+                              style={{ fontSize: "11px" }}
+                            >
+                              Select Department
+                            </option>
+                            {departmentList.map((item) => (
+                              <option
+                                key={item.DepartmentID}
+                                value={item.DepartmentID}
+                              >
+                                {item.Department}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                        <div className="upper-dataTbl me-2">
+                          <select
+                            style={{ fontSize: "11px" }}
+                            name="snotifiaction"
+                            value={chooseNotifySubDepartment}
+                            onChange={handleSubDepartment}
+                            className="form-control form-control-sm searchField"
+                          >
+                            <option
+                              value=""
+                              disabled
+                              selected
+                              style={{ fontSize: "11px" }}
+                            >
+                              Select Sub Department
+                            </option>
+                            {subdepartmentList.map((item) => (
+                              <option
+                                key={item.SubDepartID}
+                                value={item.SubDepartID}
+                              >
+                                {item.SubDepartName}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                      </>
+                    )}
+
+                    {chooseNotifyFlag === "de" && (
+                      <>
+                        <div className="upper-dataTbl me-2">
+                          <select
+                            style={{ fontSize: "11px" }}
+                            name="snotifiaction"
+                            value={chooseNotifyDepartment}
+                            onChange={handleDepartment}
+                            className="form-control form-control-sm searchField"
+                          >
+                            <option
+                              value=""
+                              disabled
+                              selected
+                              style={{ fontSize: "11px" }}
+                            >
+                              Select Department
+                            </option>
+                            {departmentList.map((item) => (
+                              <option
+                                key={item.DepartmentID}
+                                value={item.DepartmentID}
+                              >
+                                {item.Department}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                        <div className="upper-dataTbl me-2">
+                          <select
+                            style={{ fontSize: "11px" }}
+                            name="snotifiaction"
+                            value={chooseNotifySubDepartment}
+                            onChange={handleSubDepartment}
+                            className="form-control form-control-sm searchField"
+                          >
+                            <option
+                              value=""
+                              disabled
+                              selected
+                              style={{ fontSize: "11px" }}
+                            >
+                              Select Sub Department
+                            </option>
+                            {subdepartmentList.map((item) => (
+                              <option
+                                key={item.SubDepartID}
+                                value={item.SubDepartID}
+                              >
+                                {item.SubDepartName}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+
+                        <div className="upper-dataTbl me-2">
+                          <select
+                            style={{ fontSize: "11px" }}
+                            name="snotifiaction"
+                            value={chooseNotifyDesignation}
+                            onChange={handleDesignation}
+                            className="form-control form-control-sm searchField"
+                          >
+                            <option
+                              value=""
+                              disabled
+                              selected
+                              style={{ fontSize: "11px" }}
+                            >
+                              Select Designation
+                            </option>
+                            {/* <option value="-1">All</option> */}
+                            {designationList.map((item) => (
+                              <option
+                                key={item.DesignationID}
+                                value={item.DesignationID}
+                              >
+                                {item.Designation}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                      </>
+                    )}
+
                     <div className="upper-dataTbl">
                       <div className="d-flex">
                         {/* <p className="pe-2">Search</p> */}
@@ -233,9 +593,9 @@ export default function Notification() {
                   </>
                 }
               />
-            </div>
-          </>
-        )}
+            )}
+          </div>
+        </>
       </div>
       {imgPrv &&
         ShowImgPreview({
@@ -248,6 +608,35 @@ export default function Notification() {
           notification={selected_notification}
           setViewPopup={setViewPopup}
           DFlag={DFlag}
+        />
+      )}
+
+      {editPopup && (
+        <EditNotificationPopup
+          setEditPopup={setEditPopup}
+          DFlag={DFlag}
+          notificationValues={notificationValues}
+          setNotificationValues={setNotificationValues}
+          notificationErrors={notificationErrors}
+          setNotificationErrors={setNotificationErrors}
+        />
+      )}
+
+      {notificationPopup && (
+        <NotificationPopup
+          setNotificationPopup={setNotificationPopup}
+          // crList={crList}
+          DFlag={DFlag}
+          notificationValues={notificationValues}
+          setNotificationValues={setNotificationValues}
+          notificationErrors={notificationErrors}
+          setNotificationErrors={setNotificationErrors}
+          submit={submit}
+          setSubmit={setSubmit}
+          // fetchNotification={fetchNotification}
+          // image1={image1}
+          // setImage1={setImage1}
+          // chooseCooperative={chooseCooperative}
         />
       )}
     </>

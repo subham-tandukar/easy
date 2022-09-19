@@ -60,7 +60,7 @@ export default function AddOrganization({
     software: "",
   };
 
-  const { appURL } = useContext(UpperbarContext);
+  const { appURL, sidePanelBg } = useContext(UpperbarContext);
   const { User } = useContext(AuthContext);
   const [formValues, setFormValues] = useState(initalvalue);
   const [formErrors, setformErrors] = useState({});
@@ -78,7 +78,7 @@ export default function AddOrganization({
   const [selectPrdOpts, setSelectPrdOpts] = useState([]);
   const [selectedPrdOptions, setSelectedPrdOptions] = useState([]);
 
-  console.log(selectedPrdOptions)
+  console.log(selectedPrdOptions);
 
   const [toggleSystem, setToggleSystem] = useState({
     webToggle: false,
@@ -90,11 +90,11 @@ export default function AddOrganization({
 
   const [mediumType, setMediumType] = useState("");
 
-  // 
+  //
 
   const handleToggleSystem = (e) => {
     const { name } = e.target;
-    // 
+    //
     setToggleSystem({ ...toggleSystem, [name]: !toggleSystem[name] });
     if (name === "webToggle") {
       formValues.website = "";
@@ -121,13 +121,12 @@ export default function AddOrganization({
     return `${eDate.year}-${eDate.month}-${eDate.date}`;
   };
 
-  // 
+  //
 
   const handleChange = (e) => {
     e.preventDefault();
     const { name, value } = e.target;
     setFormValues({ ...formValues, [name]: value });
-
   };
 
   const closePopUp = (e) => {
@@ -136,7 +135,6 @@ export default function AddOrganization({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
 
     setformErrors(validate(formValues));
     setIsSubmit(true);
@@ -149,13 +147,10 @@ export default function AddOrganization({
     };
 
     Fetchdata(dataForm).then(function (result) {
-
       if (result.StatusCode === 200) {
-
         const postResult = result.OrganizationTypes;
         setOrgTypeList(postResult);
       } else {
-
       }
     });
   }, []);
@@ -167,13 +162,10 @@ export default function AddOrganization({
     };
 
     Fetchdata(dataForm).then(function (result) {
-
       if (result.StatusCode === 200) {
-
         const postResult = result.LeadSources;
         setLeedSrcList(postResult);
       } else {
-
       }
     });
   }, []);
@@ -185,13 +177,10 @@ export default function AddOrganization({
     };
 
     Fetchdata(dataForm).then(function (result) {
-
       if (result.StatusCode === 200) {
-
         const postResult = result.OrganizationProducts;
         setOrgPrdList(postResult);
       } else {
-
       }
     });
   }, []);
@@ -216,13 +205,10 @@ export default function AddOrganization({
     };
 
     Fetchdata(dataForm).then(function (result) {
-
       if (result.StatusCode === 200) {
-
         const postResult = result.FollowupType;
         setFollowTList(postResult);
       } else {
-
       }
     });
   }, []);
@@ -234,13 +220,10 @@ export default function AddOrganization({
     };
 
     Fetchdata(dataForm).then(function (result) {
-
       if (result.StatusCode === 200) {
-
         const postResult = result.OrganizationStaffs;
         setOrgStaffList(postResult);
       } else {
-
       }
     });
   }, []);
@@ -453,7 +436,6 @@ export default function AddOrganization({
 
   useEffect(() => {
     if (Object.keys(formErrors).length === 0 && isSubmit) {
-
       let prdList = "";
       selectedPrdOptions.map((list) => {
         // selectedPrdList = selectedPrdList.concat(list.value);
@@ -522,12 +504,8 @@ export default function AddOrganization({
         Type: "POST",
       };
 
-
-
       Fetchdata(dataForm).then(function (result) {
-
         if (result.StatusCode === 200) {
-
           setReload(!reload);
           toast(result.Message, {
             style: {
@@ -553,7 +531,7 @@ export default function AddOrganization({
     }
   }, [formErrors]);
 
-  // 
+  //
 
   return (
     <>
@@ -567,7 +545,7 @@ export default function AddOrganization({
       />
       <div className="container addorgpopup-wrapper">
         <div className="addorgpopup-inner ">
-          <div className="popUpHeader ps-0 pe-0">
+          <div className="popUpHeader ps-0 pe-0" style={sidePanelBg}>
             <div className="popUpTitle">Add Organization</div>
             <div className="popUpClose">
               <img
@@ -948,8 +926,8 @@ export default function AddOrganization({
                       name="mediumType"
                       style={{ fontSize: "14px" }}
                       onClick={() => setMediumType("0")}
-                    // checked={toggleSystem.cBckToggle}
-                    // onClick={handleToggleSystem}
+                      // checked={toggleSystem.cBckToggle}
+                      // onClick={handleToggleSystem}
                     />
                     <label
                       htmlFor="off"
@@ -972,8 +950,8 @@ export default function AddOrganization({
                       name="mediumType"
                       style={{ fontSize: "14px" }}
                       onClick={() => setMediumType("1")}
-                    // checked={toggleSystem.cBckToggle}
-                    // onClick={handleToggleSystem}
+                      // checked={toggleSystem.cBckToggle}
+                      // onClick={handleToggleSystem}
                     />
                     <label
                       htmlFor="on"
@@ -1298,8 +1276,8 @@ export default function AddOrganization({
                       value={formValues.enquiryDate}
                       onChange={handleEnquriyDate}
                       name="enquiryDate"
-                    // hideDefaultValue={true}
-                    // placeholder={"Select From Date"}
+                      // hideDefaultValue={true}
+                      // placeholder={"Select From Date"}
                     />
                   ) : (
                     <input
@@ -1377,8 +1355,8 @@ export default function AddOrganization({
                         formValues.remark = "";
                         formValues.quote = "";
                       }}
-                    // checked={formValues.fieldWork}
-                    // onChange={() => setFieldWork(!fieldWork)}
+                      // checked={formValues.fieldWork}
+                      // onChange={() => setFieldWork(!fieldWork)}
                     />
                     <label
                       style={{

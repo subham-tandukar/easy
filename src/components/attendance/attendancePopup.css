@@ -1,27 +1,29 @@
 .attpopup-wrapper {
-  position: absolute;
-  left: 0;
-  top: 0;
+  position: fixed;
+  left: 50%;
+  top: 50%;
   z-index: 5500;
   background-color: rgba(0, 0, 0, 0.6);
-  min-height: 100vh;
+  height: 100vh;
   min-width: 100vw;
   height: 100vh;
   overflow: hidden;
   /* border: 1px solid red; */
+  transform: translate(-50%, -50%);
 }
 
 .attpopup-inner {
   background-color: white;
   /* max-width: 950px; */
   width: 50%;
-  height: 42vh !important;
-  top: 9vh;
-  left: 22%;
+  height: 50vh;
+  top: 50%;
+  left: 50%;
   position: absolute;
   flex-wrap: nowrap;
   overflow-y: hidden;
   overflow-x: hidden;
+  transform: translate(-50%, -50%);
 }
 
 .attpopupBody {
@@ -30,7 +32,7 @@
   z-index: 2;
   /* border: 1px solid red; */
   height: 28vh !important;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 .attpopupFooter {
@@ -46,16 +48,16 @@
 @media screen and (max-width: 900px) {
   .attpopup-inner {
     width: 70% !important;
-    top: 9vh;
-    left: 15%;
+    /* top: 9vh;
+    left: 15%; */
   }
 }
 
 @media screen and (max-width: 577px) {
   .attpopup-inner {
     width: 90% !important;
-    top: 9vh;
-    left: 5%;
+    /* top: 9vh;
+    left: 5%; */
   }
   .from-date {
     margin-bottom: 10px;

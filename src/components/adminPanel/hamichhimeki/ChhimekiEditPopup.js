@@ -9,42 +9,35 @@ import "react-toastify/dist/ReactToastify.css";
 import HamiChhimekiContext from "../hamichhimekiState/HamiChhimekiContext";
 import ChhimkeiForm from "./ChhimekiForm";
 import ChhimkeiFormEdit from "./ChhimekiFormEdit";
-
-
+import UpperbarContext from "../../context/upperbar-context";
 
 export default function ChhimekiEditPopup() {
+  const { sidePanelBg } = useContext(UpperbarContext);
+  const { setEditPop, setChhimekiFormError } = useContext(HamiChhimekiContext);
 
-    const {
+  const closePopUp = (e) => {
+    setEditPop(false);
+    setChhimekiFormError({});
+  };
 
-        setEditPop,
-        setChhimekiFormError,
-
-    } = useContext(HamiChhimekiContext);
-
-    const closePopUp = (e) => {
-        setEditPop(false);
-        setChhimekiFormError({});
-    };
-
-
-    return (
-        <>
-            <div className="container leavenotepopup-wrapper">
-                <div className="staffpopup-inner ">
-                    <div className="popUpHeader ps-0 pe-0">
-                        <div className="popUpTitle">Hami Chhimeki Edit </div>
-                        <div className="popUpClose">
-                            <img
-                                className="popUpCloseIcon"
-                                src={CloseIcon}
-                                alt="CloseIcon"
-                                onClick={closePopUp}
-                            />
-                        </div>
-                    </div>
-                    <ChhimkeiFormEdit />
-                </div>
+  return (
+    <>
+      <div className="container leavenotepopup-wrapper">
+        <div className="staffpopup-inner ">
+          <div className="popUpHeader ps-0 pe-0" style={sidePanelBg}>
+            <div className="popUpTitle">Hami Chhimeki Edit </div>
+            <div className="popUpClose">
+              <img
+                className="popUpCloseIcon"
+                src={CloseIcon}
+                alt="CloseIcon"
+                onClick={closePopUp}
+              />
             </div>
-        </>
-    );
+          </div>
+          <ChhimkeiFormEdit />
+        </div>
+      </div>
+    </>
+  );
 }

@@ -8,7 +8,7 @@ import { FaRegBell } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { FiChevronDown } from "react-icons/fi";
-
+import { Fetchdata } from "../hooks/getData";
 import {
   AiOutlineMenu,
   AiOutlinePoweroff,
@@ -21,7 +21,6 @@ import { Popover } from "@material-ui/core";
 import UpperbarContext from "../context/upperbar-context";
 import "../../css/abs.css";
 import { AiOutlineClose } from "react-icons/ai";
-// import StaffContext from "../adminPanel/organization/staffState/StaffContext";
 
 export default function Upperbar({
   sidebarController,
@@ -46,10 +45,12 @@ export default function Upperbar({
     toggletheme,
     sideMenu,
     setSideMenu,
+    appURL,
   } = useContext(UpperbarContext);
+  const { User } = useContext(AuthContext);
 
-  // const { notificationList } = useContext(StaffContext);
   // console.log(notificationList,"a");
+  const [notificationList, setNotificationList] = useState([]);
 
   const [mobNav, setMobNav] = useState(true);
 
@@ -78,6 +79,37 @@ export default function Upperbar({
     setSideMenu(!sideMenu);
     console.log("clicked");
   };
+
+  // const notification = sessionStorage.getItem("NotificationList");
+  // const notificationList = JSON.parse(notification);
+
+  useEffect(() => {
+    const params = {
+      FetchURL: `${appURL}api/notification-list?ComID=${User.CompanyId}&UserID=21`,
+      Type: "GET",
+    };
+
+    Fetchdata(params)
+      .then(function (result) {
+        if (result.StatusCode === 200) {
+          const postResult = result.NotificationList
+            ? result.NotificationList
+            : "";
+
+          setNotificationList(postResult);
+          // setOriginalList(postResult);
+          // console.log(notificationList, "A");
+          // setLoading(false);
+        } else {
+          setNotificationList([]);
+          // setLoading(false);
+        }
+      })
+      .catch((err) => {
+        setNotificationList([]);
+        // setLoading(false);
+      });
+  }, []);
 
   const showLogoutPopup = () => {
     return (
@@ -138,12 +170,14 @@ export default function Upperbar({
       <nav className={!logoutAlert ? "nav" : "nav pushMainNav"} style={darkBg}>
         <div className="uk-grid uk-flex-middle uk-flex-between uk-width-1">
           <div className="logo">
-            <img
-              src={logo}
-              alt="logo"
-              style={{ height: "50px" }}
-              className="uk-margin-auto uk-display-block"
-            />
+            <Link to="/">
+              <img
+                src={logo}
+                alt="logo"
+                style={{ height: "50px" }}
+                className="uk-margin-auto uk-display-block"
+              />
+            </Link>
             <div className="ham-menu">
               <span>
                 <i>
@@ -207,32 +241,66 @@ export default function Upperbar({
                   </select>
                 </span> */}
 
-                <span className="notify me-5">
-                  <button type="button" className="btn p-0">
-                    <FaRegBell
-                      size="1.3rem"
-                      color={mode === "light" ? "#000" : "#fff"}
-                    />
-                    <span className="uk-badge">3</span>
-                  </button>
-                  <div uk-dropdown="mode: click">
-                    <h5>Notification</h5>
+                {userDetails.IsManager === 0 && (
+                  <span className="notify me-5" uk-margin>
+                    <button type="button" className="btn p-0">
+                      <FaRegBell
+                        size="1.3rem"
+                        color={mode === "light" ? "#000" : "#fff"}
+                      />
+                      <span className="uk-badge">
+                        {notificationList.length}
+                      </span>
+                    </button>
+                    <div className="drop-box">
+                      <h5>Notification</h5>
 
-                    <div className="notify__wrapper">
-                      <p>1</p>
-                    </div>
+                      {notificationList.length > 0 && (
+                        <div>
+                          <div className="notify__wrapper">
+                            {notificationList.map((item) => {
+                              const { Image, Title, Description } = item;
+                              return (
+                                <>
+                                  <Link to="user-notification">
+                                    <div className="uk-flex uk-flex-middle notify-wrap">
+                                      <div className="notify-img">
+                                        <img src={Image} alt="dp" />
+                                      </div>
 
-                    <div className="notify__footer">
-                      <Link to="notification">
-                        <p>Show all notifications</p>
-                      </Link>
+                                      <div className="ms-3">
+                                        <div className="notify-title">
+                                          {Title}
+                                        </div>
+                                        <div className="notify-desc">
+                                          {Description}
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </Link>
+                                </>
+                              );
+                            })}
+                          </div>
+
+                          <div className="notify__footer">
+                            <Link to="user-notification">
+                              <p>Show all notifications</p>
+                            </Link>
+                          </div>
+                        </div>
+                      )}
+
+                      {notificationList.length === 0 && (
+                        <div className="py-2 bg-light">No notifications.</div>
+                      )}
                     </div>
-                  </div>
-                </span>
+                  </span>
+                )}
 
                 <span>
                   <div
-                    className="user-info text-start uk-margin-remove"
+                    className="user-info text-start uk-margin-remove uk-padding-remove"
                     style={darkText}
                   >
                     {userDetails.MiddleName
@@ -250,38 +318,6 @@ export default function Upperbar({
               </div>
             </div>
           </div>
-          <span>
-            <AiOutlinePoweroff
-              size={18}
-              className="nav-power-icons"
-              onClick={showLogout}
-              style={darkText}
-            />
-            <Popover
-              open={Boolean(logoutDropdown)}
-              anchorEl={logoutDropdown}
-              anchorReference="anchorPosition"
-              anchorPosition={{ top: 62, left: 4500 }}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "right",
-              }}
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              onClose={() => setLogoutDropdown(null)}
-            >
-              <div className="sec-logout" onClick={showAlert}>
-                <button type="button" class="btn-logout">
-                  <AiOutlinePoweroff size={18} className="me-2" />
-                  Logout
-                </button>
-              </div>
-            </Popover>
-
-            {logoutAlert && showLogoutPopup()}
-          </span>
 
           <div className="uk-flex uk-flex-wrap uk-padding-remove">
             {/* <span>
@@ -292,6 +328,38 @@ export default function Upperbar({
                 title="Refresh"
               ></i>
             </span> */}
+            <span className="ms-3">
+              <AiOutlinePoweroff
+                size={18}
+                className="nav-power-icons"
+                onClick={showLogout}
+                style={darkText}
+              />
+              <Popover
+                open={Boolean(logoutDropdown)}
+                anchorEl={logoutDropdown}
+                anchorReference="anchorPosition"
+                anchorPosition={{ top: 62, left: 4500 }}
+                anchorOrigin={{
+                  vertical: "bottom",
+                  horizontal: "right",
+                }}
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                onClose={() => setLogoutDropdown(null)}
+              >
+                <div className="sec-logout" onClick={showAlert}>
+                  <button type="button" class="btn-logout">
+                    <AiOutlinePoweroff size={18} className="me-2" />
+                    Logout
+                  </button>
+                </div>
+              </Popover>
+
+              {logoutAlert && showLogoutPopup()}
+            </span>
             <div
               className="dots-icon"
               onClick={() => {
@@ -347,7 +415,7 @@ export default function Upperbar({
 
           <div className="uk-margin-bottom">
             <span
-              className="user-info text-start uk-margin-remove"
+              className="user-info text-start uk-margin-remove  uk-padding-remove"
               style={darkText}
             >
               {userDetails.MiddleName
@@ -367,28 +435,58 @@ export default function Upperbar({
           </div>
 
           <div className="uk-margin-bottom text-start">
-            <span className="notify me-5">
-              <button type="button" className="btn p-0">
-                <FaRegBell
-                  size="1.3rem"
-                  color={mode === "light" ? "#000" : "#fff"}
-                />
-                <span className="uk-badge">3</span>
-              </button>
-              <div uk-dropdown="mode: click">
-                <h5>Notification</h5>
+            {userDetails.IsManager === 0 && (
+              <span className="notify me-5" uk-margin>
+                <button type="button" className="btn p-0">
+                  <FaRegBell
+                    size="1.3rem"
+                    color={mode === "light" ? "#000" : "#fff"}
+                  />
+                  <span className="uk-badge">{notificationList.length}</span>
+                </button>
+                <div className="drop-box">
+                  <h5>Notification</h5>
 
-                <div className="notify__wrapper">
-                  <p>1</p>
-                </div>
+                  {notificationList.length > 0 && (
+                    <div>
+                      <div className="notify__wrapper">
+                        {notificationList.map((item) => {
+                          const { Image, Title, Description } = item;
+                          return (
+                            <>
+                              <Link to="user-notification">
+                                <div className="uk-flex uk-flex-middle notify-wrap">
+                                  <div className="notify-img">
+                                    <img src={Image} alt="dp" />
+                                  </div>
 
-                <div className="notify__footer">
-                  <Link to="notification">
-                    <p>Show all notifications</p>
-                  </Link>
+                                  <div className="ms-3">
+                                    <div className="notify-title">{Title}</div>
+                                    <div className="notify-desc">
+                                      {Description}
+                                    </div>
+                                  </div>
+                                </div>
+                              </Link>
+                            </>
+                          );
+                        })}
+                      </div>
+
+                      <div className="notify__footer">
+                        <Link to="user-notification">
+                          <p>Show all notifications</p>
+                        </Link>
+                      </div>
+                    </div>
+                  )}
+
+                  {notificationList.length === 0 && (
+                    <div className="py-2 bg-light">No notifications.</div>
+                  )}
                 </div>
-              </div>
-            </span>
+              </span>
+            )}
           </div>
         </div>
       </nav>
