@@ -62,9 +62,9 @@ export default function Notification() {
   };
 
   const handleAll = (e) => {
-    setChooseNotifyDepartment("");
-    setChooseNotifyDesignation("");
-    setChooseNotifySubDepartment("");
+    setChooseNotifyDepartment("0");
+    setChooseNotifyDesignation("0");
+    setChooseNotifySubDepartment("0");
 
     const target = e.target;
     const name = target.name;
@@ -72,8 +72,8 @@ export default function Notification() {
     setChooseNotifyFlag(value);
   };
   const handleDepartment = (e) => {
-    setChooseNotifyDesignation("");
-    setChooseNotifySubDepartment("");
+    setChooseNotifyDesignation("0");
+    setChooseNotifySubDepartment("0");
 
     const target = e.target;
     const name = target.name;
@@ -82,7 +82,7 @@ export default function Notification() {
   };
 
   const handleSubDepartment = (e) => {
-    setChooseNotifyDesignation("");
+    setChooseNotifyDesignation("0");
     const target = e.target;
     const name = target.name;
     const value = target.value;
@@ -123,12 +123,12 @@ export default function Notification() {
       // grow: 1,
       center: true,
       selector: (row) =>
-        // {
-        //   return DFlag === "N"
-        //     ? GetNepaliDate(row.PublishedDate)
-        //     : row.PublishedDate;
-        // },
-        row.PublishedDate,
+        {
+          return DFlag === "N"
+            ? GetNepaliDate(row.PublishedDate)
+            : row.PublishedDate;
+        },
+        // row.PublishedDate,
     },
     // {
     //   name: "Created By",
@@ -395,7 +395,7 @@ export default function Notification() {
                     <div className="upper-dataTbl me-2">
                       <select
                         style={{ fontSize: "11px" }}
-                        name="snotifiaction"
+                        name="all"
                         value={chooseNotifyFlag}
                         onChange={handleAll}
                         className="form-control form-control-sm searchField"
@@ -411,13 +411,13 @@ export default function Notification() {
                       <div className="upper-dataTbl me-2">
                         <select
                           style={{ fontSize: "11px" }}
-                          name="snotifiaction"
+                          name="department"
                           value={chooseNotifyDepartment}
                           onChange={handleDepartment}
                           className="form-control form-control-sm searchField"
                         >
                           <option
-                            value=""
+                            value="0"
                             disabled
                             selected
                             style={{ fontSize: "11px" }}
@@ -441,13 +441,13 @@ export default function Notification() {
                         <div className="upper-dataTbl me-2">
                           <select
                             style={{ fontSize: "11px" }}
-                            name="snotifiaction"
+                            name="department"
                             value={chooseNotifyDepartment}
                             onChange={handleDepartment}
                             className="form-control form-control-sm searchField"
                           >
                             <option
-                              value=""
+                              value="0"
                               disabled
                               selected
                               style={{ fontSize: "11px" }}
@@ -467,13 +467,13 @@ export default function Notification() {
                         <div className="upper-dataTbl me-2">
                           <select
                             style={{ fontSize: "11px" }}
-                            name="snotifiaction"
+                            name="subDepartment"
                             value={chooseNotifySubDepartment}
                             onChange={handleSubDepartment}
                             className="form-control form-control-sm searchField"
                           >
                             <option
-                              value=""
+                              value="0"
                               disabled
                               selected
                               style={{ fontSize: "11px" }}
@@ -498,13 +498,13 @@ export default function Notification() {
                         <div className="upper-dataTbl me-2">
                           <select
                             style={{ fontSize: "11px" }}
-                            name="snotifiaction"
+                            name="department"
                             value={chooseNotifyDepartment}
                             onChange={handleDepartment}
                             className="form-control form-control-sm searchField"
                           >
                             <option
-                              value=""
+                              value="0"
                               disabled
                               selected
                               style={{ fontSize: "11px" }}
@@ -524,13 +524,13 @@ export default function Notification() {
                         <div className="upper-dataTbl me-2">
                           <select
                             style={{ fontSize: "11px" }}
-                            name="snotifiaction"
+                            name="subDepartment"
                             value={chooseNotifySubDepartment}
                             onChange={handleSubDepartment}
                             className="form-control form-control-sm searchField"
                           >
                             <option
-                              value=""
+                              value="0"
                               disabled
                               selected
                               style={{ fontSize: "11px" }}
@@ -551,13 +551,13 @@ export default function Notification() {
                         <div className="upper-dataTbl me-2">
                           <select
                             style={{ fontSize: "11px" }}
-                            name="snotifiaction"
+                            name="designation"
                             value={chooseNotifyDesignation}
                             onChange={handleDesignation}
                             className="form-control form-control-sm searchField"
                           >
                             <option
-                              value=""
+                              value="0"
                               disabled
                               selected
                               style={{ fontSize: "11px" }}

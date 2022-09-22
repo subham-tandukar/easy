@@ -341,7 +341,7 @@ const NotificationPopup = ({
                     value={notificationValues.department}
                     onChange={handleChange}
                   >
-                    <option disabled value="" selected>
+                    <option disabled value="0" selected>
                       Select Department <sup style={{ color: "red" }}>*</sup>
                     </option>
                     {departmentList.map((list) => (
@@ -368,7 +368,7 @@ const NotificationPopup = ({
                       value={notificationValues.department}
                       onChange={handleChange}
                     >
-                      <option disabled value="" selected>
+                      <option disabled value="0" selected>
                         Select Department <sup style={{ color: "red" }}>*</sup>
                       </option>
                       {departmentList.map((list) => (
@@ -396,7 +396,7 @@ const NotificationPopup = ({
                       value={notificationValues.subDepartment}
                       onChange={handleChange}
                     >
-                      <option disabled value="" selected>
+                      <option disabled value="0" selected>
                         Select Sub Department{" "}
                         <sup style={{ color: "red" }}>*</sup>
                       </option>
@@ -431,7 +431,7 @@ const NotificationPopup = ({
                         value={notificationValues.department}
                         onChange={handleChange}
                       >
-                        <option disabled value="" selected>
+                        <option disabled value="0" selected>
                           Select Department{" "}
                           <sup style={{ color: "red" }}>*</sup>
                         </option>
@@ -460,7 +460,7 @@ const NotificationPopup = ({
                         value={notificationValues.subDepartment}
                         onChange={handleChange}
                       >
-                        <option disabled value="" selected>
+                        <option disabled value="0" selected>
                           Select Sub Department{" "}
                           <sup style={{ color: "red" }}>*</sup>
                         </option>
@@ -491,7 +491,7 @@ const NotificationPopup = ({
                       value={notificationValues.staff}
                       onChange={handleChange}
                     >
-                      <option disabled value="" selected>
+                      <option disabled value="0" selected>
                         Select Staff <sup style={{ color: "red" }}>*</sup>
                       </option>
                       {staffList.map((list) => (
@@ -520,7 +520,7 @@ const NotificationPopup = ({
                         value={notificationValues.department}
                         onChange={handleChange}
                       >
-                        <option disabled value="" selected>
+                        <option disabled value="0" selected>
                           Select Department{" "}
                           <sup style={{ color: "red" }}>*</sup>
                         </option>
@@ -549,7 +549,7 @@ const NotificationPopup = ({
                         value={notificationValues.subDepartment}
                         onChange={handleChange}
                       >
-                        <option disabled value="" selected>
+                        <option disabled value="0" selected>
                           Select Sub Department{" "}
                           <sup style={{ color: "red" }}>*</sup>
                         </option>
@@ -580,7 +580,7 @@ const NotificationPopup = ({
                       value={notificationValues.designation}
                       onChange={handleChange}
                     >
-                      <option disabled value="" selected>
+                      <option disabled value="0" selected>
                         Select Designation <sup style={{ color: "red" }}>*</sup>
                       </option>
                       {designationList.map((list) => (
@@ -774,7 +774,7 @@ const NotificationPopup = ({
                   <input
                     class="form-check-input"
                     type="checkbox"
-                    value=""
+                    value="0"
                     id="fieldWork"
                     name="fieldWork"
                     checked={notificationValues.fieldWork}

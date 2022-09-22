@@ -30,11 +30,11 @@ function StaffState(props) {
   // for notification starts
 
   const initialvalue = {
-    all: "",
-    department: "",
-    subDepartment: "",
-    staff: "",
-    designation: "",
+    all: "a",
+    department: "0",
+    subDepartment: "0",
+    staff: "0",
+    designation: "0",
     title: "",
     description: "",
     actionButton: "",
@@ -50,11 +50,11 @@ function StaffState(props) {
   const [DFlag, setDFlag] = useState("N");
   const [notifyOriginalList, setNotifyOriginalList] = useState(null);
 
-  const [chooseNotifyDepartment, setChooseNotifyDepartment] = useState("");
+  const [chooseNotifyDepartment, setChooseNotifyDepartment] = useState("0");
   const [chooseNotifySubDepartment, setChooseNotifySubDepartment] =
-    useState("");
-  const [chooseNotifyDesignation, setChooseNotifyDesignation] = useState("");
-  const [chooseNotifyFlag, setChooseNotifyFlag] = useState("");
+    useState("0");
+  const [chooseNotifyDesignation, setChooseNotifyDesignation] = useState("0");
+  const [chooseNotifyFlag, setChooseNotifyFlag] = useState("a");
 
   useEffect(() => {
     notifyList();
@@ -105,10 +105,6 @@ function StaffState(props) {
     setPerId(data.NotificationID);
     setNotificationValues({
       title: data.Title,
-      all: data.NFlag,
-      department: data.DepartmentID,
-      subDepartment: data.SubDepartmentID,
-      designation: data.DesignationID,
       description: data.Description,
       actionButton: data.AcBtn,
       actionUrl: data.AcUrl,
@@ -116,7 +112,6 @@ function StaffState(props) {
     });
     setImage(data.Image);
     setEditPopup(true);
-    console.log(perID);
   };
 
   // to edit notification
@@ -210,15 +205,15 @@ function StaffState(props) {
     Fetchdata(dataForm).then(function (result) {
       if (result.StatusCode === 200) {
         notifyList();
-        let statsN = JSON.parse(JSON.stringify(newStatus));
-        let pitchStatus;
+        let NewstatsN = JSON.parse(JSON.stringify(newStatus));
+        let pitchNewStatus;
 
         if (dataForm.Status === 1) {
-          pitchStatus = "Activated";
+          pitchNewStatus = "Activated";
         } else if (dataForm.Status === 0) {
-          pitchStatus = "Deactivated";
+          pitchNewStatus = "Deactivated";
         }
-        setNewStatus(statsN);
+        setNewStatus(NewstatsN);
         toast(result.Message, {
           style: {
             color: "green",

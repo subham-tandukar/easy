@@ -116,12 +116,12 @@ export default function UserNotification() {
       // grow: 1,
       center: true,
       selector: (row) =>
-        //   {
-        //     return DFlag === "N"
-        //       ? GetNepaliDate(row.PublishedDate)
-        //       : row.PublishedDate;
-        //   },
-        row.PublishedDate,
+          {
+            return DFlag === "N"
+              ? GetNepaliDate(row.PublishedDate)
+              : row.PublishedDate;
+          },
+        // row.PublishedDate,
     },
     {
       name: "Created By",
