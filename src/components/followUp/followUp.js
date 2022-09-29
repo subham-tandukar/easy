@@ -18,9 +18,10 @@ import {
 } from "../hooks/dateConvertor";
 import AddFollowUp from "./addFollowUp";
 import StaffContext from "../adminPanel/organization/staffState/StaffContext";
+import { FaRegCalendarAlt } from "react-icons/fa";
 
 export default function FollowUp() {
-  const { customStyles } = useContext(StaffContext)
+  const { customStyles } = useContext(StaffContext);
   const { User } = useContext(AuthContext);
   const initalFollowvalue = {
     followStatus: "-1",
@@ -40,7 +41,8 @@ export default function FollowUp() {
   const [reload, setReload] = useState(false);
   const [addPopup, setAddPopup] = useState(false);
   const [DFlag, setDFlag] = useState("N");
-  const { fiscalYear, todayDate, appURL } = useContext(UpperbarContext);
+  const { fiscalYear, todayDate, appURL, darkText } =
+    useContext(UpperbarContext);
   const [initialLoad, setInitialLoad] = useState(true);
 
   const columns = [
@@ -151,7 +153,7 @@ export default function FollowUp() {
     // },
   ];
 
-  // 
+  //
   useEffect(() => {
     const dataForm = {
       FetchURL: `${appURL}api/org-type?ComID=${User.CompanyId}&BranchID=${User.BranchId}`,
@@ -159,13 +161,10 @@ export default function FollowUp() {
     };
 
     Fetchdata(dataForm).then(function (result) {
-
       if (result.StatusCode === 200) {
-
         const postResult = result.OrganizationTypes;
         setOrgTypeList(postResult);
       } else {
-
       }
     });
   }, []);
@@ -177,13 +176,10 @@ export default function FollowUp() {
     };
 
     Fetchdata(dataForm).then(function (result) {
-
       if (result.StatusCode === 200) {
-
         const postResult = result.FollowupType;
         setFollowTList(postResult);
       } else {
-
       }
     });
   }, []);
@@ -195,19 +191,17 @@ export default function FollowUp() {
   };
 
   useEffect(() => {
-    // 
+    //
     if (followFormValues.from && followFormValues.to) {
       let enFrom =
         DFlag === "N"
           ? GetEnglishDate(followFormValues.from)
           : followFormValues.from;
 
-
       let enTo =
         DFlag === "N"
           ? GetEnglishDate(followFormValues.to)
           : followFormValues.to;
-
 
       const params = {
         FetchURL: `${appURL}api/follow-list?ComID=${User.CompanyId}&UserID=${User.UID}&IsOurClient=${followFormValues.client}&FromDate=${enFrom}&ToDate=${enTo}&OrgType=${followFormValues.orgType}&FollowType=${followFormValues.followType}&FollowStatus=${followFormValues.followStatus}&ToType=1`,
@@ -217,7 +211,6 @@ export default function FollowUp() {
       Fetchdata(params)
         .then(function (result) {
           if (result.StatusCode === 200) {
-
             const postResult = result.FollowupLists ? result.FollowupLists : "";
             setFollowUpList(postResult);
             setOriginalList(postResult);
@@ -273,10 +266,12 @@ export default function FollowUp() {
       <div className="container-fluid flwlst-wrapper  mt-3 ps-4 pe-4">
         <div className="row mt-3">
           <div className="page-header">
-            <div className="text-start  page-title">FollowUp</div>
+            <div className="text-start  page-title" style={darkText}>
+              FollowUp
+            </div>
             <div className="page-date">
-              <div className="sec-content">
-                Today's Date : {todayDate} <span>|</span> Fiscal Year :{" "}
+              <div className="sec-content" style={darkText}>
+                <FaRegCalendarAlt /> {todayDate} <span>|</span> Fiscal Year :{" "}
                 {fiscalYear.StartDate}
                 <span>-</span>
                 {fiscalYear.EndDate}
@@ -289,7 +284,7 @@ export default function FollowUp() {
           <div className="sec-dataTable">
             <div className="row mb-1 ">
               <div className="col-md-2 col-sm-2 col-lg-2 sel-month">
-                <div className="text-start mb-1" style={{ fontSize: "12px" }}>
+                <div className="text-start mb-1" style={darkText}>
                   Status
                 </div>
                 <select
@@ -310,7 +305,7 @@ export default function FollowUp() {
               </div>
 
               <div className="col-md-2 col-sm-2 col-lg-2 sel-month">
-                <div className="text-start mb-1" style={{ fontSize: "12px" }}>
+                <div className="text-start mb-1" style={darkText}>
                   Type
                 </div>
                 <select
@@ -335,7 +330,7 @@ export default function FollowUp() {
               </div>
 
               <div className="col-md-2 col-sm-2 col-lg-2 sel-month">
-                <div className="text-start mb-1" style={{ fontSize: "12px" }}>
+                <div className="text-start mb-1" style={darkText}>
                   Organization
                 </div>
                 <select
@@ -360,7 +355,7 @@ export default function FollowUp() {
               </div>
 
               <div className="col-md-2 col-sm-2 col-lg-2 sel-month">
-                <div className="text-start mb-1" style={{ fontSize: "12px" }}>
+                <div className="text-start mb-1" style={darkText}>
                   Client Type
                 </div>
                 <select
@@ -380,7 +375,7 @@ export default function FollowUp() {
               </div>
 
               <div className="col-md-2 col-sm-2 col-lg-2 sel-month">
-                <div className="text-start mb-1" style={{ fontSize: "12px" }}>
+                <div className="text-start mb-1" style={darkText}>
                   From Date
                 </div>
                 {DFlag === "N" ? (
@@ -409,7 +404,7 @@ export default function FollowUp() {
               </div>
 
               <div className="col-md-2 col-sm-2 col-lg-2 sel-month">
-                <div className="text-start mb-1" style={{ fontSize: "12px" }}>
+                <div className="text-start mb-1" style={darkText}>
                   To Date
                 </div>
                 {DFlag === "N" ? (

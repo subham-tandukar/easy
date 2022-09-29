@@ -9,10 +9,10 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import UpperbarContext from "../context/upperbar-context";
 import StaffContext from "../adminPanel/organization/staffState/StaffContext";
-
+import { FaRegCalendarAlt } from "react-icons/fa";
 
 export default function Holiday() {
-  const { customStyles } = useState(StaffContext)
+  const { customStyles } = useState(StaffContext);
   const { User } = useContext(AuthContext);
   const [loading, setLoading] = useState(true);
   const [holidayList, setHolidayList] = useState([]);
@@ -20,7 +20,8 @@ export default function Holiday() {
   const [imgPrv, setImgPrv] = useState(false);
   const [ImgPreview, setImgPreview] = useState("");
   const searchInput = useRef("");
-  const { fiscalYear, todayDate, appURL } = useContext(UpperbarContext);
+  const { fiscalYear, todayDate, appURL, darkText } =
+    useContext(UpperbarContext);
 
   useEffect(() => {
     const params = {
@@ -31,7 +32,6 @@ export default function Holiday() {
     Fetchdata(params)
       .then(function (result) {
         if (result.StatusCode === 200) {
-
           const postResult = result.Holidays ? result.Holidays : "";
           setHolidayList(postResult);
           setOriginalList(postResult);
@@ -86,13 +86,11 @@ export default function Holiday() {
 
     const srchQuery = searchInput.current.value.toLowerCase();
     if (srchQuery) {
-
       let srchResult = originalList.filter((list) => {
         return list["Holiday"].toLowerCase().includes(srchQuery);
       });
 
       if (srchResult) {
-
         setHolidayList(srchResult);
       } else {
         setHolidayList([]);
@@ -115,10 +113,12 @@ export default function Holiday() {
       <div className="container-fluid notification-wrapper mt-3 ps-4 pe-4">
         <div className="row ">
           <div className="page-header">
-            <div className="text-start  page-title">Holiday</div>
+            <div className="text-start  page-title" style={darkText}>
+              Holiday
+            </div>
             <div className="page-date">
-              <div className="sec-content">
-                Today's Date : {todayDate} <span>|</span> Fiscal Year :{" "}
+              <div className="sec-content" style={darkText}>
+                <FaRegCalendarAlt /> {todayDate} <span>|</span> Fiscal Year :{" "}
                 {fiscalYear.StartDate}
                 <span>-</span>
                 {fiscalYear.EndDate}

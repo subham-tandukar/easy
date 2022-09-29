@@ -10,10 +10,11 @@ import SubdepartmentPopupEdit from "./SubdepartmentPopupEdit";
 import Spinner from "../../../loading/spinner";
 import UpperbarContext from "../../../context/upperbar-context";
 import StaffContext from "../staffState/StaffContext";
-
+import { FaRegCalendarAlt } from "react-icons/fa";
 export default function Subdepartment() {
-  const { customStyles } = useContext(StaffContext)
-  const { fiscalYear, todayDate, appURL } = useContext(UpperbarContext);
+  const { customStyles } = useContext(StaffContext);
+  const { fiscalYear, todayDate, appURL, darkText } =
+    useContext(UpperbarContext);
   const [subdepartmentPopup, setSubdepartmentPopup] = useState(false);
   const [departmentEditPopup, setDepartmentEditPopup] = useState(false);
   const [reload, setReload] = useState(false);
@@ -41,7 +42,6 @@ export default function Subdepartment() {
 
   const [titleId, setTitleID] = useState();
   const editPop = (datas) => {
-
     setDepartmentEditPopup(true);
     setTitleID(datas.SubDepartID);
     setSubdepartmentFormValue({
@@ -74,7 +74,6 @@ export default function Subdepartment() {
       dataForm.Status = 1;
     }
     Fetchdata(dataForm).then(function (result) {
-
       if (result.StatusCode === 200) {
         subdeptList();
         let statsN = JSON.parse(JSON.stringify(newStat));
@@ -169,7 +168,6 @@ export default function Subdepartment() {
               >
                 View{" "}
               </button>{" "}
-
               <button
                 type="button"
                 class="btn btn-sm actvspan"
@@ -204,7 +202,6 @@ export default function Subdepartment() {
     };
 
     Fetchdata(params).then(function (result) {
-
       if (result.StatusCode === 200) {
         const postResult = result.SubDepList ? result.SubDepList : "";
         setLoading(false);
@@ -213,7 +210,6 @@ export default function Subdepartment() {
       } else {
         setLoading(false);
         setSubdepartmentList([]);
-
       }
     });
   };
@@ -237,7 +233,6 @@ export default function Subdepartment() {
     };
 
     Fetchdata(params).then(function (result) {
-
       if (result.StatusCode === 200) {
         const postResult = result.list ? result.list : "";
         setDepartmentList(postResult);
@@ -245,7 +240,6 @@ export default function Subdepartment() {
         setLoading(false);
       } else {
         setLoading(true);
-
       }
     });
   };
@@ -255,13 +249,11 @@ export default function Subdepartment() {
 
     const srchQuery = searchInput.current.value.toLowerCase();
     if (srchQuery) {
-
       let srchResult = originalList.filter((list) => {
         return list["SubDepartName"].toLowerCase().includes(srchQuery);
       });
 
       if (srchResult) {
-
         setSubdepartmentList(srchResult);
       } else {
         setSubdepartmentList({});
@@ -278,8 +270,6 @@ export default function Subdepartment() {
     setChoose(value);
   };
 
-
-
   return (
     <>
       <ToastContainer
@@ -293,10 +283,12 @@ export default function Subdepartment() {
       <div className="container-fluid classatten-wrapper  mt-3 ps-4 pe-4">
         <div className="row mt-3">
           <div className="page-header">
-            <div className="text-start  page-title">Sub Department</div>
+            <div className="text-start  page-title" style={darkText}>
+              Sub Department
+            </div>
             <div className="page-date">
-              <div className="sec-content">
-                Today's Date : {todayDate} <span>|</span> Fiscal Year :{" "}
+              <div className="sec-content" style={darkText}>
+                <FaRegCalendarAlt /> {todayDate} <span>|</span> Fiscal Year :{" "}
                 {fiscalYear.StartDate}
                 <span>-</span>
                 {fiscalYear.EndDate}

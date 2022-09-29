@@ -11,10 +11,11 @@ import HolidayPopup from "./HolidayPopup";
 import HolidayPopupEdit from "./HolidayPopupEdit";
 import UpperbarContext from "../../../context/upperbar-context";
 import StaffContext from "../staffState/StaffContext";
-
+import { FaRegCalendarAlt } from "react-icons/fa";
 export default function AdminHoliday() {
-  const { fiscalYear, todayDate, appURL } = useContext(UpperbarContext);
-  const { customStyles } = useContext(StaffContext)
+  const { fiscalYear, todayDate, appURL, darkText } =
+    useContext(UpperbarContext);
+  const { customStyles } = useContext(StaffContext);
   const [holidayPopup, setHolidayPopup] = useState(false);
   const [holidayEditPopup, setHolidayEditPopup] = useState(false);
   const [reload, setReload] = useState(false);
@@ -39,7 +40,6 @@ export default function AdminHoliday() {
 
   const [titleId, setTitleID] = useState();
   const editPop = (datas) => {
-
     setHolidayEditPopup(true);
     setTitleID(datas.HolidayID);
     setHolidayFormValue({
@@ -71,7 +71,6 @@ export default function AdminHoliday() {
       dataForm.Status = 1;
     }
     Fetchdata(dataForm).then(function (result) {
-
       if (result.StatusCode === 200) {
         holiList();
         let statsN = JSON.parse(JSON.stringify(newStat));
@@ -150,16 +149,13 @@ export default function AdminHoliday() {
               <button
                 type="button"
                 class="btn btn-sm editspan"
-
                 onClick={() => editPop(row)}
               >
                 View{" "}
               </button>{" "}
-
               <button
                 type="button"
                 class="btn btn-sm actvspan"
-
                 onClick={() => changeStatus(row.HolidayID, row.Status)}
               >
                 {checkStatus(row.Status)}
@@ -190,7 +186,6 @@ export default function AdminHoliday() {
     };
 
     Fetchdata(params).then(function (result) {
-
       if (result.StatusCode === 200) {
         const postResult = result.Holidays ? result.Holidays : "";
         setHolidayList(postResult);
@@ -198,7 +193,6 @@ export default function AdminHoliday() {
         setLoading(false);
       } else {
         setLoading(true);
-
       }
     });
   };
@@ -208,13 +202,11 @@ export default function AdminHoliday() {
 
     const srchQuery = searchInput.current.value.toLowerCase();
     if (srchQuery) {
-
       let srchResult = originalList.filter((list) => {
         return list["Name"].toLowerCase().includes(srchQuery);
       });
 
       if (srchResult) {
-
         setHolidayList(srchResult);
       } else {
         setHolidayList({});
@@ -237,10 +229,12 @@ export default function AdminHoliday() {
       <div className="container-fluid classatten-wrapper  mt-3 ps-4 pe-4">
         <div className="row mt-3">
           <div className="page-header">
-            <div className="text-start  page-title">Holiday</div>
+            <div className="text-start  page-title" style={darkText}>
+              Holiday
+            </div>
             <div className="page-date">
-              <div className="sec-content">
-                Today's Date : {todayDate} <span>|</span> Fiscal Year :{" "}
+              <div className="sec-content" style={darkText}>
+                <FaRegCalendarAlt /> {todayDate} <span>|</span> Fiscal Year :{" "}
                 {fiscalYear.StartDate}
                 <span>-</span>
                 {fiscalYear.EndDate}

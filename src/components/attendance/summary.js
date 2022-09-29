@@ -11,10 +11,12 @@ import YearlySummary from "./yearlySummary";
 import NepaliDate from "nepali-date-converter";
 import UpperbarContext from "../context/upperbar-context";
 import { GetCurrYear } from "../hooks/dateConvertor";
+import { FaRegCalendarAlt } from "react-icons/fa";
 
 export default function Summary() {
   const [category, setCategory] = useState("");
-  const { fiscalYear, todayDate, appURL } = useContext(UpperbarContext);
+  const { fiscalYear, todayDate, appURL, darkText } =
+    useContext(UpperbarContext);
   const [loading, setLoading] = useState(true);
   const [sYear, setSYear] = useState(GetCurrYear());
   const [DFlag, setDFlag] = useState("N");
@@ -58,10 +60,12 @@ export default function Summary() {
       <div className="container-fluid classatten-wrapper  mt-3 ps-4 pe-4">
         <div className="row mt-3">
           <div className="page-header">
-            <div className="text-start  page-title">Attendance Summary </div>
+            <div className="text-start  page-title" style={darkText}>
+              Attendance Summary{" "}
+            </div>
             <div className="page-date">
-              <div className="sec-content">
-                Today's Date : {todayDate} <span>|</span> Fiscal Year :{" "}
+              <div className="sec-content" style={darkText}>
+                <FaRegCalendarAlt /> {todayDate} <span>|</span> Fiscal Year :{" "}
                 {fiscalYear.StartDate}
                 <span>-</span>
                 {fiscalYear.EndDate}
@@ -103,19 +107,19 @@ export default function Summary() {
                     </option>
                     {DFlag === "N"
                       ? nYears.map((list) => (
-                        <>
-                          <option key={list} value={list}>
-                            {list}
-                          </option>
-                        </>
-                      ))
+                          <>
+                            <option key={list} value={list}>
+                              {list}
+                            </option>
+                          </>
+                        ))
                       : eYears.map((list) => (
-                        <>
-                          <option key={list} value={list}>
-                            {list}
-                          </option>
-                        </>
-                      ))}
+                          <>
+                            <option key={list} value={list}>
+                              {list}
+                            </option>
+                          </>
+                        ))}
                   </select>
                 </div>
               )}
@@ -126,7 +130,9 @@ export default function Summary() {
                   className=" text-center d-flex flex-column justify-content-center align-items-center"
                   style={{ margin: "10% auto", width: "120px" }}
                 >
-                  <p className="initial-msg">Please provide input!</p>
+                  <p className="initial-msg" style={darkText}>
+                    Please provide input!
+                  </p>
                 </div>
               )}
               {category === "1" && (

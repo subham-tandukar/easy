@@ -10,9 +10,10 @@ import "react-toastify/dist/ReactToastify.css";
 import UpperbarContext from "../context/upperbar-context";
 import { GetNepaliDate } from "../hooks/dateConvertor";
 import StaffContext from "../adminPanel/organization/staffState/StaffContext";
+import { FaRegCalendarAlt } from "react-icons/fa";
 
 export default function UserActivity() {
-  const { customStyles } = useContext(StaffContext)
+  const { customStyles } = useContext(StaffContext);
   const { User } = useContext(AuthContext);
   const [loading, setLoading] = useState(true);
   const [activityList, setActivityList] = useState([]);
@@ -21,7 +22,7 @@ export default function UserActivity() {
   const [ImgPreview, setImgPreview] = useState("");
   const searchInput = useRef("");
   const [DFlag, setDFlag] = useState("N");
-  const { fiscalYear, todayDate } = useContext(UpperbarContext);
+  const { fiscalYear, todayDate, darkText } = useContext(UpperbarContext);
 
   useEffect(() => {
     const params = {
@@ -32,7 +33,6 @@ export default function UserActivity() {
     Fetchdata(params)
       .then(function (result) {
         if (result.StatusCode === 200) {
-
           const postResult = result.UserAct ? result.UserAct : "";
           setActivityList(postResult);
           setOriginalList(postResult);
@@ -85,13 +85,11 @@ export default function UserActivity() {
 
     const srchQuery = searchInput.current.value.toLowerCase();
     if (srchQuery) {
-
       let srchResult = originalList.filter((list) => {
         return list["Holiday"].toLowerCase().includes(srchQuery);
       });
 
       if (srchResult) {
-
         setActivityList(srchResult);
       } else {
         setActivityList([]);
@@ -114,10 +112,12 @@ export default function UserActivity() {
       <div className="container-fluid notification-wrapper mt-3 ps-4 pe-4">
         <div className="row ">
           <div className="page-header">
-            <div className="text-start  page-title">User Activity</div>
+            <div className="text-start  page-title" style={darkText}>
+              User Activity
+            </div>
             <div className="page-date">
-              <div className="sec-content">
-                Today's Date : {todayDate} <span>|</span> Fiscal Year :{" "}
+              <div className="sec-content" style={darkText}>
+                <FaRegCalendarAlt /> {todayDate} <span>|</span> Fiscal Year :{" "}
                 {fiscalYear.StartDate}
                 <span>-</span>
                 {fiscalYear.EndDate}
@@ -144,23 +144,23 @@ export default function UserActivity() {
                 responsive
                 dense
                 striped
-              // subHeader
-              // subHeaderComponent={
-              //   <>
-              //     <div className="upper-dataTbl">
-              //       <div className="d-flex">
-              //         {/* <p className="pe-2">Search</p> */}
-              //         <input
-              //           ref={searchInput}
-              //           type="text"
-              //           class="form-control form-control-sm searchField"
-              //           placeholder="Search"
-              //           onChange={searchHandler}
-              //         />
-              //       </div>
-              //     </div>
-              //   </>
-              // }
+                // subHeader
+                // subHeaderComponent={
+                //   <>
+                //     <div className="upper-dataTbl">
+                //       <div className="d-flex">
+                //         {/* <p className="pe-2">Search</p> */}
+                //         <input
+                //           ref={searchInput}
+                //           type="text"
+                //           class="form-control form-control-sm searchField"
+                //           placeholder="Search"
+                //           onChange={searchHandler}
+                //         />
+                //       </div>
+                //     </div>
+                //   </>
+                // }
               />
             </div>
           </>

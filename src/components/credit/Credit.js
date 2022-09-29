@@ -11,6 +11,7 @@ import CreditManagementContext from "../adminPanel/CreditManagementState/CreditM
 import StaffContext from "../adminPanel/organization/staffState/StaffContext";
 import CreditPopup from "./CreditPopup";
 import { Fetchdata } from "../hooks/getData";
+import { FaRegCalendarAlt } from "react-icons/fa";
 
 export default function Credit() {
   const { fiscalYear, todayDate, darkText } = useContext(UpperbarContext);
@@ -213,7 +214,7 @@ export default function Credit() {
             </div>
             <div className="page-date">
               <div className="sec-content" style={darkText}>
-                Today's Date : {todayDate} <span>|</span> Fiscal Year :{" "}
+                <FaRegCalendarAlt /> {todayDate} <span>|</span> Fiscal Year :{" "}
                 {fiscalYear.StartDate}
                 <span>-</span>
                 {fiscalYear.EndDate}

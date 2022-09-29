@@ -12,7 +12,7 @@ import NepaliDate from "nepali-date-converter";
 import Calendar from "@sbmdkl/nepali-datepicker-reactjs";
 import "@sbmdkl/nepali-datepicker-reactjs/dist/index.css";
 import StaffContext from "../adminPanel/organization/staffState/StaffContext";
-
+import { GetNepaliDate } from "../hooks/dateConvertor";
 const EditNotificationPopup = ({
   setEditPopup,
   DFlag,
@@ -113,6 +113,7 @@ const EditNotificationPopup = ({
     let name = "pubDate";
     setNotificationValues({ ...notificationValues, [name]: bsDate });
   };
+  // console.log("ccc", notificationValues);
 
   const closePopUp = () => {
     setEditPopup(false);
@@ -629,8 +630,8 @@ const EditNotificationPopup = ({
                   value={notificationValues.pubDate}
                   onChange={handleIssueDate}
                   name="pubDate"
-                  //   hideDefaultValue={true}
-                  //   placeholder={"Select Publish Date"}
+                  hideDefaultValue={true}
+                  placeholder={notificationValues.pubDate}
                 />
               ) : (
                 <input

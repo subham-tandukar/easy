@@ -11,10 +11,12 @@ import BranchPopup from "./BranchPopup";
 import BranchPopupEdit from "./BranchPopupEdit";
 import UpperbarContext from "../../../context/upperbar-context";
 import StaffContext from "../staffState/StaffContext";
+import { FaRegCalendarAlt } from "react-icons/fa";
 
 export default function Branch() {
-  const { fiscalYear, todayDate, appURL } = useContext(UpperbarContext);
-  const { customStyles } = useContext(StaffContext)
+  const { fiscalYear, todayDate, appURL, darkText } =
+    useContext(UpperbarContext);
+  const { customStyles } = useContext(StaffContext);
   const [branchPopup, setBranchPopup] = useState(false);
   const [branchEditPopup, setBranchEditPopup] = useState(false);
   const [reload, setReload] = useState(false);
@@ -40,7 +42,6 @@ export default function Branch() {
 
   const [titleId, setTitleID] = useState();
   const editPop = (datas) => {
-
     setBranchEditPopup(true);
     setTitleID(datas.BranchID);
     setBranchFormValue({
@@ -72,7 +73,6 @@ export default function Branch() {
       dataForm.Status = 1;
     }
     Fetchdata(dataForm).then(function (result) {
-
       if (result.StatusCode === 200) {
         brnchList();
         let statsN = JSON.parse(JSON.stringify(newStat));
@@ -151,12 +151,10 @@ export default function Branch() {
               <button
                 type="button"
                 class="btn btn-sm editspan"
-
                 onClick={() => editPop(row)}
               >
                 View{" "}
               </button>{" "}
-
               <button
                 type="button"
                 class="btn btn-sm actvspan"
@@ -190,7 +188,6 @@ export default function Branch() {
     };
 
     Fetchdata(params).then(function (result) {
-
       if (result.StatusCode === 200) {
         const postResult = result.BranchLst ? result.BranchLst : "";
         setBranchList(postResult);
@@ -198,7 +195,6 @@ export default function Branch() {
         setLoading(false);
       } else {
         setLoading(true);
-
       }
     });
   };
@@ -208,7 +204,6 @@ export default function Branch() {
 
     const srchQuery = searchInput.current.value.toLowerCase();
     if (srchQuery) {
-
       let srchResult = originalList.filter((list) => {
         return (
           list["Address"].toLowerCase().includes(srchQuery) ||
@@ -217,7 +212,6 @@ export default function Branch() {
       });
 
       if (srchResult) {
-
         setBranchList(srchResult);
       } else {
         setBranchList({});
@@ -240,10 +234,12 @@ export default function Branch() {
       <div className="container-fluid classatten-wrapper  mt-3 ps-4 pe-4">
         <div className="row mt-3">
           <div className="page-header">
-            <div className="text-start  page-title">Branch</div>
+            <div className="text-start  page-title" style={darkText}>
+              Branch
+            </div>
             <div className="page-date">
-              <div className="sec-content">
-                Today's Date : {todayDate} <span>|</span> Fiscal Year :{" "}
+              <div className="sec-content" style={darkText}>
+                <FaRegCalendarAlt /> {todayDate} <span>|</span> Fiscal Year :{" "}
                 {fiscalYear.StartDate}
                 <span>-</span>
                 {fiscalYear.EndDate}

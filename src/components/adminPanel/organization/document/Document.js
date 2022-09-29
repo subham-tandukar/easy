@@ -10,10 +10,11 @@ import DocumentPopup from "./DocumentPopup";
 import DocumentEditPopup from "./DocumentEditPopup";
 import UpperbarContext from "../../../context/upperbar-context";
 import StaffContext from "../staffState/StaffContext";
-
+import { FaRegCalendarAlt } from "react-icons/fa";
 export default function Document() {
-  const { fiscalYear, todayDate, appURL } = useContext(UpperbarContext);
-  const { customStylesForImage } = useContext(StaffContext)
+  const { fiscalYear, todayDate, appURL, darkText } =
+    useContext(UpperbarContext);
+  const { customStylesForImage } = useContext(StaffContext);
   const [documentPopup, setDocumentPopup] = useState(false);
   const [documentEditPopup, setDocumentEditPopup] = useState(false);
   const [reload, setReload] = useState(false);
@@ -50,7 +51,6 @@ export default function Document() {
 
   const [titleId, setTitleID] = useState();
   const editPop = (datas) => {
-
     setDocumentEditPopup(true);
     // setTitleID(datas.DesignationID);
     // setDocumentFormValue({
@@ -85,7 +85,7 @@ export default function Document() {
   //         dataForm.Status = 1
   //     }
   //     Fetchdata(dataForm).then(function (result) {
-  //         
+  //
   //         if (result.StatusCode === 200) {
   //             desgList();
   //             let statsN = JSON.parse(JSON.stringify(newStat));
@@ -97,7 +97,7 @@ export default function Document() {
   //             } else if (dataForm.Status === 0) {
   //                 pitchStatus = "Deactivated";
   //             }
-  //             
+  //
   //             setNewStat(statsN)
   //             toast(result.Message, {
   //                 style: {
@@ -161,19 +161,17 @@ export default function Document() {
               <button
                 type="button"
                 class="btn btn-sm editspan"
-
                 onClick={() => editPop(row)}
               >
                 View{" "}
               </button>{" "}
-
               <button
                 type="button"
                 class="btn btn-sm actvspan"
 
-              // onClick={() => changeStatus(
-              //     row.DesignationID, row.Status
-              // )}
+                // onClick={() => changeStatus(
+                //     row.DesignationID, row.Status
+                // )}
               >
                 {/* {checkStatus(row.Status)} */}
               </button>
@@ -203,7 +201,6 @@ export default function Document() {
     };
 
     Fetchdata(params).then(function (result) {
-
       if (result.StatusCode === 200) {
         const postResult = result.Doclst ? result.Doclst : "";
         setDocumentList(postResult);
@@ -235,7 +232,6 @@ export default function Document() {
     };
 
     Fetchdata(params).then(function (result) {
-
       if (result.StatusCode === 200) {
         const postResult = result.list ? result.list : "";
         setDepartmentList(postResult);
@@ -267,7 +263,6 @@ export default function Document() {
     };
 
     Fetchdata(params).then(function (result) {
-
       if (result.StatusCode === 200) {
         const postResult = result.SubDepList ? result.SubDepList : "";
         setLoading(false);
@@ -275,7 +270,6 @@ export default function Document() {
       } else {
         setLoading(false);
         setSubdepartmentList([]);
-
       }
     });
   };
@@ -291,14 +285,11 @@ export default function Document() {
     };
 
     Fetchdata(dataForm).then(function (result) {
-
       if (result.StatusCode === 200) {
-
         const postResult = result.OrganizationStaffs;
         setStaffList(postResult);
       } else {
         setStaffList([]);
-
       }
     });
   }, [chooseDepartment, chooseSubDepartment]);
@@ -308,13 +299,11 @@ export default function Document() {
 
     const srchQuery = searchInput.current.value.toLowerCase();
     if (srchQuery) {
-
       let srchResult = originalList.filter((list) => {
         return list["Designation"].toLowerCase().includes(srchQuery);
       });
 
       if (srchResult) {
-
         setDocumentList(srchResult);
       } else {
         setDocumentList({});
@@ -361,10 +350,12 @@ export default function Document() {
       <div className="container-fluid classatten-wrapper  mt-3 ps-4 pe-4">
         <div className="row mt-3">
           <div className="page-header">
-            <div className="text-start  page-title">Document</div>
+            <div className="text-start  page-title" style={darkText}>
+              Document
+            </div>
             <div className="page-date">
-              <div className="sec-content">
-                Today's Date : {todayDate} <span>|</span> Fiscal Year :{" "}
+              <div className="sec-content" style={darkText}>
+                <FaRegCalendarAlt /> {todayDate} <span>|</span> Fiscal Year :{" "}
                 {fiscalYear.StartDate}
                 <span>-</span>
                 {fiscalYear.EndDate}

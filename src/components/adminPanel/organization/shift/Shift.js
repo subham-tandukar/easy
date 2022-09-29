@@ -10,10 +10,11 @@ import ShiftEditPopup from "./ShiftEditPopup";
 import Spinner from "../../../loading/spinner";
 import UpperbarContext from "../../../context/upperbar-context";
 import StaffContext from "../staffState/StaffContext";
-
+import { FaRegCalendarAlt } from "react-icons/fa";
 export default function Shift() {
-  const { fiscalYear, todayDate, appURL } = useContext(UpperbarContext);
-  const { customStyles } = useContext(StaffContext)
+  const { fiscalYear, todayDate, appURL, darkText } =
+    useContext(UpperbarContext);
+  const { customStyles } = useContext(StaffContext);
   const [shiftPopup, setShiftPopup] = useState(false);
   const [shiftEditPopup, setShiftEditPopup] = useState(false);
   const [reload, setReload] = useState(false);
@@ -43,8 +44,6 @@ export default function Shift() {
 
   const [titleId, setTitleID] = useState();
   const editPop = (datas) => {
-
-
     setShiftEditPopup(true);
     setTitleID(datas.ShiftID);
     setShiftFormValue({
@@ -66,8 +65,6 @@ export default function Shift() {
   const [newStat, setNewStat] = useState(stateInitial);
 
   const deactivateDepart = (ID, IsActive) => {
-
-
     const dataForm = {
       ComID: User.CompanyId,
       StaffID: User.UID.toString(),
@@ -85,7 +82,6 @@ export default function Shift() {
       dataForm.Status = "1";
     }
     Fetchdata(dataForm).then(function (result) {
-
       if (result.StatusCode === 200) {
         shftList();
         let statsN = JSON.parse(JSON.stringify(newStat));
@@ -189,16 +185,13 @@ export default function Shift() {
               <button
                 type="button"
                 class="btn btn-sm editspan"
-
                 onClick={() => editPop(row)}
               >
                 View{" "}
               </button>{" "}
-
               <button
                 type="button"
                 class="btn btn-sm actvspan"
-
                 onClick={() => changeStatus(row.ShiftID, row.Status)}
               >
                 {checkStatus(row.Status)}
@@ -209,7 +202,6 @@ export default function Shift() {
       },
     },
   ];
-
 
   //API to hit Shift list
   const [shiftList, setShiftList] = useState([]);
@@ -229,9 +221,7 @@ export default function Shift() {
       FetchURL: `${appURL}api/admin/shift`,
     };
 
-
     Fetchdata(params).then(function (result) {
-
       if (result.StatusCode === 200) {
         const postResult = result.ShiftList ? result.ShiftList : "";
         setShiftList(postResult);
@@ -239,7 +229,6 @@ export default function Shift() {
       } else {
         setLoading(false);
         setShiftList([]);
-
       }
     });
   };
@@ -257,10 +246,12 @@ export default function Shift() {
       <div className="container-fluid classatten-wrapper  mt-3 ps-4 pe-4">
         <div className="row mt-3">
           <div className="page-header">
-            <div className="text-start  page-title">Shift</div>
+            <div className="text-start  page-title" style={darkText}>
+              Shift
+            </div>
             <div className="page-date">
-              <div className="sec-content">
-                Today's Date : {todayDate} <span>|</span> Fiscal Year :{" "}
+              <div className="sec-content" style={darkText}>
+                <FaRegCalendarAlt /> {todayDate} <span>|</span> Fiscal Year :{" "}
                 {fiscalYear.StartDate}
                 <span>-</span>
                 {fiscalYear.EndDate}

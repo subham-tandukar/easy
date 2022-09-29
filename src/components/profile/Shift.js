@@ -1,9 +1,10 @@
 import React from "react";
+import { useContext } from "react";
+import UpperbarContext from "../context/upperbar-context";
 import "./profile.css";
 
 function Shift({ userDetails }) {
-
-
+  const { darkText } = useContext(UpperbarContext);
   const services = [
     {
       title: "Shift",
@@ -58,7 +59,7 @@ function Shift({ userDetails }) {
       title: "Allowed Early Out",
       body:
         userDetails.AllowedEarlyOut === null ||
-          userDetails.AllowedEarlyOut === "-"
+        userDetails.AllowedEarlyOut === "-"
           ? "Not Mentioned"
           : userDetails.AllowedEarlyOut,
     },
@@ -70,8 +71,10 @@ function Shift({ userDetails }) {
         {services.map((item, index) => {
           return (
             <article key={index} className="basic-info">
-              <h6 className="basic-title">{item.title}</h6>
-              <p style={{ fontSize: "14px" }}>{item.body}</p>
+              <h6 className="basic-title" style={darkText}>
+                {item.title}
+              </h6>
+              <p style={darkText}>{item.body}</p>
             </article>
           );
         })}

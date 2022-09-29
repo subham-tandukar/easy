@@ -36,7 +36,7 @@
 
 .page-title {
   /* border: 1px solid red; */
-  color: #656565;
+  color: #000;
   font-size: 23px;
 }
 .page-date {
@@ -45,7 +45,7 @@
   padding: 5px;
   font-size: 14px;
   font-weight: 600;
-  color: #656565;
+  color: #000;
 }
 
 .title-hr {

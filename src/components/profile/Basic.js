@@ -1,7 +1,10 @@
 import React from "react";
+import { useContext } from "react";
+import UpperbarContext from "../context/upperbar-context";
 import "./profile.css";
 
 function Basic({ userDetails }) {
+  const { darkText } = useContext(UpperbarContext);
   const services = [
     {
       title: "Company ID",
@@ -127,8 +130,10 @@ function Basic({ userDetails }) {
         {services.map((item, index) => {
           return (
             <article key={index} className="basic-info">
-              <h6 className="basic-title">{item.title}</h6>
-              <p style={{ fontSize: "14px" }}>{item.body}</p>
+              <h6 className="basic-title" style={darkText}>
+                {item.title}
+              </h6>
+              <p style={darkText}>{item.body}</p>
             </article>
           );
         })}

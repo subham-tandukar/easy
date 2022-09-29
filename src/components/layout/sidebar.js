@@ -108,15 +108,15 @@ export default function Sidebar({
   const handleMouseOver = () => {
     setHide(false);
     setPadding(false);
-    if (mode === "light") {
-      $(".page-title").css({ color: "#656565" });
-      $(".page-date").css({ color: "#656565" });
-      $(".title-hr").css({ color: "#656565" });
-    } else {
-      $(".page-title").css({ color: "#fff" });
-      $(".page-date").css({ color: "#fff" });
-      $(".title-hr").css({ color: "#fff" });
-    }
+    // if (mode === "light") {
+    //   $(".page-title").css({ color: "#656565" });
+    //   $(".page-date").css({ color: "#656565" });
+    //   $(".title-hr").css({ color: "#656565" });
+    // } else {
+    //   $(".page-title").css({ color: "#fff" });
+    //   $(".page-date").css({ color: "#fff" });
+    //   $(".title-hr").css({ color: "#fff" });
+    // }
   };
   const handleMouseLeave = () => {
     setHide(!hide);

@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import "./viewNotificationPopup.css";
 import CloseIcon from "../../images/CloseIcon.svg";
 import UpperbarContext from "../context/upperbar-context";
-
+import { GetNepaliDate } from "../hooks/dateConvertor";
 export default function ViewNotificationPopup({
   notification,
   setViewPopup,
@@ -45,7 +45,10 @@ export default function ViewNotificationPopup({
                     Created By : {notification.CreatedBy}
                   </div>
                   <div className="created-at" style={{ fontSize: "12px" }}>
-                    Published Date : {notification.PublishedDate}
+                    Published Date :
+                    {DFlag === "N"
+                      ? GetNepaliDate(notification.PublishedDate)
+                      : notification.PublishedDate}
                   </div>
                 </div>
               </div>

@@ -77,6 +77,7 @@ export default function Layout(props) {
     $(".pro-inner-list-item").css({ background: "#004aad" });
     $(".fwKvpK").css({ background: "#fff" });
     $(".fwKvpK").css({ color: "#555" });
+    $(".MuiButton-label").css({ color: "#555" });
     $(".rdt_TableCol").css({ borderLeft: "1px solid #e1e2e3" });
     $(".rdt_TableCell").css({ borderLeft: "1px solid #e1e2e3" });
     $(".rdt_TableRow").css({
@@ -105,6 +106,7 @@ export default function Layout(props) {
       borderLeft: "1px solid #fff",
       borderBottom: "1px solid #fff",
     });
+    $(".MuiButton-label").css({ color: "#fff" });
     $(".rdt_TableCol ").css({ background: "#040412" });
     $(".TUEFO ").css({ background: "#040423" });
     $(".rdt_TableRow").css({ background: "#040423" });

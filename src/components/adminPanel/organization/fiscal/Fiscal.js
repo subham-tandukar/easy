@@ -11,10 +11,11 @@ import FiscalPopup from "./FiscalPopup";
 import FiscalPopupEdit from "./FiscalPopupEdit";
 import UpperbarContext from "../../../context/upperbar-context";
 import StaffContext from "../staffState/StaffContext";
-
+import { FaRegCalendarAlt } from "react-icons/fa";
 export default function Fiscal() {
-  const { fiscalYear, todayDate, appURL } = useContext(UpperbarContext);
-  const { customStyles } = useContext(StaffContext)
+  const { fiscalYear, todayDate, appURL, darkText } =
+    useContext(UpperbarContext);
+  const { customStyles } = useContext(StaffContext);
   const [fiscalPopup, setFiscalPopup] = useState(false);
   const [fiscalEditPopup, setFiscalEditPopup] = useState(false);
   const [reload, setReload] = useState(false);
@@ -44,7 +45,6 @@ export default function Fiscal() {
 
   const [titleId, setTitleID] = useState();
   const editPop = (datas) => {
-
     setFiscalEditPopup(true);
     setTitleID(datas.FID);
     setFiscalFormValue({
@@ -77,7 +77,6 @@ export default function Fiscal() {
       dataForm.Status = 1;
     }
     Fetchdata(dataForm).then(function (result) {
-
       if (result.StatusCode === 200) {
         fscList();
         let statsN = JSON.parse(JSON.stringify(newStat));
@@ -162,16 +161,13 @@ export default function Fiscal() {
               <button
                 type="button"
                 class="btn btn-sm editspan"
-
                 onClick={() => editPop(row)}
               >
                 View{" "}
               </button>{" "}
-
               <button
                 type="button"
                 class="btn btn-sm actvspan"
-
                 onClick={() => changeStatus(row.FID, row.Status)}
               >
                 {checkStatus(row.Status)}
@@ -202,7 +198,6 @@ export default function Fiscal() {
     };
 
     Fetchdata(params).then(function (result) {
-
       if (result.StatusCode === 200) {
         const postResult = result.FiscalYearlst ? result.FiscalYearlst : "";
         setFiscalList(postResult);
@@ -210,7 +205,6 @@ export default function Fiscal() {
         setLoading(false);
       } else {
         setLoading(true);
-
       }
     });
   };
@@ -220,7 +214,6 @@ export default function Fiscal() {
 
     const srchQuery = searchInput.current.value.toLowerCase();
     if (srchQuery) {
-
       let srchResult = originalList.filter((list) => {
         return (
           list["Address"].toLowerCase().includes(srchQuery) ||
@@ -229,7 +222,6 @@ export default function Fiscal() {
       });
 
       if (srchResult) {
-
         setFiscalList(srchResult);
       } else {
         setFiscalList({});
@@ -252,10 +244,12 @@ export default function Fiscal() {
       <div className="container-fluid classatten-wrapper  mt-3 ps-4 pe-4">
         <div className="row mt-3">
           <div className="page-header">
-            <div className="text-start  page-title">Fiscal</div>
+            <div className="text-start  page-title" style={darkText}>
+              Fiscal
+            </div>
             <div className="page-date">
-              <div className="sec-content">
-                Today's Date : {todayDate} <span>|</span> Fiscal Year :{" "}
+              <div className="sec-content" style={darkText}>
+                <FaRegCalendarAlt /> {todayDate} <span>|</span> Fiscal Year :{" "}
                 {fiscalYear.StartDate}
                 <span>-</span>
                 {fiscalYear.EndDate}

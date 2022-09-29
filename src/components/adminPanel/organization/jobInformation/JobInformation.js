@@ -10,10 +10,12 @@ import JobPopup from "./JobPopup";
 import JobEditPopup from "./JobEditPopup";
 import UpperbarContext from "../../../context/upperbar-context";
 import StaffContext from "../staffState/StaffContext";
+import { FaRegCalendarAlt } from "react-icons/fa";
 
 export default function JobInformation() {
-  const { fiscalYear, todayDate, appURL } = useContext(UpperbarContext);
-  const { customStyles } = useContext(StaffContext)
+  const { fiscalYear, todayDate, appURL, darkText } =
+    useContext(UpperbarContext);
+  const { customStyles } = useContext(StaffContext);
   const [jobPopup, setJobPopup] = useState(false);
   const [jobEditPopup, setJobEditPopup] = useState(false);
   const [reload, setReload] = useState(false);
@@ -50,7 +52,6 @@ export default function JobInformation() {
 
   const [titleId, setTitleID] = useState();
   const editPop = (datas) => {
-
     setJobEditPopup(true);
     setTitleID(datas.JobID);
     setJobFormValue({
@@ -89,7 +90,6 @@ export default function JobInformation() {
       dataForm.Status = 1;
     }
     Fetchdata(dataForm).then(function (result) {
-
       if (result.StatusCode === 200) {
         jobInfoList();
         let statsN = JSON.parse(JSON.stringify(newStat));
@@ -192,16 +192,13 @@ export default function JobInformation() {
               <button
                 type="button"
                 class="btn btn-sm editspan"
-
                 onClick={() => editPop(row)}
               >
                 View{" "}
               </button>{" "}
-
               <button
                 type="button"
                 class="btn btn-sm actvspan"
-
                 onClick={() => changeStatus(row.JobID, row.Status)}
               >
                 {checkStatus(row.Status)}
@@ -233,7 +230,6 @@ export default function JobInformation() {
     };
 
     Fetchdata(params).then(function (result) {
-
       if (result.StatusCode === 200) {
         const postResult = result.JobInfo ? result.JobInfo : "";
         setJobList(postResult);
@@ -265,7 +261,6 @@ export default function JobInformation() {
     };
 
     Fetchdata(params).then(function (result) {
-
       if (result.StatusCode === 200) {
         const postResult = result.list ? result.list : "";
         setDepartmentList(postResult);
@@ -297,7 +292,6 @@ export default function JobInformation() {
     };
 
     Fetchdata(params).then(function (result) {
-
       if (result.StatusCode === 200) {
         const postResult = result.SubDepList ? result.SubDepList : "";
         setLoading(false);
@@ -305,7 +299,6 @@ export default function JobInformation() {
       } else {
         setLoading(false);
         setSubdepartmentList([]);
-
       }
     });
   };
@@ -321,14 +314,11 @@ export default function JobInformation() {
     };
 
     Fetchdata(dataForm).then(function (result) {
-
       if (result.StatusCode === 200) {
-
         const postResult = result.OrganizationStaffs;
         setStaffList(postResult);
       } else {
         setStaffList([]);
-
       }
     });
   }, [chooseDepartment, chooseSubDepartment]);
@@ -338,7 +328,6 @@ export default function JobInformation() {
 
     const srchQuery = searchInput.current.value.toLowerCase();
     if (srchQuery) {
-
       let srchResult = originalList.filter((list) => {
         return (
           list["Designation"].toLowerCase().includes(srchQuery) ||
@@ -348,7 +337,6 @@ export default function JobInformation() {
       });
 
       if (srchResult) {
-
         setJobList(srchResult);
       } else {
         setJobList({});
@@ -395,10 +383,12 @@ export default function JobInformation() {
       <div className="container-fluid classatten-wrapper  mt-3 ps-4 pe-4">
         <div className="row mt-3">
           <div className="page-header">
-            <div className="text-start  page-title">Job Information</div>
+            <div className="text-start  page-title" style={darkText}>
+              Job Information
+            </div>
             <div className="page-date">
-              <div className="sec-content">
-                Today's Date : {todayDate} <span>|</span> Fiscal Year :{" "}
+              <div className="sec-content" style={darkText}>
+                <FaRegCalendarAlt /> {todayDate} <span>|</span> Fiscal Year :{" "}
                 {fiscalYear.StartDate}
                 <span>-</span>
                 {fiscalYear.EndDate}

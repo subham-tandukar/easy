@@ -13,7 +13,7 @@ import AAddAttendance from "./addAttendance";
 import { Fetchdata } from "../../hooks/getData";
 import { GetToDate } from "../../hooks/dateConvertor";
 import StaffContext from "../organization/staffState/StaffContext";
-
+import { FaRegCalendarAlt } from "react-icons/fa";
 export default function AAttendanceReport() {
   const { User } = useContext(AuthContext);
 
@@ -387,7 +387,7 @@ export default function AAttendanceReport() {
             </div>
             <div className="page-date">
               <div className="sec-content" style={darkText}>
-                Today's Date : {todayDate} <span>|</span> Fiscal Year :{" "}
+                <FaRegCalendarAlt /> {todayDate} <span>|</span> Fiscal Year :{" "}
                 {fiscalYear.StartDate}
                 <span>-</span>
                 {fiscalYear.EndDate}

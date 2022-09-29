@@ -14,6 +14,7 @@ import { GetNepaliDate } from "../hooks/dateConvertor";
 import StaffContext from "../adminPanel/organization/staffState/StaffContext";
 import NotificationPopup from "./NotificationPopup";
 import EditNotificationPopup from "./editNotificationPopup";
+import { FaRegCalendarAlt } from "react-icons/fa";
 
 export default function Notification() {
   const {
@@ -53,12 +54,13 @@ export default function Notification() {
 
   const [submit, setSubmit] = useState(false);
   const searchInput = useRef("");
-  const { fiscalYear, todayDate, appURL, userDetails } =
+  const { fiscalYear, todayDate, appURL, userDetails, darkText } =
     useContext(UpperbarContext);
 
   const addNotification = () => {
     setNotificationPopup(true);
-    setNotificationValues(notificationValues);
+    setNotificationValues("");
+    setNotificationErrors({});
   };
 
   const handleAll = (e) => {
@@ -122,13 +124,12 @@ export default function Notification() {
       name: "Date",
       // grow: 1,
       center: true,
-      selector: (row) =>
-        {
-          return DFlag === "N"
-            ? GetNepaliDate(row.PublishedDate)
-            : row.PublishedDate;
-        },
-        // row.PublishedDate,
+      selector: (row) => {
+        return DFlag === "N"
+          ? GetNepaliDate(row.PublishedDate)
+          : row.PublishedDate;
+      },
+      // row.PublishedDate,
     },
     // {
     //   name: "Created By",
@@ -339,10 +340,12 @@ export default function Notification() {
       <div className="container-fluid notification-wrapper mt-3 ps-4 pe-4">
         <div className="row ">
           <div className="page-header">
-            <div className="text-start  page-title">All Notification</div>
+            <div className="text-start  page-title" style={darkText}>
+              All Notification
+            </div>
             <div className="page-date">
-              <div className="sec-content">
-                Today's Date : {todayDate} <span>|</span> Fiscal Year :{" "}
+              <div className="sec-content" style={darkText}>
+                <FaRegCalendarAlt /> {todayDate} <span>|</span> Fiscal Year :{" "}
                 {fiscalYear.StartDate}
                 <span>-</span>
                 {fiscalYear.EndDate}
@@ -354,23 +357,6 @@ export default function Notification() {
 
         <>
           <div className="sec-dataTable">
-            {userDetails.IsManager !== 0 && (
-              <div className="upper-dataTbl">
-                <div className="btn-addlnote mb-3">
-                  <button
-                    type="button"
-                    class="btn btn-sm"
-                    style={{
-                      background: "var(--button-color)",
-                      color: "white",
-                    }}
-                    onClick={addNotification}
-                  >
-                    Add Notification
-                  </button>
-                </div>
-              </div>
-            )}
             {loading ? (
               <>
                 <Spinner />
@@ -392,53 +378,24 @@ export default function Notification() {
                 subHeader
                 subHeaderComponent={
                   <>
-                    <div className="upper-dataTbl me-2">
-                      <select
-                        style={{ fontSize: "11px" }}
-                        name="all"
-                        value={chooseNotifyFlag}
-                        onChange={handleAll}
-                        className="form-control form-control-sm searchField"
-                      >
-                        <option value="a">All</option>
-                        <option value="d">Department Wise</option>
-                        <option value="s">Sub Department Wise</option>
-                        {/* <option value="i">Individual</option> */}
-                        <option value="de">Designation</option>
-                      </select>
-                    </div>
-                    {chooseNotifyFlag === "d" && (
-                      <div className="upper-dataTbl me-2">
+                    <div className="uk-flex uk-flex-wrap">
+                      <div className="upper-dataTbl me-2 mb-2">
                         <select
                           style={{ fontSize: "11px" }}
-                          name="department"
-                          value={chooseNotifyDepartment}
-                          onChange={handleDepartment}
+                          name="all"
+                          value={chooseNotifyFlag}
+                          onChange={handleAll}
                           className="form-control form-control-sm searchField"
                         >
-                          <option
-                            value="0"
-                            disabled
-                            selected
-                            style={{ fontSize: "11px" }}
-                          >
-                            Select Department
-                          </option>
-                          {departmentList.map((item) => (
-                            <option
-                              key={item.DepartmentID}
-                              value={item.DepartmentID}
-                            >
-                              {item.Department}
-                            </option>
-                          ))}
+                          <option value="a">All</option>
+                          <option value="d">Department Wise</option>
+                          <option value="s">Sub Department Wise</option>
+                          {/* <option value="i">Individual</option> */}
+                          <option value="de">Designation</option>
                         </select>
                       </div>
-                    )}
-
-                    {chooseNotifyFlag === "s" && (
-                      <>
-                        <div className="upper-dataTbl me-2">
+                      {chooseNotifyFlag === "d" && (
+                        <div className="upper-dataTbl me-2 mb-2">
                           <select
                             style={{ fontSize: "11px" }}
                             name="department"
@@ -464,131 +421,180 @@ export default function Notification() {
                             ))}
                           </select>
                         </div>
-                        <div className="upper-dataTbl me-2">
-                          <select
-                            style={{ fontSize: "11px" }}
-                            name="subDepartment"
-                            value={chooseNotifySubDepartment}
-                            onChange={handleSubDepartment}
-                            className="form-control form-control-sm searchField"
-                          >
-                            <option
-                              value="0"
-                              disabled
-                              selected
-                              style={{ fontSize: "11px" }}
-                            >
-                              Select Sub Department
-                            </option>
-                            {subdepartmentList.map((item) => (
-                              <option
-                                key={item.SubDepartID}
-                                value={item.SubDepartID}
-                              >
-                                {item.SubDepartName}
-                              </option>
-                            ))}
-                          </select>
-                        </div>
-                      </>
-                    )}
+                      )}
 
-                    {chooseNotifyFlag === "de" && (
-                      <>
-                        <div className="upper-dataTbl me-2">
-                          <select
-                            style={{ fontSize: "11px" }}
-                            name="department"
-                            value={chooseNotifyDepartment}
-                            onChange={handleDepartment}
-                            className="form-control form-control-sm searchField"
-                          >
-                            <option
-                              value="0"
-                              disabled
-                              selected
+                      {chooseNotifyFlag === "s" && (
+                        <>
+                          <div className="upper-dataTbl me-2 mb-2">
+                            <select
                               style={{ fontSize: "11px" }}
+                              name="department"
+                              value={chooseNotifyDepartment}
+                              onChange={handleDepartment}
+                              className="form-control form-control-sm searchField"
                             >
-                              Select Department
-                            </option>
-                            {departmentList.map((item) => (
                               <option
-                                key={item.DepartmentID}
-                                value={item.DepartmentID}
+                                value="0"
+                                disabled
+                                selected
+                                style={{ fontSize: "11px" }}
                               >
-                                {item.Department}
+                                Select Department
                               </option>
-                            ))}
-                          </select>
-                        </div>
-                        <div className="upper-dataTbl me-2">
-                          <select
-                            style={{ fontSize: "11px" }}
-                            name="subDepartment"
-                            value={chooseNotifySubDepartment}
-                            onChange={handleSubDepartment}
-                            className="form-control form-control-sm searchField"
-                          >
-                            <option
-                              value="0"
-                              disabled
-                              selected
+                              {departmentList.map((item) => (
+                                <option
+                                  key={item.DepartmentID}
+                                  value={item.DepartmentID}
+                                >
+                                  {item.Department}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+                          <div className="upper-dataTbl me-2 mb-2">
+                            <select
                               style={{ fontSize: "11px" }}
+                              name="subDepartment"
+                              value={chooseNotifySubDepartment}
+                              onChange={handleSubDepartment}
+                              className="form-control form-control-sm searchField"
                             >
-                              Select Sub Department
-                            </option>
-                            {subdepartmentList.map((item) => (
                               <option
-                                key={item.SubDepartID}
-                                value={item.SubDepartID}
+                                value="0"
+                                disabled
+                                selected
+                                style={{ fontSize: "11px" }}
                               >
-                                {item.SubDepartName}
+                                Select Sub Department
                               </option>
-                            ))}
-                          </select>
-                        </div>
+                              {subdepartmentList.map((item) => (
+                                <option
+                                  key={item.SubDepartID}
+                                  value={item.SubDepartID}
+                                >
+                                  {item.SubDepartName}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+                        </>
+                      )}
 
-                        <div className="upper-dataTbl me-2">
-                          <select
-                            style={{ fontSize: "11px" }}
-                            name="designation"
-                            value={chooseNotifyDesignation}
-                            onChange={handleDesignation}
-                            className="form-control form-control-sm searchField"
-                          >
-                            <option
-                              value="0"
-                              disabled
-                              selected
+                      {chooseNotifyFlag === "de" && (
+                        <>
+                          <div className="upper-dataTbl me-2 mb-2">
+                            <select
                               style={{ fontSize: "11px" }}
+                              name="department"
+                              value={chooseNotifyDepartment}
+                              onChange={handleDepartment}
+                              className="form-control form-control-sm searchField"
                             >
-                              Select Designation
-                            </option>
-                            {/* <option value="-1">All</option> */}
-                            {designationList.map((item) => (
                               <option
-                                key={item.DesignationID}
-                                value={item.DesignationID}
+                                value="0"
+                                disabled
+                                selected
+                                style={{ fontSize: "11px" }}
                               >
-                                {item.Designation}
+                                Select Department
                               </option>
-                            ))}
-                          </select>
-                        </div>
-                      </>
-                    )}
+                              {departmentList.map((item) => (
+                                <option
+                                  key={item.DepartmentID}
+                                  value={item.DepartmentID}
+                                >
+                                  {item.Department}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+                          <div className="upper-dataTbl me-2 mb-2">
+                            <select
+                              style={{ fontSize: "11px" }}
+                              name="subDepartment"
+                              value={chooseNotifySubDepartment}
+                              onChange={handleSubDepartment}
+                              className="form-control form-control-sm searchField"
+                            >
+                              <option
+                                value="0"
+                                disabled
+                                selected
+                                style={{ fontSize: "11px" }}
+                              >
+                                Select Sub Department
+                              </option>
+                              {subdepartmentList.map((item) => (
+                                <option
+                                  key={item.SubDepartID}
+                                  value={item.SubDepartID}
+                                >
+                                  {item.SubDepartName}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
 
-                    <div className="upper-dataTbl">
-                      <div className="d-flex">
-                        {/* <p className="pe-2">Search</p> */}
-                        <input
-                          ref={searchInput}
-                          type="text"
-                          class="form-control form-control-sm searchField"
-                          placeholder="Search"
-                          onChange={searchHandler}
-                        />
+                          <div className="upper-dataTbl me-2 mb-2">
+                            <select
+                              style={{ fontSize: "11px" }}
+                              name="designation"
+                              value={chooseNotifyDesignation}
+                              onChange={handleDesignation}
+                              className="form-control form-control-sm searchField"
+                            >
+                              <option
+                                value="0"
+                                disabled
+                                selected
+                                style={{ fontSize: "11px" }}
+                              >
+                                Select Designation
+                              </option>
+                              {/* <option value="-1">All</option> */}
+                              {designationList.map((item) => (
+                                <option
+                                  key={item.DesignationID}
+                                  value={item.DesignationID}
+                                >
+                                  {item.Designation}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+                        </>
+                      )}
+
+                      <div className="upper-dataTbl mb-2 me-2">
+                        <div className="d-flex">
+                          {/* <p className="pe-2">Search</p> */}
+                          <input
+                            ref={searchInput}
+                            type="text"
+                            class="form-control form-control-sm searchField"
+                            placeholder="Search"
+                            onChange={searchHandler}
+                          />
+                        </div>
                       </div>
+
+                      {userDetails.IsManager !== 0 && (
+                        <div className="upper-dataTbl">
+                          <div className="btn-addlnote me-2 mb-2 mb-2">
+                            <button
+                              type="button"
+                              class="btn btn-sm"
+                              style={{
+                                background: "var(--button-color)",
+                                color: "white",
+                              }}
+                              onClick={addNotification}
+                            >
+                              Add Notification
+                            </button>
+                          </div>
+                        </div>
+                      )}
                     </div>
                   </>
                 }

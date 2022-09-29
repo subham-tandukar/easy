@@ -7,6 +7,7 @@ import UpperbarContext from "../../../context/upperbar-context";
 import { defaultThemes } from "react-data-table-component";
 // import { getBoundingClientObj } from "react-select/dist/declarations/src/utils";
 import { GetEnglishDate } from "../../../hooks/dateConvertor";
+import { GetNepaliDate } from "../../../hooks/dateConvertor";
 function StaffState(props) {
   const { User } = useContext(AuthContext);
   const { appURL } = useContext(UpperbarContext);
@@ -108,13 +109,15 @@ function StaffState(props) {
       description: data.Description,
       actionButton: data.AcBtn,
       actionUrl: data.AcUrl,
-      pubDate: data.PublishedDate,
+      pubDate:
+        DFlag === "N" ? GetNepaliDate(data.PublishedDate) : data.PublishedDate,
     });
     setImage(data.Image);
     setEditPopup(true);
   };
 
   // to edit notification
+
   const editdata = () => {
     const dataForm = {
       ComID: User.CompanyId,

@@ -11,6 +11,7 @@ import UpperbarContext from "../../context/upperbar-context";
 import AYearlySummary from "./yearlySummary";
 import AMonthlySummary from "./monthSummary";
 import { GetCurrMonth, GetCurrYear } from "../../hooks/dateConvertor";
+import { FaRegCalendarAlt } from "react-icons/fa";
 
 export default function AdminSummary() {
   const { User } = useContext(AuthContext);
@@ -126,7 +127,7 @@ export default function AdminSummary() {
             </div>
             <div className="page-date">
               <div className="sec-content" style={darkText}>
-                Today's Date : {todayDate} <span>|</span> Fiscal Year :{" "}
+                <FaRegCalendarAlt /> {todayDate} <span>|</span> Fiscal Year :{" "}
                 {fiscalYear.StartDate}
                 <span>-</span>
                 {fiscalYear.EndDate}
@@ -306,7 +307,9 @@ export default function AdminSummary() {
                   className=" text-center d-flex flex-column justify-content-center align-items-center"
                   style={{ margin: "10% auto", width: "120px" }}
                 >
-                  <p className="initial-msg" style={darkText}>Please provide input!</p>
+                  <p className="initial-msg" style={darkText}>
+                    Please provide input!
+                  </p>
                 </div>
               )}
               {category === "1" && sYear && department && subDepartment && (

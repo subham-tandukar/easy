@@ -18,10 +18,11 @@ import {
 } from "../hooks/dateConvertor";
 import AddCustomerSupport from "./addCustomerSupport";
 import StaffContext from "../adminPanel/organization/staffState/StaffContext";
+import { FaRegCalendarAlt } from "react-icons/fa";
 
 export default function CustomerSupport() {
   const { User } = useContext(AuthContext);
-  const { customStylesForImage } = useContext(StaffContext)
+  const { customStylesForImage } = useContext(StaffContext);
 
   const initalvalue = {
     product: "-1",
@@ -39,7 +40,8 @@ export default function CustomerSupport() {
   const [reload, setReload] = useState(false);
   const [addPopup, setAddPopup] = useState(false);
   const [DFlag, setDFlag] = useState("N");
-  const { fiscalYear, todayDate, appURL } = useContext(UpperbarContext);
+  const { fiscalYear, todayDate, appURL, darkText } =
+    useContext(UpperbarContext);
   const [initialLoad, setInitialLoad] = useState(true);
   const [orgPrdList, setOrgPrdList] = useState([]);
 
@@ -167,7 +169,7 @@ export default function CustomerSupport() {
     // },
   ];
 
-  // 
+  //
   useEffect(() => {
     const dataForm = {
       FetchURL: `${appURL}api/org-type?ComID=${User.CompanyId}&BranchID=${User.BranchId}`,
@@ -175,13 +177,10 @@ export default function CustomerSupport() {
     };
 
     Fetchdata(dataForm).then(function (result) {
-
       if (result.StatusCode === 200) {
-
         const postResult = result.OrganizationTypes;
         setOrgTypeList(postResult);
       } else {
-
       }
     });
   }, []);
@@ -193,13 +192,10 @@ export default function CustomerSupport() {
     };
 
     Fetchdata(dataForm).then(function (result) {
-
       if (result.StatusCode === 200) {
-
         const postResult = result.OrganizationProducts;
         setOrgPrdList(postResult);
       } else {
-
       }
     });
   }, []);
@@ -211,14 +207,12 @@ export default function CustomerSupport() {
   };
 
   useEffect(() => {
-    // 
+    //
     if (formValues.from && formValues.to) {
       let enFrom =
         DFlag === "N" ? GetEnglishDate(formValues.from) : formValues.from;
 
-
       let enTo = DFlag === "N" ? GetEnglishDate(formValues.to) : formValues.to;
-
 
       const params = {
         FetchURL: `${appURL}api/csupport-list?ComID=${User.CompanyId}&UserID=${User.UID}&OrgID=${formValues.orgType}&Supportstatus=${formValues.status}&Supportmedium=${formValues.medium}&Fromdate=${enFrom}&Todate=${enTo}&ProductID=${formValues.product}`,
@@ -228,7 +222,6 @@ export default function CustomerSupport() {
       Fetchdata(params)
         .then(function (result) {
           if (result.StatusCode === 200) {
-
             const postResult = result.Customerlist ? result.Customerlist : "";
             setCSupportList(postResult);
             setOriginalList(postResult);
@@ -284,10 +277,12 @@ export default function CustomerSupport() {
       <div className="container-fluid flwlst-wrapper  mt-3 ps-4 pe-4">
         <div className="row mt-3">
           <div className="page-header">
-            <div className="text-start  page-title">Customer Support</div>
+            <div className="text-start  page-title" style={darkText}>
+              Customer Support
+            </div>
             <div className="page-date">
-              <div className="sec-content">
-                Today's Date : {todayDate} <span>|</span> Fiscal Year :{" "}
+              <div className="sec-content" style={darkText}>
+                <FaRegCalendarAlt /> {todayDate} <span>|</span> Fiscal Year :{" "}
                 {fiscalYear.StartDate}
                 <span>-</span>
                 {fiscalYear.EndDate}
@@ -300,7 +295,7 @@ export default function CustomerSupport() {
           <div className="sec-dataTable">
             <div className="row mb-1 ">
               <div className="col-md-2 col-sm-2 col-lg-2 sel-month">
-                <div className="text-start mb-1" style={{ fontSize: "12px" }}>
+                <div className="text-start mb-1" style={darkText}>
                   Organization
                 </div>
                 <select
@@ -325,7 +320,7 @@ export default function CustomerSupport() {
               </div>
 
               <div className="col-md-2 col-sm-2 col-lg-2 sel-month">
-                <div className="text-start mb-1" style={{ fontSize: "12px" }}>
+                <div className="text-start mb-1" style={darkText}>
                   Product
                 </div>
                 <select
@@ -350,7 +345,7 @@ export default function CustomerSupport() {
               </div>
 
               <div className="col-md-2 col-sm-2 col-lg-2 sel-month">
-                <div className="text-start mb-1" style={{ fontSize: "12px" }}>
+                <div className="text-start mb-1" style={darkText}>
                   Status
                 </div>
                 <select
@@ -371,7 +366,7 @@ export default function CustomerSupport() {
               </div>
 
               <div className="col-md-2 col-sm-2 col-lg-2 sel-month">
-                <div className="text-start mb-1" style={{ fontSize: "12px" }}>
+                <div className="text-start mb-1" style={darkText}>
                   Medium
                 </div>
                 <select
@@ -391,7 +386,7 @@ export default function CustomerSupport() {
               </div>
 
               <div className="col-md-2 col-sm-2 col-lg-2 sel-month">
-                <div className="text-start mb-1" style={{ fontSize: "12px" }}>
+                <div className="text-start mb-1" style={darkText}>
                   From Date
                 </div>
                 {DFlag === "N" ? (
@@ -420,7 +415,7 @@ export default function CustomerSupport() {
               </div>
 
               <div className="col-md-2 col-sm-2 col-lg-2 sel-month">
-                <div className="text-start mb-1" style={{ fontSize: "12px" }}>
+                <div className="text-start mb-1" style={darkText}>
                   To Date
                 </div>
                 {DFlag === "N" ? (
@@ -492,23 +487,23 @@ export default function CustomerSupport() {
                         responsive
                         dense
                         striped
-                      //   subHeader
-                      //   subHeaderComponent={
-                      //     <>
-                      //       <div className="upper-dataTbl">
-                      //         {/* <div className="d-flex">
-                      //   <p className="pe-2">Search</p>
-                      //   <input
-                      //     ref={searchInput}
-                      //     type="text"
-                      //     class="form-control form-control-sm searchField"
-                      //     placeholder=""
-                      //     onChange={searchHandler}
-                      //   />
-                      // </div> */}
-                      //       </div>
-                      //     </>
-                      //   }
+                        //   subHeader
+                        //   subHeaderComponent={
+                        //     <>
+                        //       <div className="upper-dataTbl">
+                        //         {/* <div className="d-flex">
+                        //   <p className="pe-2">Search</p>
+                        //   <input
+                        //     ref={searchInput}
+                        //     type="text"
+                        //     class="form-control form-control-sm searchField"
+                        //     placeholder=""
+                        //     onChange={searchHandler}
+                        //   />
+                        // </div> */}
+                        //       </div>
+                        //     </>
+                        //   }
                       />
                     </>
                   )}

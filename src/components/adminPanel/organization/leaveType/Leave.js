@@ -10,10 +10,12 @@ import LeavePopup from "./LeavePopup";
 import LeaveEditPopup from "./LeaveEditPopup";
 import UpperbarContext from "../../../context/upperbar-context";
 import StaffContext from "../staffState/StaffContext";
+import { FaRegCalendarAlt } from "react-icons/fa";
 
 export default function Leave() {
-  const { fiscalYear, todayDate, appURL } = useContext(UpperbarContext);
-  const { customStyles } = useContext(StaffContext)
+  const { fiscalYear, todayDate, appURL, darkText } =
+    useContext(UpperbarContext);
+  const { customStyles } = useContext(StaffContext);
   const [leavePopup, setLeavePopup] = useState(false);
   const [leaveEditPopup, setLeaveEditPopup] = useState(false);
   const [reload, setReload] = useState(false);
@@ -42,7 +44,6 @@ export default function Leave() {
 
   const [titleId, setTitleID] = useState();
   const editPop = (datas) => {
-
     setLeaveEditPopup(true);
     setTitleID(datas.LeaveID);
     setLeaveFormValue({
@@ -78,7 +79,6 @@ export default function Leave() {
       dataForm.Status = 1;
     }
     Fetchdata(dataForm).then(function (result) {
-
       if (result.StatusCode === 200) {
         leavList();
         let statsN = JSON.parse(JSON.stringify(newStat));
@@ -179,7 +179,6 @@ export default function Leave() {
               >
                 View{" "}
               </button>{" "}
-
               <button
                 type="button"
                 class="btn btn-sm actvspan"
@@ -213,7 +212,6 @@ export default function Leave() {
     };
 
     Fetchdata(params).then(function (result) {
-
       if (result.StatusCode === 200) {
         const postResult = result.LeaveLst ? result.LeaveLst : "";
         setLeaveList(postResult);
@@ -231,13 +229,11 @@ export default function Leave() {
 
     const srchQuery = searchInput.current.value.toLowerCase();
     if (srchQuery) {
-
       let srchResult = originalList.filter((list) => {
         return list["Designation"].toLowerCase().includes(srchQuery);
       });
 
       if (srchResult) {
-
         setLeaveList(srchResult);
       } else {
         setLeaveList({});
@@ -260,10 +256,12 @@ export default function Leave() {
       <div className="container-fluid classatten-wrapper  mt-3 ps-4 pe-4">
         <div className="row mt-3">
           <div className="page-header">
-            <div className="text-start  page-title">Leave Type</div>
+            <div className="text-start  page-title" style={darkText}>
+              Leave Type
+            </div>
             <div className="page-date">
-              <div className="sec-content">
-                Today's Date : {todayDate} <span>|</span> Fiscal Year :{" "}
+              <div className="sec-content" style={darkText}>
+                <FaRegCalendarAlt /> {todayDate} <span>|</span> Fiscal Year :{" "}
                 {fiscalYear.StartDate}
                 <span>-</span>
                 {fiscalYear.EndDate}

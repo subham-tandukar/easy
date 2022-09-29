@@ -12,14 +12,15 @@ import UpperbarContext from "../context/upperbar-context";
 import StaffContext from "../adminPanel/organization/staffState/StaffContext";
 
 function Service({ userDetails }) {
-  const { customStyles } = useContext(StaffContext)
+  const { customStyles } = useContext(StaffContext);
+
   const [DFlag, setDFlag] = useState("N");
   const services = [
     {
       title: "Designation",
       body:
         userDetails.DesignationName === null ||
-          userDetails.DesignationName === "-"
+        userDetails.DesignationName === "-"
           ? "Not Mentioned"
           : userDetails.DesignationName,
     },
@@ -27,7 +28,7 @@ function Service({ userDetails }) {
       title: "Department",
       body:
         userDetails.DepartmentName === null ||
-          userDetails.DepartmentName === "-"
+        userDetails.DepartmentName === "-"
           ? "Not Mentioned"
           : userDetails.DepartmentName,
     },
@@ -35,7 +36,7 @@ function Service({ userDetails }) {
       title: "Sub department",
       body:
         userDetails.SubDepartmentName === null ||
-          userDetails.SubDepartmentName === "-"
+        userDetails.SubDepartmentName === "-"
           ? "Not Mentioned"
           : userDetails.SubDepartmentName,
     },
@@ -58,7 +59,7 @@ function Service({ userDetails }) {
   const [loading, setLoading] = useState(true);
   const [jobInfo, setJobinfo] = useState([]);
   const { User } = useContext(AuthContext);
-  const { appURL } = useContext(UpperbarContext);
+  const { appURL, darkText } = useContext(UpperbarContext);
 
   useEffect(() => {
     const params = {
@@ -75,7 +76,6 @@ function Service({ userDetails }) {
         } else {
           setJobinfo([]);
           setLoading(false);
-
         }
       })
       .catch((err) => {
@@ -137,14 +137,16 @@ function Service({ userDetails }) {
           {services.map((item, index) => {
             return (
               <article key={index} className="basic-info">
-                <h6 className="basic-title">{item.title}</h6>
-                <p style={{ fontSize: "14px" }}>{item.body}</p>
+                <h6 className="basic-title" style={darkText}>
+                  {item.title}
+                </h6>
+                <p style={darkText}>{item.body}</p>
               </article>
             );
           })}
         </div>
 
-        <h4 style={{ textAlign: "left", fontSize: "17px" }}>
+        <h4 style={darkText} className="uk-text-left fs-6">
           Service History <hr />
         </h4>
         {loading ? (

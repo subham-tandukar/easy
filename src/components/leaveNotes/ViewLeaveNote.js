@@ -1,11 +1,49 @@
 import React, { useContext } from "react";
 import UpperbarContext from "../context/upperbar-context";
 import CloseIcon from "../../images/CloseIcon.svg";
+import { GetNepaliDate } from "../hooks/dateConvertor";
 const ViewLeaveNote = ({ note, setViewPopup, DFlag }) => {
   const { sidePanelBg } = useContext(UpperbarContext);
   const closePopUp = (e) => {
     setViewPopup(false);
   };
+
+  const leave = [
+    {
+      title: "Leave Type",
+      body: note.LeaveType,
+    },
+    {
+      title: "Title",
+      body: note.Title,
+    },
+    {
+      title: "Cause",
+      body: note.Cause,
+    },
+    {
+      title: "From",
+      body: DFlag === "N" ? GetNepaliDate(note.FromDate) : note.FromDate,
+    },
+    {
+      title: "ToDate",
+      body: DFlag === "N" ? GetNepaliDate(note.ToDate) : note.ToDate,
+    },
+    {
+      title: "Days",
+      body: note.TotalDays,
+    },
+    {
+      title: "Status",
+      body: note.LeaveStatus,
+    },
+    {
+      title: "Verified By",
+      body:
+        note.LeaveVerified === "verified" ? note.VerifiedBy : "Not verified",
+    },
+  ];
+
   return (
     <>
       <div className="container viewNotifyPopup-wrapper">
@@ -25,59 +63,28 @@ const ViewLeaveNote = ({ note, setViewPopup, DFlag }) => {
             <div className="row text-start mt-2">
               <table className="table">
                 <tbody>
-                  <tr>
-                    <td className="fw-bold">Leave Type</td>
-                    <td style={{ borderLeft: "1px solid rgb(225, 226, 227)" }}>
-                      {note.LeaveType}
-                    </td>
-                  </tr>
-
-                  <tr>
-                    <td className="fw-bold">Title</td>
-                    <td style={{ borderLeft: "1px solid rgb(225, 226, 227)" }}>
-                      {note.Title}
-                    </td>
-                  </tr>
-
-                  <tr>
-                    <td className="fw-bold">Cause</td>
-                    <td style={{ borderLeft: "1px solid rgb(225, 226, 227)" }}>
-                      {note.Cause}
-                    </td>
-                  </tr>
-
-                  <tr>
-                    <td className="fw-bold">From</td>
-                    <td style={{ borderLeft: "1px solid rgb(225, 226, 227)" }}>
-                      {note.FromDate}
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="fw-bold">To</td>
-                    <td style={{ borderLeft: "1px solid rgb(225, 226, 227)" }}>
-                      {note.ToDate}
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="fw-bold">Days</td>
-                    <td style={{ borderLeft: "1px solid rgb(225, 226, 227)" }}>
-                      {note.TotalDays}
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="fw-bold">Status</td>
-                    <td style={{ borderLeft: "1px solid rgb(225, 226, 227)" }}>
-                      {note.LeaveStatus}
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="fw-bold">Verified By</td>
-                    <td style={{ borderLeft: "1px solid rgb(225, 226, 227)" }}>
-                      {note.LeaveVerified === "verified"
-                        ? note.VerifiedBy
-                        : "Not verified"}
-                    </td>
-                  </tr>
+                  {leave.map((props) => {
+                    const { title, body } = props;
+                    return (
+                      <>
+                        <tr>
+                          <td
+                            className="fw-bold"
+                            style={{ width: "max-content" }}
+                          >
+                            {title}
+                          </td>
+                          <td
+                            style={{
+                              borderLeft: "1px solid rgb(225, 226, 227)",
+                            }}
+                          >
+                            {body}
+                          </td>
+                        </tr>
+                      </>
+                    );
+                  })}
                 </tbody>
               </table>
             </div>

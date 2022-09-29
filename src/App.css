@@ -144,7 +144,7 @@ input[type="radio"] {
   }
   .dashboard-wrapper {
     width: 75%;
-    margin: 0 auto;
+    margin: 0 auto !important;
   }
   .dashboard-wrapper .dasboard-wrap {
     padding: 0;
@@ -241,6 +241,13 @@ input[type="radio"] {
     padding-right: 1rem !important;
   }
 }
-.gSXMmp {
+.gSXMmp,
+.hoMdai {
   max-height: 382px !important;
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
+}
+.gSXMmp::-webkit-scrollbar,
+.hoMdai::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
 }

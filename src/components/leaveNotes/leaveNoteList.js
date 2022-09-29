@@ -10,9 +10,10 @@ import "react-toastify/dist/ReactToastify.css";
 import NepaliDate from "nepali-date-converter";
 import ConfirmPopup from "../hooks/confirmPopup";
 import UpperbarContext from "../context/upperbar-context";
-import { GetEnglishDate, GetNepaliDate } from "../hooks/dateConvertor";
+import { GetNepaliDate } from "../hooks/dateConvertor";
 import StaffContext from "../adminPanel/organization/staffState/StaffContext";
 import ViewLeaveNote from "./ViewLeaveNote";
+import { FaRegCalendarAlt } from "react-icons/fa";
 
 export default function LeaveNoteList() {
   const { customStyles } = useContext(StaffContext);
@@ -59,7 +60,7 @@ export default function LeaveNoteList() {
       grow: 0,
       center: true,
       selector: (row) => {
-        return DFlag === "N" ? GetEnglishDate(row.FromDate) : row.FromDate;
+        return DFlag === "N" ? GetNepaliDate(row.FromDate) : row.FromDate;
       },
     },
     {
@@ -67,7 +68,7 @@ export default function LeaveNoteList() {
       grow: 0,
       center: true,
       selector: (row) => {
-        return DFlag === "N" ? GetEnglishDate(row.ToDate) : row.ToDate;
+        return DFlag === "N" ? GetNepaliDate(row.ToDate) : row.ToDate;
       },
     },
     {
@@ -223,7 +224,7 @@ export default function LeaveNoteList() {
             </div>
             <div className="page-date">
               <div className="sec-content" style={darkText}>
-                Today's Date : {todayDate} <span>|</span> Fiscal Year :{" "}
+                <FaRegCalendarAlt /> {todayDate} <span>|</span> Fiscal Year :{" "}
                 {fiscalYear.StartDate}
                 <span>-</span>
                 {fiscalYear.EndDate}

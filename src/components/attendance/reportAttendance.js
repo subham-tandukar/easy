@@ -8,6 +8,7 @@ import "@sbmdkl/nepali-datepicker-reactjs/dist/index.css";
 import NepaliDate from "nepali-date-converter";
 import UpperbarContext from "../context/upperbar-context";
 import { GetCurrMonth, GetFromDate, GetToDate } from "../hooks/dateConvertor";
+import { FaRegCalendarAlt } from "react-icons/fa";
 
 export default function ReportAttendance() {
   const [category, setCategory] = useState("");
@@ -16,7 +17,8 @@ export default function ReportAttendance() {
   const [toDate, setToDate] = useState("");
   const [attPopup, setAttPopup] = useState(false);
   const [DFlag, setDFlag] = useState("N");
-  const { fiscalYear, todayDate, appURL } = useContext(UpperbarContext);
+  const { fiscalYear, todayDate, appURL, darkText } =
+    useContext(UpperbarContext);
   const [reload, setReload] = useState(false);
 
   const addAttendance = (e) => {
@@ -35,11 +37,11 @@ export default function ReportAttendance() {
     const nepDate = new NepaliDate().getBS();
     var cm = nepDate.month + 1;
     let zm = cm < 10 ? `0${cm}` : cm;
-    // 
+    //
     var cd = nepDate.date + 1;
     let zd = cd < 10 ? `0${cd}` : cd;
     let strDate = nepDate.year + "-" + zm + "-" + zd;
-    // 
+    //
     return strDate;
   }
 
@@ -48,10 +50,12 @@ export default function ReportAttendance() {
       <div className="container-fluid sumatten-wrapper  mt-3 ps-4 pe-4">
         <div className="row mt-3">
           <div className="page-header">
-            <div className="text-start  page-title">Attendance Report</div>
+            <div className="text-start  page-title" style={darkText}>
+              Attendance Report
+            </div>
             <div className="page-date">
-              <div className="sec-content">
-                Today's Date : {todayDate} <span>|</span> Fiscal Year :{" "}
+              <div className="sec-content" style={darkText}>
+                <FaRegCalendarAlt /> {todayDate} <span>|</span> Fiscal Year :{" "}
                 {fiscalYear.StartDate}
                 <span>-</span>
                 {fiscalYear.EndDate}
@@ -229,7 +233,9 @@ export default function ReportAttendance() {
                   className=" text-center d-flex flex-column justify-content-center align-items-center"
                   style={{ margin: "10% auto", width: "120px" }}
                 >
-                  <p className="initial-msg">Please provide input!</p>
+                  <p className="initial-msg" style={darkText}>
+                    Please provide input!
+                  </p>
                 </div>
               )}
               {category === "1" && fromDate && toDate && (

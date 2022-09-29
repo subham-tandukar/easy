@@ -10,10 +10,11 @@ import DesignationEditPopup from "./DesignationEditPopup";
 import Spinner from "../../../loading/spinner";
 import UpperbarContext from "../../../context/upperbar-context";
 import StaffContext from "../staffState/StaffContext";
-
+import { FaRegCalendarAlt } from "react-icons/fa";
 export default function Designation() {
-  const { customStyles } = useContext(StaffContext)
-  const { fiscalYear, todayDate, appURL } = useContext(UpperbarContext);
+  const { customStyles } = useContext(StaffContext);
+  const { fiscalYear, todayDate, appURL, darkText } =
+    useContext(UpperbarContext);
   const [designationPopup, setDesignationPopup] = useState(false);
   const [designationEditPopup, setDesignationEditPopup] = useState(false);
   const [reload, setReload] = useState(false);
@@ -45,7 +46,6 @@ export default function Designation() {
 
   const [titleId, setTitleID] = useState();
   const editPop = (datas) => {
-
     setDesignationEditPopup(true);
     setTitleID(datas.DesignationID);
     setDesignationFormValue({
@@ -80,7 +80,6 @@ export default function Designation() {
       dataForm.Status = 1;
     }
     Fetchdata(dataForm).then(function (result) {
-
       if (result.StatusCode === 200) {
         desgList();
         let statsN = JSON.parse(JSON.stringify(newStat));
@@ -178,16 +177,13 @@ export default function Designation() {
               <button
                 type="button"
                 class="btn btn-sm editspan"
-
                 onClick={() => editPop(row)}
               >
                 View{" "}
               </button>{" "}
-
               <button
                 type="button"
                 class="btn btn-sm actvspan"
-
                 onClick={() => changeStatus(row.DesignationID, row.Status)}
               >
                 {checkStatus(row.Status)}
@@ -198,8 +194,6 @@ export default function Designation() {
       },
     },
   ];
-
-
 
   //API to hit Designation list
   const [designationList, setDesignationList] = useState([]);
@@ -222,7 +216,6 @@ export default function Designation() {
     };
 
     Fetchdata(params).then(function (result) {
-
       if (result.StatusCode === 200) {
         const postResult = result.DesignationList ? result.DesignationList : "";
         setDesignationList(postResult);
@@ -254,7 +247,6 @@ export default function Designation() {
     };
 
     Fetchdata(params).then(function (result) {
-
       if (result.StatusCode === 200) {
         const postResult = result.list ? result.list : "";
         setDepartmentList(postResult);
@@ -286,7 +278,6 @@ export default function Designation() {
     };
 
     Fetchdata(params).then(function (result) {
-
       if (result.StatusCode === 200) {
         const postResult = result.SubDepList ? result.SubDepList : "";
         setLoading(false);
@@ -294,7 +285,6 @@ export default function Designation() {
       } else {
         setLoading(false);
         setSubdepartmentList([]);
-
       }
     });
   };
@@ -304,13 +294,11 @@ export default function Designation() {
 
     const srchQuery = searchInput.current.value.toLowerCase();
     if (srchQuery) {
-
       let srchResult = originalList.filter((list) => {
         return list["Designation"].toLowerCase().includes(srchQuery);
       });
 
       if (srchResult) {
-
         setDesignationList(srchResult);
       } else {
         setDesignationList({});
@@ -348,10 +336,12 @@ export default function Designation() {
       <div className="container-fluid classatten-wrapper  mt-3 ps-4 pe-4">
         <div className="row mt-3">
           <div className="page-header">
-            <div className="text-start  page-title">Designation</div>
+            <div className="text-start  page-title" style={darkText}>
+              Designation
+            </div>
             <div className="page-date">
-              <div className="sec-content">
-                Today's Date : {todayDate} <span>|</span> Fiscal Year :{" "}
+              <div className="sec-content" style={darkText}>
+                <FaRegCalendarAlt /> {todayDate} <span>|</span> Fiscal Year :{" "}
                 {fiscalYear.StartDate}
                 <span>-</span>
                 {fiscalYear.EndDate}

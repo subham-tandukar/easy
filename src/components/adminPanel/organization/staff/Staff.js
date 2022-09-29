@@ -11,9 +11,10 @@ import StaffEditPopup from "./StaffEditPopup";
 import { ShowImgPreview } from "../../../hooks/imagePreview";
 import Spinner from "../../../loading/spinner";
 import UpperbarContext from "../../../context/upperbar-context";
-
+import { FaRegCalendarAlt } from "react-icons/fa";
 export default function Staff() {
-  const { fiscalYear, todayDate, appURL } = useContext(UpperbarContext);
+  const { fiscalYear, todayDate, appURL, darkText } =
+    useContext(UpperbarContext);
 
   const {
     staffPopup,
@@ -313,10 +314,12 @@ export default function Staff() {
       <div className="container-fluid classatten-wrapper  mt-3 ps-4 pe-4">
         <div className="row mt-3">
           <div className="page-header">
-            <div className="text-start  page-title">Staff</div>
+            <div className="text-start  page-title" style={darkText}>
+              Staff
+            </div>
             <div className="page-date">
-              <div className="sec-content">
-                Today's Date : {todayDate} <span>|</span> Fiscal Year :{" "}
+              <div className="sec-content" style={darkText}>
+                <FaRegCalendarAlt /> {todayDate} <span>|</span> Fiscal Year :{" "}
                 {fiscalYear.StartDate}
                 <span>-</span>
                 {fiscalYear.EndDate}

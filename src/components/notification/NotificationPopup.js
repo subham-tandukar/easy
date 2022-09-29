@@ -8,12 +8,12 @@ import UpperbarContext from "../context/upperbar-context";
 import CreditManagementContext from "../adminPanel/CreditManagementState/CreditManagementContext";
 import { Fetchdata } from "../hooks/getData";
 import AuthContext from "../context/auth-context";
-import NepaliDate from "nepali-date-converter";
+// import NepaliDate from "nepali-date-converter";
 import Calendar from "@sbmdkl/nepali-datepicker-reactjs";
 import "@sbmdkl/nepali-datepicker-reactjs/dist/index.css";
 import StaffContext from "../adminPanel/organization/staffState/StaffContext";
 import { GetEnglishDate } from "../hooks/dateConvertor";
-
+// import NepaliDate from "nepali-date-converter";
 const NotificationPopup = ({
   setNotificationPopup,
   //   crList,
@@ -182,7 +182,6 @@ const NotificationPopup = ({
             },
           });
         } else {
-          
           toast("Error: " + resp.Message, {
             style: {
               color: "red",
@@ -195,8 +194,6 @@ const NotificationPopup = ({
       setImage("");
     }
   }, [notificationErrors]);
-
- 
 
   //API to hit Department list
   const [departmentList, setDepartmentList] = useState([]);
@@ -692,8 +689,8 @@ const NotificationPopup = ({
                   value={notificationValues.pubDate}
                   onChange={handleIssueDate}
                   name="pubDate"
-                  //   hideDefaultValue={true}
-                  //   placeholder={"Select Publish Date"}
+                  hideDefaultValue={true}
+                  placeholder="YYYY/MM/DD"
                 />
               ) : (
                 <input

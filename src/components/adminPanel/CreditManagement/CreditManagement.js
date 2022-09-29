@@ -11,6 +11,7 @@ import CreditManagementContext from "../CreditManagementState/CreditManagementCo
 import ApprovePop from "./ApprovePop";
 import RejectPop from "./RejectPop";
 import StaffContext from "../organization/staffState/StaffContext";
+import { FaRegCalendarAlt } from "react-icons/fa";
 
 export default function CreditManagement() {
   const { fiscalYear, todayDate, darkText } = useContext(UpperbarContext);
@@ -190,7 +191,7 @@ export default function CreditManagement() {
             <div className="d-flex align-items-center">
               <div className="page-date">
                 <div className="sec-content" style={darkText}>
-                  Today's Date : {todayDate} <span>|</span> Fiscal Year :{" "}
+                  <FaRegCalendarAlt /> {todayDate} <span>|</span> Fiscal Year :{" "}
                   {fiscalYear.StartDate}
                   <span>-</span>
                   {fiscalYear.EndDate}

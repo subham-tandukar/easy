@@ -19,9 +19,10 @@ import {
   GetToDate,
 } from "../hooks/dateConvertor";
 import StaffContext from "../adminPanel/organization/staffState/StaffContext";
+import { FaRegCalendarAlt } from "react-icons/fa";
 
 export default function Organization() {
-  const { customStyles } = useContext(StaffContext)
+  const { customStyles } = useContext(StaffContext);
   const { User } = useContext(AuthContext);
   // const { orgFormValues, setOrgFormValues } = useContext(OrganizationContext);
   const initalvalue = {
@@ -40,7 +41,8 @@ export default function Organization() {
   const [reload, setReload] = useState(false);
   const [addPopup, setAddPopup] = useState(false);
   const [DFlag, setDFlag] = useState("N");
-  const { fiscalYear, todayDate, appURL } = useContext(UpperbarContext);
+  const { fiscalYear, todayDate, appURL, darkText } =
+    useContext(UpperbarContext);
   const [initialLoad, setInitialLoad] = useState(true);
 
   const columns = [
@@ -154,13 +156,13 @@ export default function Organization() {
     var cm = nepDate.getMonth() + 1;
 
     var cd = nepDate.getDate();
-    // 
+    //
     let strDate = nepDate.getYear() + "-" + cm + "-" + cd;
-    // 
+    //
     return strDate;
   };
 
-  // 
+  //
   useEffect(() => {
     const dataForm = {
       FetchURL: `${appURL}api/org-type?ComID=${User.CompanyId}&BranchID=${User.BranchId}`,
@@ -168,13 +170,10 @@ export default function Organization() {
     };
 
     Fetchdata(dataForm).then(function (result) {
-
       if (result.StatusCode === 200) {
-
         const postResult = result.OrganizationTypes;
         setOrgTypeList(postResult);
       } else {
-
       }
     });
   }, []);
@@ -186,13 +185,10 @@ export default function Organization() {
     };
 
     Fetchdata(dataForm).then(function (result) {
-
       if (result.StatusCode === 200) {
-
         const postResult = result.LeadSources;
         setLeedSrcList(postResult);
       } else {
-
       }
     });
   }, []);
@@ -204,10 +200,10 @@ export default function Organization() {
   };
 
   useEffect(() => {
-    // 
+    //
 
     // orgFormValues.from = getNepaliDate();
-    // 
+    //
 
     if (
       orgFormValues.from &&
@@ -217,9 +213,7 @@ export default function Organization() {
     ) {
       let enFrom = GetEnglishDate(orgFormValues.from);
 
-
       let enTo = GetEnglishDate(orgFormValues.to);
-
 
       const params = {
         FetchURL: `${appURL}api/all-org-list?ComID=${User.CompanyId}&UserID=${User.UID}&IsOurClient=0&FromDate=${enFrom}&ToDate=${enTo}&SourceID=${orgFormValues.source}&OrgType=${orgFormValues.orgType}`,
@@ -229,7 +223,6 @@ export default function Organization() {
       Fetchdata(params)
         .then(function (result) {
           if (result.StatusCode === 200) {
-
             const postResult = result.OrgList ? result.OrgList : "";
             setOrganizationList(postResult);
             setOriginalList(postResult);
@@ -255,7 +248,6 @@ export default function Organization() {
     orgFormValues.source,
     orgFormValues.orgType,
   ]);
-
 
   // const addOrganization = (e) => {
   //   setAddPopup(true);
@@ -284,10 +276,12 @@ export default function Organization() {
       <div className="container-fluid orglst-wrapper  mt-3 ps-4 pe-4">
         <div className="row mt-3">
           <div className="page-header">
-            <div className="text-start  page-title">Organization</div>
+            <div className="text-start  page-title" style={darkText}>
+              Organization
+            </div>
             <div className="page-date">
-              <div className="sec-content">
-                Today's Date : {todayDate} <span>|</span> Fiscal Year :{" "}
+              <div className="sec-content" style={darkText}>
+                <FaRegCalendarAlt /> {todayDate} <span>|</span> Fiscal Year :{" "}
                 {fiscalYear.StartDate}
                 <span>-</span>
                 {fiscalYear.EndDate}
@@ -301,7 +295,7 @@ export default function Organization() {
           <div className="sec-dataTable">
             <div className="row mb-1 ">
               <div className="col-md-3 col-sm-3 col-lg-3 sel-month">
-                <div className="text-start mb-1" style={{ fontSize: "12px" }}>
+                <div className="text-start mb-1" style={darkText}>
                   Organization
                 </div>
                 <select
@@ -326,7 +320,7 @@ export default function Organization() {
               </div>
 
               <div className="col-md-3 col-sm-3 col-lg-3 sel-month">
-                <div className="text-start mb-1" style={{ fontSize: "12px" }}>
+                <div className="text-start mb-1" style={darkText}>
                   Source
                 </div>
                 <select
@@ -351,7 +345,7 @@ export default function Organization() {
               </div>
 
               <div className="col-md-3 col-sm-3 col-lg-3 sel-month">
-                <div className="text-start mb-1" style={{ fontSize: "12px" }}>
+                <div className="text-start mb-1" style={darkText}>
                   From Date
                 </div>
                 {DFlag === "N" ? (
@@ -380,7 +374,7 @@ export default function Organization() {
               </div>
 
               <div className="col-md-3 col-sm-3 col-lg-3 sel-month">
-                <div className="text-start mb-1" style={{ fontSize: "12px" }}>
+                <div className="text-start mb-1" style={darkText}>
                   To Date
                 </div>
                 {DFlag === "N" ? (

@@ -11,10 +11,11 @@ import { ShowImgPreview } from "../../../hooks/imagePreview";
 import Spinner from "../../../loading/spinner";
 import UpperbarContext from "../../../context/upperbar-context";
 import StaffContext from "../staffState/StaffContext";
-
+import { FaRegCalendarAlt } from "react-icons/fa";
 export default function Product() {
-  const { fiscalYear, todayDate, appURL } = useContext(UpperbarContext);
-  const { customStylesForImage } = useContext(StaffContext)
+  const { fiscalYear, todayDate, appURL, darkText } =
+    useContext(UpperbarContext);
+  const { customStylesForImage } = useContext(StaffContext);
 
   const [productPopup, setProductPopup] = useState(false);
   const [productEditPopup, setProductEditPopup] = useState(false);
@@ -49,7 +50,6 @@ export default function Product() {
 
   const [titleId, setTitleID] = useState();
   const editPop = (datas) => {
-
     setProductEditPopup(true);
     setTitleID(datas.ProdID);
     setProductFormValue({
@@ -83,7 +83,6 @@ export default function Product() {
       dataForm.Status = 1;
     }
     Fetchdata(dataForm).then(function (result) {
-
       if (result.StatusCode === 200) {
         proList();
         let statsN = JSON.parse(JSON.stringify(newStat));
@@ -204,16 +203,13 @@ export default function Product() {
               <button
                 type="button"
                 class="btn btn-sm editspan"
-
                 onClick={() => editPop(row)}
               >
                 View{" "}
               </button>{" "}
-
               <button
                 type="button"
                 class="btn btn-sm actvspan"
-
                 onClick={() => changeStatus(row.ProdID, row.Status)}
               >
                 {checkStatus(row.Status)}
@@ -243,7 +239,6 @@ export default function Product() {
     };
 
     Fetchdata(params).then(function (result) {
-
       if (result.StatusCode === 200) {
         const postResult = result.ProductList ? result.ProductList : "";
         setProductList(postResult);
@@ -252,7 +247,6 @@ export default function Product() {
       } else {
         setLoading(false);
         setProductList({});
-
       }
     });
   };
@@ -262,13 +256,11 @@ export default function Product() {
 
     const srchQuery = searchInput.current.value.toLowerCase();
     if (srchQuery) {
-
       let srchResult = originalList.filter((list) => {
         return list["Product"].toLowerCase().includes(srchQuery);
       });
 
       if (srchResult) {
-
         setProductList(srchResult);
       } else {
         setProductList({});
@@ -291,10 +283,12 @@ export default function Product() {
       <div className="container-fluid classatten-wrapper  mt-3 ps-4 pe-4">
         <div className="row mt-3">
           <div className="page-header">
-            <div className="text-start  page-title">Product</div>
+            <div className="text-start  page-title" style={darkText}>
+              Product
+            </div>
             <div className="page-date">
-              <div className="sec-content">
-                Today's Date : {todayDate} <span>|</span> Fiscal Year :{" "}
+              <div className="sec-content" style={darkText}>
+                <FaRegCalendarAlt /> {todayDate} <span>|</span> Fiscal Year :{" "}
                 {fiscalYear.StartDate}
                 <span>-</span>
                 {fiscalYear.EndDate}

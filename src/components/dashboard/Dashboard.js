@@ -20,7 +20,7 @@ const Dashboard = () => {
 
   return (
     <>
-      <section className="ps-4 pe-4">
+      <section className="ps-sm-4 pe-sm-4 ps-0 pe-0">
         <div className="uk-flex uk-flex-between uk-flex-wrap uk-flex-middle head">
           <div className="uk-margin-right">
             <p
@@ -37,23 +37,30 @@ const Dashboard = () => {
             </p>
           </div>
         </div>
-        <div className="uk-grid uk-grid-match uk-child-width-1-2@m dashboard-wrapper">
-          <div className="dasboard-wrap">
-            <Employee />
+        <div className="uk-grid uk-grid-match uk-child-width-1-2@m dashboard-wrapper uk-margin-remove">
+          <div className="p-0">
+            <div className="dasboard-wrap">
+              <Employee />
+            </div>
           </div>
           <div className="dasboard-wrap">
             <ProjectDetails />
           </div>
-          <div className="dasboard-wrap">
-            <Bargraph />
+
+          <div className="p-0">
+            <div className="dasboard-wrap">
+              <Bargraph />
+            </div>
           </div>
 
           <div className="dasboard-wrap">
             <PieChart />
           </div>
 
-          <div className="uk-flex-middle dasboard-wrap">
-            <TodayAbsent />
+          <div className="p-0">
+            <div className="uk-flex-middle dasboard-wrap">
+              <TodayAbsent />
+            </div>
           </div>
 
           <div className="dasboard-wrap">

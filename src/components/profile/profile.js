@@ -9,17 +9,19 @@ import UpperbarContext from "../context/upperbar-context";
 import { ShowImgPreview } from "../hooks/imagePreview";
 import AuthContext from "../context/auth-context";
 import { Fetchdata } from "../hooks/getData";
+import { FaRegCalendarAlt } from "react-icons/fa";
 
 export default function Profile() {
   const { User } = useContext(AuthContext);
   const [userDetails, setUserDetails] = useState("");
   const [imgPrv, setImgPrv] = useState(false);
   const [ImgPreview, setImgPreview] = useState("");
-  const { fiscalYear, todayDate, appURL } = useContext(UpperbarContext);
+  const { fiscalYear, todayDate, appURL, darkText } =
+    useContext(UpperbarContext);
 
   useEffect(() => {
     // const cur_user = localStorage.getItem("token");
-    // 
+    //
     // cur_user.length && setUserDetails(JSON.parse(cur_user));
 
     const dataForm = {
@@ -33,9 +35,7 @@ export default function Profile() {
 
     Fetchdata(dataForm)
       .then(function (result) {
-
         if (result.StatusCode === 200) {
-
           const postResult = result.Logins[0] ? result.Logins[0] : "";
           if (postResult) {
             postResult.CompanyId = "ES25";
@@ -47,14 +47,13 @@ export default function Profile() {
             cur_user.length && setUserDetails(JSON.parse(cur_user));
           }
         } else {
-
           const cur_user = localStorage.getItem("token");
 
           cur_user.length && setUserDetails(JSON.parse(cur_user));
         }
       })
       .then((res) => {
-        // 
+        //
       });
   }, []);
 
@@ -118,7 +117,7 @@ export default function Profile() {
     userDetails.MiddleName +
     " " +
     userDetails.LastName;
-  // 
+  //
 
   //Initiate date object
   const dt_date1 = new Date();
@@ -149,10 +148,12 @@ export default function Profile() {
       <div className="container-fluid classatten-wrapper  mt-3 ps-4 pe-4">
         <div className="row mt-3 ">
           <div className="page-header">
-            <div className="text-start  page-title">Profile </div>
+            <div className="text-start  page-title" style={darkText}>
+              Profile{" "}
+            </div>
             <div className="page-date">
-              <div className="sec-content">
-                Today's Date : {todayDate} <span>|</span> Fiscal Year :{" "}
+              <div className="sec-content" style={darkText}>
+                <FaRegCalendarAlt /> {todayDate} <span>|</span> Fiscal Year :{" "}
                 {fiscalYear.StartDate}
                 <span>-</span>
                 {fiscalYear.EndDate}
@@ -177,8 +178,10 @@ export default function Profile() {
               </div>
             </div>
             <div>
-              <h6 style={{ paddingLeft: "10px", textAlign: "left" }}>{name}</h6>
-              <p style={{ textAlign: "left", paddingLeft: "10px" }}>
+              <h6 style={darkText} className="ps-3 uk-text-left">
+                {name}
+              </h6>
+              <p style={darkText} className="ps-3 uk-text-left">
                 {userDetails.DesignationName} <br />
                 {userDetails.DepartmentName}, {userDetails.SubDepartmentName}
                 <br />

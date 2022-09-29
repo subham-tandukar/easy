@@ -16,7 +16,7 @@ export default function DailyAttendance({
   reload,
   appURL,
 }) {
-  const { customStyles } = useContext(StaffContext)
+  const { customStyles } = useContext(StaffContext);
   const { User } = useContext(AuthContext);
   const [loading, setLoading] = useState(true);
   const [attendanceList, setAttendanceList] = useState([]);
@@ -40,7 +40,7 @@ export default function DailyAttendance({
     {
       name: "Date",
       center: true,
-      selector: (row) => row.AttenDate,
+      selector: (row) => row.AttenDay,
     },
 
     {
@@ -49,12 +49,12 @@ export default function DailyAttendance({
       grow: 0,
       selector: (row) => {
         if (DFlag === "N") {
-          const nDate = new NepaliDate(row.AttenDate).getBS();
-          // 
+          const nDate = new NepaliDate(row.AttenDay).getBS();
+          //
           const day = nDate.day;
           return weekDay[day];
         } else {
-          const day = new Date(row.AttenDate).getDay();
+          const day = new Date(row.AttenDay).getDay();
 
           return weekDay[day];
         }
@@ -110,16 +110,13 @@ export default function DailyAttendance({
 
       Fetchdata(dataForm)
         .then(function (result) {
-
           if (result.StatusCode === 200) {
-
             const postResult = result.AttenRepMonth ? result.AttenRepMonth : "";
             setAttendanceList(postResult);
             setLoading(false);
           } else {
             setAttendanceList([]);
             setLoading(false);
-
           }
         })
         .catch((err) => {

@@ -12,10 +12,12 @@ import BankPopupEdit from "./BankPopupEdit";
 
 import UpperbarContext from "../../../context/upperbar-context";
 import StaffContext from "../staffState/StaffContext";
+import { FaRegCalendarAlt } from "react-icons/fa";
 
 export default function Bank() {
-  const { fiscalYear, todayDate, appURL } = useContext(UpperbarContext);
-  const { customStyles } = useContext(StaffContext)
+  const { fiscalYear, todayDate, appURL, darkText } =
+    useContext(UpperbarContext);
+  const { customStyles } = useContext(StaffContext);
   const [bankPopup, setBankPopup] = useState(false);
   const [bankEditPopup, setBankEditPopup] = useState(false);
   const [reload, setReload] = useState(false);
@@ -73,7 +75,6 @@ export default function Bank() {
 
   const [titleId, setTitleID] = useState();
   const editPop = (datas) => {
-
     setBankEditPopup(true);
     setTitleID(datas.BankID);
     setBankFormValue({
@@ -93,7 +94,6 @@ export default function Bank() {
   const [newStat, setNewStat] = useState(stateInitial);
 
   const deactivateDepart = (ID, IsActive) => {
-
     const dataForm = {
       ComID: User.CompanyId,
       StaffID: User.UID,
@@ -105,14 +105,12 @@ export default function Bank() {
       Type: "POST",
     };
 
-
     if (IsActive === 1) {
       dataForm.Status = 0;
     } else {
       dataForm.Status = 1;
     }
     Fetchdata(dataForm).then(function (result) {
-
       if (result.StatusCode === 200) {
         bnkList();
         let statsN = JSON.parse(JSON.stringify(newStat));
@@ -197,16 +195,13 @@ export default function Bank() {
               <button
                 type="button"
                 class="btn btn-sm editspan"
-
                 onClick={() => editPop(row)}
               >
                 View{" "}
               </button>{" "}
-
               <button
                 type="button"
                 class="btn btn-sm actvspan"
-
                 onClick={() => deactivateDepart(row.BankID, row.Status)}
               >
                 {checkStatus(row.Status)}
@@ -238,7 +233,6 @@ export default function Bank() {
     };
 
     Fetchdata(params).then(function (result) {
-
       if (result.StatusCode === 200) {
         const postResult = result.BankLst ? result.BankLst : "";
         setBankList(postResult);
@@ -247,7 +241,6 @@ export default function Bank() {
       } else {
         setBankList([]);
         setLoading(true);
-
       }
     });
   };
@@ -257,7 +250,6 @@ export default function Bank() {
 
     const srchQuery = searchInput.current.value.toLowerCase();
     if (srchQuery) {
-
       let srchResult = originalList.filter((list) => {
         return (
           list["BankName"].toLowerCase().includes(srchQuery) ||
@@ -266,7 +258,6 @@ export default function Bank() {
       });
 
       if (srchResult) {
-
         setBankList(srchResult);
       } else {
         setBankList({});
@@ -299,7 +290,6 @@ export default function Bank() {
         const postResult = result.list ? result.list : "";
         setDepartmentList(postResult);
       } else {
-
       }
     });
   };
@@ -324,13 +314,11 @@ export default function Bank() {
     };
 
     Fetchdata(params).then(function (result) {
-
       if (result.StatusCode === 200) {
         const postResult = result.SubDepList ? result.SubDepList : "";
         setSubdepartmentList(postResult);
       } else {
         setSubdepartmentList([]);
-
       }
     });
   };
@@ -346,13 +334,10 @@ export default function Bank() {
     };
 
     Fetchdata(dataForm).then(function (result) {
-
       if (result.StatusCode === 200) {
-
         const postResult = result.OrganizationStaffs;
         setStaffList(postResult);
       } else {
-
       }
     });
   }, [chooseDepartment, chooseSubDepartment]);
@@ -370,10 +355,12 @@ export default function Bank() {
       <div className="container-fluid classatten-wrapper  mt-3 ps-4 pe-4">
         <div className="row mt-3">
           <div className="page-header">
-            <div className="text-start  page-title">Bank</div>
+            <div className="text-start  page-title" style={darkText}>
+              Bank
+            </div>
             <div className="page-date">
-              <div className="sec-content">
-                Today's Date : {todayDate} <span>|</span> Fiscal Year :{" "}
+              <div className="sec-content" style={darkText}>
+                <FaRegCalendarAlt /> {todayDate} <span>|</span> Fiscal Year :{" "}
                 {fiscalYear.StartDate}
                 <span>-</span>
                 {fiscalYear.EndDate}
